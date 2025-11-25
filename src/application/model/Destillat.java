@@ -1,5 +1,5 @@
 package application.model;
 
-public class Destillat implements Drinkable {
+public abstract class Destillat implements Drinkable {
 
 }
