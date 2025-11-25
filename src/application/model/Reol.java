@@ -60,7 +60,7 @@ public class Reol {
             // check if the Storable value is off type: 'Fad'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
-                if (fad.fadNr == fadNr) {
+                if (fad.getFadNr() == fadNr) {
                     return ID + ": " + i;
                 }
             } else {
@@ -85,7 +85,7 @@ public class Reol {
             // check if the Storable value is off type: 'Fadtype'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
-                if (fad.fadType == fadtype) {
+                if (fad.getFadtype() == fadtype) {
                     String værdi = ID + ": " + i;
                     list.add(værdi);
                 }
@@ -115,7 +115,7 @@ public class Reol {
             // check if the Storable value is off type: 'Destillat'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
-                if (fad.indhold == destillat) {
+                if (fad.getIndhold() == destillat) {
                     String værdi = ID + ": " + i;
                     list.add(værdi);
                 }
