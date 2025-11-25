@@ -11,8 +11,8 @@ public abstract class Destillat implements Drinkable {
     //Linkattributter
     private Map<LocalDate, ArrayList<Fad>> fadHistorik;
 
-//    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
-//    Før det er færdigt
+    //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
+    //    Før det er færdigt
 
 
     public Destillat() {
