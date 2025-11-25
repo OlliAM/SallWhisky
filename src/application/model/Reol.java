@@ -51,6 +51,7 @@ public class Reol {
     }
 
     // Internal helper-method for searching (Override).
+    // FadNr-search.
     public String søgPåReol(int fadNr) {
 
         // 'iterate over all spaces.
@@ -72,6 +73,7 @@ public class Reol {
     }
 
     // Internal helper-method for searching (Override).
+    // Fadtype-search.
     public ArrayList<String> søgPåReol(Fadtype fadtype) {
 
         // Instantiate new arraylist.
@@ -80,7 +82,7 @@ public class Reol {
         // 'iterate over all spaces.
         for (int i = 0; i < pladser.length; i++) {
             Storable plads = pladser[i];
-            // check if the Storable value is off type: 'Fad'.
+            // check if the Storable value is off type: 'Fadtype'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
                 if (fad.fadType == fadtype) {
@@ -101,6 +103,7 @@ public class Reol {
     }
 
     // Internal helper-method for searching (Override).
+    // Destillat-search.
     public ArrayList<String> søgPåReol(Destillat destillat) {
 
         // Instantiate new arraylist.
@@ -109,7 +112,7 @@ public class Reol {
         // 'iterate over all spaces.
         for (int i = 0; i < pladser.length; i++) {
             Storable plads = pladser[i];
-            // check if the Storable value is off type: 'Fad'.
+            // check if the Storable value is off type: 'Destillat'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
                 if (fad.indhold == destillat) {

@@ -12,10 +12,10 @@ public class Lager {
     private ArrayList<Reol> reoler = new ArrayList<>();
 
     // Constructor (private).
-    Lager(String navn, int antalFade, int antalFlasker) {
+    Lager(String navn) {
         this.navn = navn;
-        this.antalFade = antalFade;
-        this.antalFlasker = antalFlasker;
+        this.antalFade = 0;
+        this.antalFlasker = 0;
     }
 
     // Create & add new Reol-instance to internal Lager-class.
@@ -31,6 +31,19 @@ public class Lager {
 
         // Return Reol-class -> Used for Controller.
         return newReol;
+    }
+
+    // Store the specified product at index.
+    public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
+        // Call the storage method in Reol-instace -> Handles Errors.
+        reol.gemPåPlads(pladsNr, produkt);
+
+        // Check which type of Storable was added & increment internal counter.
+        if (produkt instanceof Fad) {
+            antalFade += 1;
+        } else {
+            antalFlasker += 1;
+        }
     }
 
     // Method for returning all currently empty spaces.
@@ -50,6 +63,7 @@ public class Lager {
     }
 
     // Linear Search method (Override).
+    // FadNr-search.
     public String søgPåLager(int fadNr) {
 
         // Iterate over entire list of Reol-instances.
@@ -66,6 +80,7 @@ public class Lager {
     }
 
     // Linear Search method (Override).
+    // Fadtype-search.
     public ArrayList<String> søgPåLager(Fadtype fadtype) {
 
         // Initiate new arraylist instance.
@@ -75,7 +90,7 @@ public class Lager {
         for (Reol reol : reoler) {
             ArrayList<String> værdier = reol.søgPåReol(fadtype);
             // If null is returned the value was not found!
-            // If a String-type was returned the value was found!
+            // If an Arraylist-type was returned the value was found!
             if (værdier != null) {
                 list.addAll(værdier);
             }
@@ -89,6 +104,7 @@ public class Lager {
     }
 
     // Linear Search method (Override).
+    // Destillat-search.
     public ArrayList<String> søgPåLager(Destillat destillat) {
 
         // Initiate new arraylist instance.
@@ -98,7 +114,7 @@ public class Lager {
         for (Reol reol : reoler) {
             ArrayList<String> værdier = reol.søgPåReol(destillat);
             // If null is returned the value was not found!
-            // If a String-type was returned the value was found!
+            // If an Arraylist-type was returned the value was found!
             if (værdier != null) {
                 list.addAll(værdier);
             }
