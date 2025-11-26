@@ -90,7 +90,7 @@ public class Reol {
 
     // Internal helper-method for searching (Override).
     // Fadtype-search.
-    public ArrayList<String> søgPåReol(Fadtype fadtype) {
+    public ArrayList<String> søgPåReol(String fadtype) {
 
         // Instantiate new arraylist.
         ArrayList<String> list = new ArrayList<>();
@@ -101,7 +101,7 @@ public class Reol {
             // check if the Storable value is off type: 'Fadtype'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
-                if (fad.getFadtype() == fadtype) {
+                if (fad.getFadtype().equals(fadtype)) {
                     String værdi = ID + ": " + i;
                     list.add(værdi);
                 }

@@ -6,16 +6,17 @@ import java.time.LocalDate;
 
 
 public class BundDestillat extends Destillat{
+    private double mængdeL;
     private LocalDate startDato;
     private LocalDate slutDato;
-    private Kornsort kornsort;
+    private String kornsort;
     private double maltBatchKg;
-    private Rygemateriale rygemateriale;
+    private String rygemateriale;
 
-    public BundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, Kornsort kornsort, double maltBatchKg,
-                         Rygemateriale rygemateriale) {
+    public BundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort, double maltBatchKg,
+                         String rygemateriale, String init) {
+        super(slutDato, init);
         this.startDato = startDato;
-        this.slutDato = slutDato;
         this.kornsort = kornsort;
         this.maltBatchKg = maltBatchKg;
         this.rygemateriale = rygemateriale;
@@ -23,6 +24,15 @@ public class BundDestillat extends Destillat{
 
     //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
     //    Før det er færdigt
+
+
+    public double getMængdeL() {
+        return mængdeL;
+    }
+
+    public void setMængdeL(double mængdeL) {
+        this.mængdeL = mængdeL;
+    }
 
     public void setSlutDato(LocalDate slutDato) {
         this.slutDato = slutDato;
@@ -36,7 +46,7 @@ public class BundDestillat extends Destillat{
         return slutDato;
     }
 
-    public Kornsort getKornsort() {
+    public String getKornsort() {
         return kornsort;
     }
 
@@ -44,7 +54,7 @@ public class BundDestillat extends Destillat{
         return maltBatchKg;
     }
 
-    public Rygemateriale getRygemateriale() {
+    public String getRygemateriale() {
         return rygemateriale;
     }
 }

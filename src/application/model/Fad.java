@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Fad implements Storable{
+public class Fad implements Storable {
     //Fadene kan typisk bruges mange gange.
     //Størrelserne på fadene kan variere og Sall ser på anvendelse af mindre fade på 30 og 50 liter, men også på
     //store, som kan indeholde 100, 190 eller 250 liter væske
 
     private int fadNr;
-    private Fadtype fadtype;
+    private String fadtype;
     private double kapacitetL;
     private String oprindelse;
     private double mængdeL;
@@ -20,7 +20,7 @@ public class Fad implements Storable{
     private Map<LocalDate, ArrayList<Drinkable>> indholdshistorik;
     private Destillat indhold;
 
-    public Fad(int fadNr, Fadtype fadtype, double kapacitetL, String oprindelse) {
+    public Fad(int fadNr, String fadtype, double kapacitetL, String oprindelse) {
         this.fadNr = fadNr;
         this.fadtype = fadtype;
         this.kapacitetL = kapacitetL;
@@ -28,36 +28,86 @@ public class Fad implements Storable{
         indholdshistorik = new TreeMap<>();
     }
 
-    public void addIndhold(Drinkable drinkable, LocalDate dato) {
-        if(dato == null) {
+    public void addToHistorik(Drinkable drinkable, LocalDate dato) {
+        if (dato == null) {
             dato = LocalDate.now();
         }
         ArrayList<Drinkable> indhold = new ArrayList<>();
-        if(indholdshistorik.containsKey(dato)) {
+        if (indholdshistorik.containsKey(dato)) {
             indhold = indholdshistorik.get(dato);
         }
 
-        if(!indhold.contains(drinkable)) {
+        if (!indhold.contains(drinkable)) {
             indhold.add(drinkable);
             indholdshistorik.put(dato, indhold);
-
-            if(drinkable instanceof Destillat) {
-                ((Destillat) drinkable).addFad(this, dato);
-            }
         }
     }
 
-    public void removeIndhold(Drinkable drinkable, LocalDate dato) {
+    public void removeFromHistorik(Drinkable drinkable, LocalDate dato) {
         ArrayList<Drinkable> indhold = indholdshistorik.get(dato);
-        if(indhold != null) {
-            if(indhold.contains(drinkable)) {
-                indhold.remove(drinkable);
-                if(drinkable instanceof Destillat) {
-                    ((Destillat) drinkable).removeFad(this, dato);
-                }
-            }
+        if (indhold != null) {
+            indhold.remove(drinkable);
+
         }
     }
+
+    public Destillat fyldPå(Fad andetFad, int mængde, LocalDate dato, String init) {
+        if(mængde > andetFad.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
+            throw new IllegalArgumentException("Den givne mængde er ikke indefor fadenes parametre");
+        }
+
+        if(dato == null) {
+            dato = LocalDate.now();
+        }
+
+        Destillat destillat;
+
+        if(indhold == null) {
+            destillat = andetFad.getIndhold();
+        }
+        else {
+            destillat = new KombiDestillat(dato, init);
+            ((KombiDestillat) destillat).add(andetFad.getIndhold());
+            ((KombiDestillat) destillat).add(indhold);
+        }
+
+        indhold = destillat;
+        addToHistorik(indhold, dato);
+        mængdeL += mængde;
+        andetFad.setMængdeL(andetFad.getMængdeL() - mængde);
+
+        return destillat;
+    }
+
+    public Destillat fyldPå(BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
+        if(mængde > bundDestillat.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
+            throw new IllegalArgumentException("Den givne mængde er ikke indefor fadet og destillatets parametre");
+        }
+
+        if(dato == null) {
+            dato = LocalDate.now();
+        }
+
+        Destillat destillat;
+
+        if(indhold == null) {
+            destillat = bundDestillat;
+        }
+        else {
+            destillat = new KombiDestillat(dato, init);
+            ((KombiDestillat) destillat).add(bundDestillat);
+            ((KombiDestillat) destillat).add(indhold);
+        }
+
+        indhold = destillat;
+        addToHistorik(indhold, dato);
+        mængdeL += mængde;
+        bundDestillat.setMængdeL(bundDestillat.getMængdeL() - mængde);
+
+        return destillat;
+    }
+
+
 
     public Map<LocalDate, ArrayList<Drinkable>> getIndholdshistorik() {
         return new TreeMap<>(indholdshistorik);
@@ -75,11 +125,11 @@ public class Fad implements Storable{
         this.fadNr = fadNr;
     }
 
-    public Fadtype getFadtype() {
+    public String getFadtype() {
         return fadtype;
     }
 
-    public void setFadtype(Fadtype fadtype) {
+    public void setFadtype(String fadtype) {
         this.fadtype = fadtype;
     }
 

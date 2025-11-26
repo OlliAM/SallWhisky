@@ -4,54 +4,32 @@ import java.time.LocalDate;
 import java.util.*;
 
 public abstract class Destillat implements Drinkable {
-    private double mængdeL;
     private String kommentar;
     private double alkoholprocent;
+    private LocalDate færdigDato;
+    private String init;
 
-    //Linkattributter
-    private Map<LocalDate, ArrayList<Fad>> fadHistorik;
+    public LocalDate getFærdigDato() {
+        return færdigDato;
+    }
 
     //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
     //    Før det er færdigt
-
-
-    public Destillat() {
-        this.fadHistorik = new TreeMap<>();
+    public Destillat(LocalDate færdigDato, String init) {
+        this.færdigDato = færdigDato;
+        this.init = init;
     }
 
-    public void addFad(Fad fad, LocalDate dato) {
-        if(dato == null) {
-            dato = LocalDate.now();
-        }
-        ArrayList<Fad> fade = new ArrayList<>();
-        if(fadHistorik.containsKey(dato)) {
-            fade = fadHistorik.get(dato);
-        }
-
-        if(!fade.contains(fad)) {
-            fade.add(fad);
-            fadHistorik.put(dato, fade);
-            fad.addIndhold(this, dato);
-        }
-
+    public void setFærdigDato(LocalDate færdigDato) {
+        this.færdigDato = færdigDato;
     }
 
-    public void removeFad(Fad fad, LocalDate dato) {
-        ArrayList<Fad> fade = fadHistorik.get(dato);
-        if(fade != null) {
-            if(fade.contains(fad)) {
-                fade.remove(fad);
-                fad.removeIndhold(this, dato);
-            }
-        }
+    public String getInit() {
+        return init;
     }
 
-    public Map<LocalDate, ArrayList<Fad>> getFadHistorik() {
-        return new TreeMap<>(fadHistorik);
-    }
-
-    public void setMængdeL(double mængdeL) {
-        this.mængdeL = mængdeL;
+    public void setInit(String init) {
+        this.init = init;
     }
 
     public void setKommentar(String kommentar) {
@@ -60,10 +38,6 @@ public abstract class Destillat implements Drinkable {
 
     public void setAlkoholprocent(double alkoholprocent) {
         this.alkoholprocent = alkoholprocent;
-    }
-
-    public double getMængdeL() {
-        return mængdeL;
     }
 
     public String getKommentar() {
