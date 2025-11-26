@@ -61,6 +61,22 @@ public class Lager {
         }
     }
 
+    // Store the specified product at index.
+    public Storable tagFraReol(Reol reol, int pladsNr) {
+        // Call the removal method in Reol-instace -> Handles Errors.
+        Storable produkt = reol.tagFraPlads(pladsNr);
+
+        // Check which type of Storable was removed & decrement internal counter.
+        if (produkt instanceof Fad) {
+            antalFade -= 1;
+        } else {
+            antalFlasker -= 1;
+        }
+
+        // Return Storable object.
+        return produkt;
+    }
+
     // Method for returning all currently empty spaces.
     public ArrayList<String> getTommePladser() {
 
@@ -96,7 +112,7 @@ public class Lager {
 
     // Linear Search method (Override).
     // Fadtype-search.
-    public ArrayList<String> søgPåLager(Fadtype fadtype) {
+    public ArrayList<String> søgPåLager(String fadtype) {
 
         // Initiate new arraylist instance.
         ArrayList<String> list = new ArrayList<>();
