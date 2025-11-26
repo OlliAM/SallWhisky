@@ -20,12 +20,11 @@ public class Fad implements Storable{
     private Map<LocalDate, ArrayList<Drinkable>> indholdshistorik;
     private Destillat indhold;
 
-    public Fad(int fadNr, Fadtype fadtype, double kapacitetL, String oprindelse, double mængdeL) {
+    public Fad(int fadNr, Fadtype fadtype, double kapacitetL, String oprindelse) {
         this.fadNr = fadNr;
         this.fadtype = fadtype;
         this.kapacitetL = kapacitetL;
         this.oprindelse = oprindelse;
-        this.mængdeL = mængdeL;
         indholdshistorik = new TreeMap<>();
     }
 
