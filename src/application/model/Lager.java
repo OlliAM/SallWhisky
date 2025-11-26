@@ -18,6 +18,21 @@ public class Lager {
         this.antalFlasker = 0;
     }
 
+    // Return the internal name String of the Lager-instance.
+    public String getLagerNavn() {
+        return this.navn;
+    }
+
+    // Return the total num of Cask-instances in storage..
+    public int getAntalFade() {
+        return this.antalFade;
+    }
+
+    // Return the total num of Bottle-instances in storage..
+    public int getAntalFlasker() {
+        return this.antalFlasker;
+    }
+
     // Create & add new Reol-instance to internal Lager-class.
     public Reol opretReol(String ID, int pladser) {
         // Instantiate the new Reol-class to store.

@@ -17,6 +17,21 @@ public class Reol {
         this.optagedePladser = optagedePladser;
     }
 
+    // Return the internal ID String of the Reol-instance.
+    public String getID() {
+        return this.ID;
+    }
+
+    // Return the total num of occupied spaces in the Reol-instance.
+    public int getOptagedePladser() {
+        return this.optagedePladser;
+    }
+
+    // Return the total precent of occupied space in the Reol-instance.
+    public double getProcentOptaget() {
+        return (pladser.length / optagedePladser);
+    }
+
     // Store the Storable-instance at the specified index.
     public void gemPåPlads(int pladsNr, Storable produkt) {
         // Check if the pladsNr is out of bounds.
@@ -29,8 +44,9 @@ public class Reol {
             throw new RuntimeException("Space: " + pladsNr + ", is already in use!");
         }
 
-        // Add the produkt-instance to specified index.
+        // Add the produkt-instance to specified index & increment by 1.
         pladser[pladsNr] = produkt;
+        optagedePladser += 1;
     }
 
     // Get individual slots that contain values.
