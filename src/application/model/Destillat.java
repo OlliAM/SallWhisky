@@ -16,8 +16,7 @@ public abstract class Destillat implements Drinkable {
 
 
     public Destillat() {
-
-        this.fadHistorik = new HashMap<>();
+        this.fadHistorik = new TreeMap<>();
     }
 
     public void addFad(Fad fad, LocalDate dato) {
@@ -48,7 +47,7 @@ public abstract class Destillat implements Drinkable {
     }
 
     public Map<LocalDate, ArrayList<Fad>> getFadHistorik() {
-        return fadHistorik;
+        return new TreeMap<>(fadHistorik);
     }
 
     public void setMængdeL(double mængdeL) {

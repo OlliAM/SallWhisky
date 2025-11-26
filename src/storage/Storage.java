@@ -8,6 +8,7 @@ public class Storage {
     private static Storage storage;
     private ArrayList<Destillat> destillatList;
 
+
     private Storage() {
         destillatList = new ArrayList<>();
     }
