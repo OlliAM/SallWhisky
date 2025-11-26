@@ -29,7 +29,7 @@ public class Storage {
     }
 
     public static Storage getInstance() {
-        if(storage == null) {
+        if (storage == null) {
             storage = new Storage();
         }
         return storage;
@@ -37,7 +37,9 @@ public class Storage {
 
     // ---------- Destillat ----------
     public void addToDestillatList(Destillat d) {
-        destillatList.add(d);
+        if (!destillatList.contains(d)) {
+            destillatList.add(d);
+        }
     }
 
     public void removeFromDestillatList(Destillat d) {
@@ -84,6 +86,7 @@ public class Storage {
     public void removeFromLagerList(Lager l) {
         lagerList.remove(l);
     }
+
     public ArrayList<Lager> getLagerList() {
         return lagerList;
     }

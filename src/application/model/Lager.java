@@ -11,8 +11,8 @@ public class Lager {
     // Link variables.
     private ArrayList<Reol> reoler = new ArrayList<>();
 
-    // Constructor (private).
-    Lager(String navn) {
+    // Constructor
+    public Lager(String navn) {
         this.navn = navn;
         this.antalFade = 0;
         this.antalFlasker = 0;

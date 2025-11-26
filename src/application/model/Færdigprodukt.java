@@ -1,10 +1,14 @@
 package application.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Færdigprodukt {
-    private List<Fad> anvendteDestillater;
+    private String navn;
+    private Map<Destillat, Fad> anvendteDestillater;
     private double mængdeL;
     private double procentFørFortynding;
     private double procentEfterFortynding;
@@ -12,13 +16,15 @@ public class Færdigprodukt {
     private String vandOprindelse;
     private int produktNr;
     private String beskrivelse;
+    private LocalDate dato;
 
     //Linkattributter
     List<Flaske> flasker;
 
-    Færdigprodukt(Fad fad, List<Fad> anvendteDestillater, double mængdeL, double procentFørFortynding,
+    public Færdigprodukt(String navn, Map<Destillat, Fad> anvendteDestillater, double mængdeL, double procentFørFortynding,
                   double procentEfterFortynding, double tilsatVandL, String vandOprindelse, int produktNr,
-                  String beskrivelse) {
+                  String beskrivelse, LocalDate dato) {
+        this.navn = navn;
         this.anvendteDestillater = anvendteDestillater;
         this.mængdeL = mængdeL;
         this.procentFørFortynding = procentFørFortynding;
@@ -27,10 +33,63 @@ public class Færdigprodukt {
         this.vandOprindelse = vandOprindelse;
         this.produktNr = produktNr;
         this.beskrivelse = beskrivelse;
+        this.dato = dato;
     }
 
-    public List<Fad> getAnvendteDestillater() {
-        return new ArrayList<>(anvendteDestillater);
+    public String getNavn() {
+        return navn;
+    }
+
+    public void setNavn(String navn) {
+        this.navn = navn;
+    }
+
+    public void setAnvendteDestillater(Map<Destillat, Fad> anvendteDestillater) {
+        this.anvendteDestillater = anvendteDestillater;
+    }
+
+    public void setMængdeL(double mængdeL) {
+        this.mængdeL = mængdeL;
+    }
+
+    public void setProcentFørFortynding(double procentFørFortynding) {
+        this.procentFørFortynding = procentFørFortynding;
+    }
+
+    public void setProcentEfterFortynding(double procentEfterFortynding) {
+        this.procentEfterFortynding = procentEfterFortynding;
+    }
+
+    public void setTilsatVandL(double tilsatVandL) {
+        this.tilsatVandL = tilsatVandL;
+    }
+
+    public void setVandOprindelse(String vandOprindelse) {
+        this.vandOprindelse = vandOprindelse;
+    }
+
+    public void setProduktNr(int produktNr) {
+        this.produktNr = produktNr;
+    }
+
+    public void setBeskrivelse(String beskrivelse) {
+        this.beskrivelse = beskrivelse;
+    }
+
+    public LocalDate getDato() {
+        return dato;
+    }
+
+    public void setDato(LocalDate dato) {
+        this.dato = dato;
+    }
+
+    public void setFlasker(List<Flaske> flasker) {
+        this.flasker = flasker;
+    }
+
+    public Map<Destillat, Fad> getAnvendteDestillater() {
+        return new HashMap<>(anvendteDestillater);
     }
 
     public double getMængdeL() {
