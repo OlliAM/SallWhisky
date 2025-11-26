@@ -61,7 +61,7 @@ public class Fad implements Storable{
     }
 
     public Map<LocalDate, ArrayList<Drinkable>> getIndholdshistorik() {
-        return indholdshistorik;
+        return new TreeMap<>(indholdshistorik);
     }
 
     public Destillat getIndhold() {
