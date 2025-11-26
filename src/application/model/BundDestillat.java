@@ -8,7 +8,6 @@ import java.time.LocalDate;
 public class BundDestillat extends Destillat{
     private double mængdeL;
     private LocalDate startDato;
-    private LocalDate slutDato;
     private String kornsort;
     private double maltBatchKg;
     private String rygemateriale;
@@ -34,16 +33,8 @@ public class BundDestillat extends Destillat{
         this.mængdeL = mængdeL;
     }
 
-    public void setSlutDato(LocalDate slutDato) {
-        this.slutDato = slutDato;
-    }
-
     public LocalDate getStartDato() {
         return startDato;
-    }
-
-    public LocalDate getSlutDato() {
-        return slutDato;
     }
 
     public String getKornsort() {

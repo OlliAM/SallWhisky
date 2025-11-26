@@ -96,7 +96,7 @@ public class Lager {
 
     // Linear Search method (Override).
     // Fadtype-search.
-    public ArrayList<String> søgPåLager(Fadtype fadtype) {
+    public ArrayList<String> søgPåLager(String fadtype) {
 
         // Initiate new arraylist instance.
         ArrayList<String> list = new ArrayList<>();
