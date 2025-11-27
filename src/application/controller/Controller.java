@@ -17,7 +17,7 @@ public class Controller {
 
     public BundDestillat createBundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort,
                                              double maltBatchKg, String rygemateriale, String init) {
-        if(slutDato.isBefore(startDato)) {
+        if (slutDato.isBefore(startDato)) {
             throw new IllegalArgumentException("Slutdato er før startdato");
         }
         BundDestillat bundDestillat = new BundDestillat(startDato, slutDato, kornsort, maltBatchKg, rygemateriale, init);
@@ -50,20 +50,20 @@ public class Controller {
         HashMap<Destillat, Fad> anvendteDestillater = new HashMap<>();
         double alkoholVolumen = 0;
         double samletVolumen = 0;
-        for(Fad fad : fade.keySet()) {
+        for (Fad fad : fade.keySet()) {
             double mængde = fade.get(fad);
 
-            if(mængde > fad.getMængdeL()) {
+            if (mængde > fad.getMængdeL()) {
                 throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end" +
                         "indholdet");
             }
 
-            if(dato.isBefore(fad.getIndhold().getFærdigDato())) {
+            if (dato.isBefore(fad.getIndhold().getFærdigDato())) {
                 throw new IllegalArgumentException("Dato for påfyldning af fad " + fad.getFadNr() + " er efter " +
                         "oprettelsesdatoen for færdigproduktet");
             }
 
-            if(fad.getIndhold().getFærdigDato().until(dato).getYears() < 3) {
+            if (fad.getIndhold().getFærdigDato().until(dato).getYears() < 3) {
                 throw new IllegalArgumentException("Fadets indhold har ikke været lagret i 3 år endnu");
             }
 
@@ -78,7 +78,7 @@ public class Controller {
         samletVolumen += tilsatVandL;
         double alkoholprocentEfter = alkoholVolumen / samletVolumen * 100;
 
-        if(alkoholprocentEfter < 40) {
+        if (alkoholprocentEfter < 40) {
             throw new IllegalArgumentException("Endelig alkoholprocent er under 40%");
         }
 
@@ -93,8 +93,7 @@ public class Controller {
     }
 
     public void hældPåFlaskerMax(Færdigprodukt færdigprodukt) {
-        //TODO udkommenter når metoden er lavet
-        //færdigprodukt.hældPåFlaskerMax();
+        færdigprodukt.hældPåFlaskerMax();
     }
 
     public Lager createLager(String navn) {
