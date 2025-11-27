@@ -49,6 +49,23 @@ public class Reol {
         optagedePladser += 1;
     }
 
+    public Storable tagFraPlads(int pladsNr) {
+        // Check if the pladsNr is out of bounds.
+        if (pladsNr > pladser.length) {
+            throw new IndexOutOfBoundsException("Index out of bounds!");
+        }
+
+        // Check if the space at pladsNr-index is currently occupied.
+        if (pladser[pladsNr] == null) {
+            throw new RuntimeException("Space: " + pladsNr + ", is currently empty!");
+        }
+
+        // Remove the Storable-value from specified index & decrement counter.
+        Storable værdi = pladser[pladsNr];
+        optagedePladser -= 1;
+        return værdi;
+    }
+
     // Get individual slots that contain values.
     public ArrayList<String> getTommePladser() {
 

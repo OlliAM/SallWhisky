@@ -51,7 +51,11 @@ public class Lager {
     // Store the specified product at index.
     public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
         // Call the storage method in Reol-instace -> Handles Errors.
-        reol.gemPåPlads(pladsNr, produkt);
+        try {
+            reol.gemPåPlads(pladsNr, produkt);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
 
         // Check which type of Storable was added & increment internal counter.
         if (produkt instanceof Fad) {
@@ -59,6 +63,29 @@ public class Lager {
         } else {
             antalFlasker += 1;
         }
+    }
+
+    // Store the specified product at index.
+    public Storable tagFraReol(Reol reol, int pladsNr) {
+        // Initiate new Storable variable.
+        Storable produkt = null;
+
+        // Call the removal method in Reol-instace -> Handles Errors
+        try {
+            produkt = reol.tagFraPlads(pladsNr);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        // Check which type of Storable was removed & decrement internal counter.
+        if (produkt instanceof Fad) {
+            antalFade -= 1;
+        } else {
+            antalFlasker -= 1;
+        }
+
+        // Return Storable object.
+        return produkt;
     }
 
     // Method for returning all currently empty spaces.
