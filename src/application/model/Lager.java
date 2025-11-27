@@ -2,6 +2,42 @@ package application.model;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * ---------- Attributer ----------
+ *
+ * Navn (String):
+ *      Navn repræsenterer lagerets navn/ID.
+ * antalFade(int)
+ *      Antallet af Fad-klasse instanser nuværende gemt på lageret.
+ *      Instantialiseret til 0.
+ * antalFlasker(int)
+ *      Antallet af Flaske-klasse instanser nuværende gemt på lageret.
+ *      Instantialiseret til 0.
+ *
+ * ---------- Metoder ----------
+ *
+ * opretReol(String ID, int pladser):
+ *      Metode til at oprette ny instans af Reol-klasse med prekonfigureret antal af lagerpladser.
+ *      Reol-instansen gemmes herefter på den tilhørende Lager-klasse instans.
+ *
+ * gemPåReol(Reol reol, int PladsNr, Storable produkt):
+ *      Metode til at lagrere den tilhørende produkt på specificeret Reol og lagerplads nr.
+ *      Throws (IndexOutOfBoundsException) - Hvis plads nummeret er udenfor reolen's kapacitet.
+ *      Throws (Exception) - Hvis lagerpladsen er allerede optaget af andet produkt.
+ *
+ * tagFraReol(Reol reol, int pladsNr):
+ *      Metode til at returnere Storable-objektet fra en specifik Reol og lagerplads nummer.
+ *      Throws (IndexOutOfBoundsException) - Hvis plads nummeret er udenfor reolen's kapacitet.
+ *      Throws (Exception) - Hvis lagerpladsen ikke besidder et Storable-objekt.
+ *
+ * getTommePladser():
+ *      Metode til at returnere en liste af alle ledige lagerpladser nuværende på lageret.
+ *      Listen består af String representationer af de forskellige lagerpladser.
+ *
+ * søgPåLager(int fadNr)
+ *
+ */
 public class Lager {
     private String navn;
     private int antalFade;
@@ -87,7 +123,10 @@ public class Lager {
         return produkt;
     }
 
-    // Method for returning all currently empty spaces.
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getTommePladser() {
 
         // Instantialize new Arraylist.
