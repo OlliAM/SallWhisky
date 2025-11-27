@@ -24,7 +24,6 @@ public class BundDestillat extends Destillat{
     //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
     //    Før det er færdigt
 
-
     public double getMængdeL() {
         return mængdeL;
     }
