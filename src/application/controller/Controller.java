@@ -102,13 +102,15 @@ public class Controller {
         return lager;
     }
 
+    public Reol createReol(Lager lager, String id, int antalPladser) {
+        return lager.opretReol(id, antalPladser);
+    }
+
     public Indhold createIndhold(String navn) {
         Indhold indhold = new Indhold(navn);
         storage.addToIndholdList(indhold);
         return indhold;
     }
-
-
 
     public Storage getStorage() {
         return storage;
