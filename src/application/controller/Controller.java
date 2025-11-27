@@ -47,6 +47,7 @@ public class Controller {
     public Færdigprodukt opretFærdigProdukt(String navn, Map<Fad, Double> fade,
                                             double tilsatVandL, String vandOprindelse, int produktNr, String beskrivelse,
                                             LocalDate dato) {
+
         HashMap<Destillat, Fad> anvendteDestillater = new HashMap<>();
         double alkoholVolumen = 0;
         double samletVolumen = 0;
@@ -94,8 +95,7 @@ public class Controller {
     }
 
     public void hældPåFlaskerMax(Færdigprodukt færdigprodukt) {
-        //TODO udkommenter når metoden er lavet
-        //færdigprodukt.hældPåFlaskerMax();
+        færdigprodukt.hældPåFlaskerMax();
     }
 
     public Lager createLager(String navn) {

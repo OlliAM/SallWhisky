@@ -1,60 +1,58 @@
 package application.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Flaske implements Storable {
-    private int flaskeNr;
+    private String navn;
+    private String flaskeID;
     private double kapacitetL = 0.7;
-    private double aktuelleMængdeL;
-    private String beskrivelse; // ???
+    private String beskrivelse;
+
     //Linkattributter
-    Set<Færdigprodukt> færdigprodukter;
+    Færdigprodukt færdigprodukt;
 
-    public Flaske(int flaskeNr, double aktuelleMængdeL, String historie) {
-        this.flaskeNr = flaskeNr;
-        this.aktuelleMængdeL = aktuelleMængdeL;
-        færdigprodukter = new HashSet<>();
-
-        // TODO Beskrivelse/Historie?
-        // Hvordan laver vi flaskeNr?
-        // Dobbeltrettethed
+    Flaske(Færdigprodukt færdigprodukt, int flaskeNr) {
+        this.navn = færdigprodukt.getNavn();
+        this.flaskeID = færdigprodukt.getProduktNr() + "-" + flaskeNr;
+        this.beskrivelse = færdigprodukt.getBeskrivelse();
     }
 
-    public int getFlaskeNr() {
-        return flaskeNr;
-    }
-
-    public double getAktuelleMængdeL() {
-        return aktuelleMængdeL;
-    }
-
-    public void setAktuelleMængdeL(double aktuelleMængdeL) {
-        this.aktuelleMængdeL = aktuelleMængdeL;
+    public String getFlaskeID() {
+        return flaskeID;
     }
 
     public double getKapacitetL() {
         return kapacitetL;
     }
 
-    public HashSet<Færdigprodukt> getFærdigprodukter() {
-        return new HashSet<>(færdigprodukter);
+    public String getNavn() {
+        return navn;
     }
 
-    public void addFærdigprodukt(Færdigprodukt færdigprodukt) {
-        færdigprodukter.add(færdigprodukt);
+    public String getBeskrivelse() {
+        return beskrivelse;
     }
 
-    public Færdigprodukt removeFærdigprodukt(Færdigprodukt færdigprodukt) {
-        færdigprodukter.remove(færdigprodukt);
+    public Færdigprodukt getFærdigprodukt() {
         return færdigprodukt;
     }
 
-
-    public void påfyldFærdigprodukt(Færdigprodukt færdigprodukt) {
-
-
-        // TODO
-
+    public void setNavn(String navn) {
+        this.navn = navn;
     }
+
+    public void setFlaskeID(String flaskeID) {
+        this.flaskeID = flaskeID;
+    }
+
+    public void setKapacitetL(double kapacitetL) {
+        this.kapacitetL = kapacitetL;
+    }
+
+    public void setBeskrivelse(String beskrivelse) {
+        this.beskrivelse = beskrivelse;
+    }
+
+    public void setFærdigprodukt(Færdigprodukt færdigprodukt) {
+        this.færdigprodukt = færdigprodukt;
+    }
+
 }
