@@ -104,10 +104,6 @@ public class Controller {
         return lager;
     }
 
-    public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
-
-    }
-
     public Reol createReol(Lager lager, String id, int antalPladser) {
         return lager.opretReol(id, antalPladser);
     }
@@ -153,8 +149,6 @@ public class Controller {
     public ArrayList<String> søgPåLager(Lager lager, Destillat destillat) {
         return lager.søgPåLager(destillat);
     }
-
-
 
     public Storage getStorage() {
         return storage;
