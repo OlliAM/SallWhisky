@@ -51,7 +51,11 @@ public class Lager {
     // Store the specified product at index.
     public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
         // Call the storage method in Reol-instace -> Handles Errors.
-        reol.gemPåPlads(pladsNr, produkt);
+        try {
+            reol.gemPåPlads(pladsNr, produkt);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
 
         // Check which type of Storable was added & increment internal counter.
         if (produkt instanceof Fad) {
@@ -63,8 +67,15 @@ public class Lager {
 
     // Store the specified product at index.
     public Storable tagFraReol(Reol reol, int pladsNr) {
-        // Call the removal method in Reol-instace -> Handles Errors.
-        Storable produkt = reol.tagFraPlads(pladsNr);
+        // Initiate new Storable variable.
+        Storable produkt = null;
+
+        // Call the removal method in Reol-instace -> Handles Errors
+        try {
+            produkt = reol.tagFraPlads(pladsNr);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
 
         // Check which type of Storable was removed & decrement internal counter.
         if (produkt instanceof Fad) {
