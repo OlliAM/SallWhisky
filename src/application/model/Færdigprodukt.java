@@ -126,7 +126,7 @@ public class Færdigprodukt {
 
     /**
      * Der skal være minimum 0.7L færdigprodukt
-     * @param antal (not null)
+     * @param antal (NotNull)
      * @return List</Flaske> af opfyldte flasker
      */
     public List<Flaske> hældPåFlasker(int antal) {
