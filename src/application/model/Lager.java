@@ -3,40 +3,49 @@ package application.model;
 import java.util.ArrayList;
 
 /**
+ * <h2> ----- Attributer ----- </h2>
+ * <br>
+ * <p1><b>navn (String):</b><br>
+ * Navn repræsenterer lagerets navn/ID.</p1><br>
+ * <br>
+ * <p1><b>antalFade (int)</b><br>
+ * Antallet af Fad-klasse instanser nuværende gemt på lageret.<br>
+ * Instantialiseret til 0.</p1><br>
+ * <br>
+ * <p1><b>antalFlasker (int)</b><br>
+ * Antallet af Flaske-klasse instanser nuværende gemt på lageret.<br>
+ * Instantialiseret til 0.</p1><br>
+ * <br>
+ * <h2> ----- Metoder ----- </h2>
+ * <br>
+ * <p1><b>opretReol(String ID, int pladser):</b><br>
+ * Metode til at oprette ny instans af Reol-klasse med prekonfigureret antal af lagerpladser.<br>
+ * Reol-instansen gemmes herefter på den tilhørende Lager-klasse instans.</p1><br>
+ * <br>
  *
- * ---------- Attributer ----------
+ * <p1><b>gemPåReol(Reol reol, int PladsNr, Storable produkt):</b><br>
+ * Metode til at lagrere den tilhørende produkt på specificeret Reol og lagerplads nr.<br>
+ * <i>Throws</i><br>
+ * - IndexOutOfBoundsException: Hvis plads nummeret er udenfor reolen's kapacitet.<br>
+ * - Exception: Hvis lagerpladsen er allerede optaget af andet produkt.</p1><br>
+ * <br>
  *
- * Navn (String):
- *      Navn repræsenterer lagerets navn/ID.
- * antalFade(int)
- *      Antallet af Fad-klasse instanser nuværende gemt på lageret.
- *      Instantialiseret til 0.
- * antalFlasker(int)
- *      Antallet af Flaske-klasse instanser nuværende gemt på lageret.
- *      Instantialiseret til 0.
+ * <p1><b>tagFraReol(Reol reol, int pladsNr):</b><br>
+ * Metode til at returnere Storable-objektet fra en specifik Reol og lagerplads nummer.<br>
+ * <i>Throws</i><br>
+ * - IndexOutOfBoundsException: Hvis plads nummeret er udenfor reolen's kapacitet.<br>
+ * - Exception: Hvis lagerpladsen ikke besidder et Storable-objekt.</p1><br>
+ * <br>
  *
- * ---------- Metoder ----------
- *
- * opretReol(String ID, int pladser):
- *      Metode til at oprette ny instans af Reol-klasse med prekonfigureret antal af lagerpladser.
- *      Reol-instansen gemmes herefter på den tilhørende Lager-klasse instans.
- *
- * gemPåReol(Reol reol, int PladsNr, Storable produkt):
- *      Metode til at lagrere den tilhørende produkt på specificeret Reol og lagerplads nr.
- *      Throws (IndexOutOfBoundsException) - Hvis plads nummeret er udenfor reolen's kapacitet.
- *      Throws (Exception) - Hvis lagerpladsen er allerede optaget af andet produkt.
- *
- * tagFraReol(Reol reol, int pladsNr):
- *      Metode til at returnere Storable-objektet fra en specifik Reol og lagerplads nummer.
- *      Throws (IndexOutOfBoundsException) - Hvis plads nummeret er udenfor reolen's kapacitet.
- *      Throws (Exception) - Hvis lagerpladsen ikke besidder et Storable-objekt.
- *
- * getTommePladser():
- *      Metode til at returnere en liste af alle ledige lagerpladser nuværende på lageret.
- *      Listen består af String representationer af de forskellige lagerpladser.
- *
- * søgPåLager(int fadNr)
- *
+ * <p1><b>getTommePladser():</b><br>
+ * Metode til at returnere en liste af alle ledige lagerpladser nuværende på lageret.<br>
+ * Listen består af String representationer af de forskellige lagerpladser.</p1><br>
+ * <br>
+ * <p1><b>søgPåLager(...)</b><br>
+ * Metode til at søge efter specifikke produkter gemt på lageret.<br>
+ * Metoden er Overloadet - Yderligere information på metodens JavaDoc.</p1><br>
+ * <br>
+ * <h3>-----------------------------------------------------------</h3>
  */
 public class Lager {
     private String navn;
