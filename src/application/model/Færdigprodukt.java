@@ -125,7 +125,9 @@ public class Færdigprodukt {
     }
 
     /**
-     * Der skal være minimum 0.7L færdigprodukt
+     * Producerer og returnere en liste af int antal flasker indeholdende
+     * færdigproduktet.
+     * Pre: Der skal være minimum 0.7L færdigprodukt
      * @param antal (not null)
      * @return List</Flaske> af opfyldte flasker
      */
@@ -144,7 +146,7 @@ public class Færdigprodukt {
     }
 
     /**
-     * Der skal være minimum 0.7L færdigprodukt
+     * Pre: this.mængde >= 0.7
      * @return List</Flaske> af opfyldte flasker
      */
     public List<Flaske> hældPåFlaskerMax() {
@@ -160,7 +162,11 @@ public class Færdigprodukt {
         return new ArrayList<>(flasker);
     }
 
-    // Hjælpemetode
+    /**
+     * Metode, der returnerer antallet af, hvor mange flasker en vis mængde
+     * færdigprodukt potentielt kan lave.
+     * @return int antal potentielle flasker
+     */
     public int antalMuligeFlasker() {
         return (int) (mængdeL / 0.7);
     }
