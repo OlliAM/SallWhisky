@@ -8,22 +8,22 @@ import java.util.Map;
 
 public class Færdigprodukt {
     private String navn;
-    private Map<Destillat, Fad> anvendteDestillater;
+    private int produktNr;
     private double mængdeL;
     private double procentFørFortynding;
     private double procentEfterFortynding;
     private double tilsatVandL;
     private String vandOprindelse;
-    private int produktNr;
     private String beskrivelse;
     private LocalDate dato;
 
     //Linkattributter
-    List<Flaske> flasker;
+    private List<Flaske> flasker;
+    private Map<Destillat, Fad> anvendteDestillater;
 
     public Færdigprodukt(String navn, Map<Destillat, Fad> anvendteDestillater, double mængdeL, double procentFørFortynding,
-                  double procentEfterFortynding, double tilsatVandL, String vandOprindelse, int produktNr,
-                  String beskrivelse, LocalDate dato) {
+                         double procentEfterFortynding, double tilsatVandL, String vandOprindelse, int produktNr,
+                         String beskrivelse, LocalDate dato) {
         this.navn = navn;
         this.anvendteDestillater = anvendteDestillater;
         this.mængdeL = mængdeL;
@@ -124,24 +124,44 @@ public class Færdigprodukt {
         return new ArrayList<>(flasker);
     }
 
-    // to forksellige metoder: en der laver så mange flasker som muligt
-    // en der laver én
-    public Flaske hældPåFlaske() {
-//        if (mængdeL > )
-        return null;
+    /**
+     * Der skal være minimum 0.7L færdigprodukt
+     * @param antal (not null)
+     * @return List</Flaske> af opfyldte flasker
+     */
+    public List<Flaske> hældPåFlasker(int antal) {
+        int muligtAntal = antalMuligeFlasker();
+
+        if (muligtAntal < antal) {
+            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + "flasker");
+        } else {
+            for (int i = 1; i <= antal; i++) {
+                Flaske flaske = new Flaske(this, i);
+                flasker.add(flaske);
+            }
+        }
+        return new ArrayList<>(flasker);
     }
 
-    public Flaske hældPåFlasker(int antal) {
-        // TODO
+    /**
+     * Der skal være minimum 0.7L færdigprodukt
+     * @return List</Flaske> af opfyldte flasker
+     */
+    public List<Flaske> hældPåFlaskerMax() {
+        int muligtAntal = antalMuligeFlasker();
 
-
-        return null;
+        if (muligtAntal < 1) {
+            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + "flasker");
+        }
+            for (int i = 1; i <= muligtAntal; i++) {
+                Flaske flaske = new Flaske(this, i);
+                flasker.add(flaske);
+            }
+        return new ArrayList<>(flasker);
     }
 
-    public Flaske hældPåFlaskerMax(Fad fad) {
-        // TODO
-
-
-        return null;
+    // Hjælpemetode
+    public int antalMuligeFlasker() {
+        return (int) (mængdeL / 0.7);
     }
 }

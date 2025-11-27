@@ -3,7 +3,6 @@ package application.model;
 import java.util.ArrayList;
 
 public class Lager {
-    // Class variables.
     private String navn;
     private int antalFade;
     private int antalFlasker;
