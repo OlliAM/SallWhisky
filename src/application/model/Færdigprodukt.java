@@ -148,6 +148,7 @@ public class Færdigprodukt {
     /**
      * Pre: this.mængde >= 0.7
      * @return List</Flaske> af opfyldte flasker
+     *
      */
     public List<Flaske> hældPåFlaskerMax() {
         int muligtAntal = antalMuligeFlasker();

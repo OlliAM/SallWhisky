@@ -49,7 +49,7 @@ public class Lager {
 
     // Store the specified product at index.
     public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
-        // Call the storage method in Reol-instace -> Handles Errors.
+        // Call the storage method in Reol-instance -> Handles Errors.
         try {
             reol.gemPåPlads(pladsNr, produkt);
         } catch (Exception e) {
