@@ -38,14 +38,17 @@ public class Controller {
         return destillat;
     }
 
-    public Fad createFad(String fadtype, double kapacitetL, String oprindelse) {
-        int fadNr = 1;
 
+    public Fad createFad(String fadtype, double kapacitetL, String oprindelse) {
+        // Automatisering af fadNr:
+        int fadNr = 1;
         ArrayList<Fad> fade = storage.getFadList();
 
         if (!fade.isEmpty()) {
             fadNr = fade.getLast().getFadNr() + 1;
         }
+
+
         Fad fad = new Fad(fadNr, fadtype, kapacitetL, oprindelse);
 
         storage.addToFadList(fad);

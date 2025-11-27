@@ -125,17 +125,16 @@ public class Færdigprodukt {
     }
 
     /**
-     * Producerer og returnere en liste af int antal flasker indeholdende
-     * færdigproduktet.
-     * Pre: Der skal være minimum 0.7L færdigprodukt
-     * @param antal (not null)
-     * @return List</Flaske> af opfyldte flasker
+     * Producerer og returnerer en liste af et int antal flasker indeholdende færdigproduktet.
+     * @Pre: mængdeL >= 0.7L
+     * @param antal > 0 & not null
+     * @return List</Flaske> af x antal opfyldte flasker
      */
     public List<Flaske> hældPåFlasker(int antal) {
         int muligtAntal = antalMuligeFlasker();
 
         if (muligtAntal < antal) {
-            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + "flasker");
+            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + " flasker");
         } else {
             for (int i = 1; i <= antal; i++) {
                 Flaske flaske = new Flaske(this, i);
@@ -146,9 +145,9 @@ public class Færdigprodukt {
     }
 
     /**
-     * Pre: this.mængde >= 0.7
-     * @return List</Flaske> af opfyldte flasker
-     *
+     * Returnerer en liste af så mange flasker, som mængden af færdigprodukt tillader.
+     * @Pre: this.mængde >= 0.7
+     * @return List</Flaske> af max mulig opfyldte flasker
      */
     public List<Flaske> hældPåFlaskerMax() {
         int muligtAntal = antalMuligeFlasker();
