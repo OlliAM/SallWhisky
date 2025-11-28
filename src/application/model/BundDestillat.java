@@ -9,16 +9,21 @@ public class BundDestillat extends Destillat{
     private double mængdeL;
     private LocalDate startDato;
     private String kornsort;
-    private double maltBatchKg;
     private String rygemateriale;
 
-    public BundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort, double maltBatchKg,
+    public BundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort,
                          String rygemateriale, String init) {
         super(slutDato, init);
         this.startDato = startDato;
         this.kornsort = kornsort;
-        this.maltBatchKg = maltBatchKg;
         this.rygemateriale = rygemateriale;
+
+        if(kornsort.equals("Byg")) {
+            super.setMaltbatch(Maltbatch.SINGLE_CASK);
+        }
+        else {
+            super.setMaltbatch(Maltbatch.GRAIN);
+        }
     }
 
     //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
@@ -38,10 +43,6 @@ public class BundDestillat extends Destillat{
 
     public String getKornsort() {
         return kornsort;
-    }
-
-    public double getMaltBatchKg() {
-        return maltBatchKg;
     }
 
     public String getRygemateriale() {

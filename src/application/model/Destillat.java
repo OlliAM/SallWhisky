@@ -6,6 +6,7 @@ import java.util.*;
 public abstract class Destillat implements Drinkable {
     private String kommentar;
     private double alkoholprocent;
+    private Maltbatch maltbatch;
     private LocalDate færdigDato;
     private String init;
 
@@ -46,5 +47,13 @@ public abstract class Destillat implements Drinkable {
 
     public double getAlkoholprocent() {
         return alkoholprocent;
+    }
+
+    public Maltbatch getMaltbatch() {
+        return maltbatch;
+    }
+
+    public void setMaltbatch(Maltbatch maltbatch) {
+        this.maltbatch = maltbatch;
     }
 }

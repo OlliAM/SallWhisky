@@ -12,28 +12,29 @@ import java.util.Map;
 public class Controller {
     private Storage storage;
 
+
     public Controller() {
         this.storage = Storage.getInstance();
     }
 
     public BundDestillat createBundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort,
-                                             double maltBatchKg, String rygemateriale, String init) {
+                                             String rygemateriale, String init) {
         if (slutDato.isBefore(startDato)) {
             throw new IllegalArgumentException("Slutdato er før startdato");
         }
-        BundDestillat bundDestillat = new BundDestillat(startDato, slutDato, kornsort, maltBatchKg, rygemateriale, init);
+        BundDestillat bundDestillat = new BundDestillat(startDato, slutDato, kornsort, rygemateriale, init);
         storage.addToDestillatList(bundDestillat);
         return bundDestillat;
     }
 
     public Destillat fyldPåFad(Fad fad, BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
-        Destillat destillat = fad.fyldPå(bundDestillat, mængde, dato, init);
+        Destillat destillat = fad.fyldPåFraDestillat(bundDestillat, mængde, dato, init);
         storage.addToDestillatList(destillat);
         return destillat;
     }
 
     public Destillat fyldPåFad(Fad fadTilFyldning, Fad andetFad, int mængde, LocalDate dato, String init) {
-        Destillat destillat = fadTilFyldning.fyldPå(andetFad, mængde, dato, init);
+        Destillat destillat = fadTilFyldning.fyldPåFraFad(andetFad, mængde, dato, init);
         storage.addToDestillatList(destillat);
         return destillat;
     }

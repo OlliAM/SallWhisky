@@ -54,11 +54,10 @@ public class Fad implements Storable {
         ArrayList<Drinkable> indhold = indholdshistorik.get(dato);
         if (indhold != null) {
             indhold.remove(drinkable);
-
         }
     }
 
-    public Destillat fyldPå(Fad andetFad, int mængde, LocalDate dato, String init) {
+    public Destillat fyldPåFraFad(Fad andetFad, int mængde, LocalDate dato, String init) {
         if(mængde > andetFad.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
             throw new IllegalArgumentException("Den givne mængde er ikke indefor fadenes parametre");
         }
@@ -68,12 +67,16 @@ public class Fad implements Storable {
         }
 
         Destillat destillat;
+        Destillat andetIndhold = andetFad.getIndhold();
 
         if(indhold == null) {
-            destillat = andetFad.getIndhold();
+            destillat = andetIndhold;
         }
         else {
             destillat = new KombiDestillat(dato, init);
+            if(andetIndhold.getMaltbatch() == Maltbatch.SINGLE_MALT || andetIndhold.getMaltbatch() == Maltbatch.SINGLE_CASK) {
+                destillat.setMaltbatch(Maltbatch.BLENDED);
+            }
             ((KombiDestillat) destillat).add(andetFad.getIndhold());
             ((KombiDestillat) destillat).add(indhold);
         }
@@ -86,7 +89,7 @@ public class Fad implements Storable {
         return destillat;
     }
 
-    public Destillat fyldPå(BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
+    public Destillat fyldPåFraDestillat(BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
         if(mængde > bundDestillat.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
             throw new IllegalArgumentException("Den givne mængde er ikke indefor fadet og destillatets parametre");
         }
@@ -102,6 +105,13 @@ public class Fad implements Storable {
         }
         else {
             destillat = new KombiDestillat(dato, init);
+
+            if(bundDestillat.getMaltbatch() == Maltbatch.SINGLE_MALT) {
+                destillat.setMaltbatch(Maltbatch.SINGLE_CASK);
+            } else {
+                destillat.setMaltbatch(Maltbatch.BLENDED);
+            }
+
             ((KombiDestillat) destillat).add(bundDestillat);
             ((KombiDestillat) destillat).add(indhold);
         }
