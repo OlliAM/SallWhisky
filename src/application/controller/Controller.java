@@ -56,6 +56,10 @@ public class Controller {
         return fad;
     }
 
+    public void removeFad(Fad fad) {
+        storage.removeFromFadList(fad);
+    }
+
     public Færdigprodukt opretFærdigProdukt(String navn, Map<Fad, Double> fade,
                                             double tilsatVandL, String vandOprindelse, int produktNr, String beskrivelse,
                                             LocalDate dato) {
