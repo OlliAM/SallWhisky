@@ -18,7 +18,7 @@ public class Controller {
 
     public BundDestillat createBundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort,
                                              double maltBatchKg, String rygemateriale, String init) {
-        if(slutDato.isBefore(startDato)) {
+        if (slutDato.isBefore(startDato)) {
             throw new IllegalArgumentException("Slutdato er før startdato");
         }
         BundDestillat bundDestillat = new BundDestillat(startDato, slutDato, kornsort, maltBatchKg, rygemateriale, init);
@@ -38,8 +38,19 @@ public class Controller {
         return destillat;
     }
 
-    public Fad createFad(int fadNr, String fadtype, double kapacitetL, String oprindelse) {
+
+    public Fad createFad(String fadtype, double kapacitetL, String oprindelse) {
+        // Automatisering af fadNr:
+        int fadNr = 1;
+        ArrayList<Fad> fade = storage.getFadList();
+
+        if (!fade.isEmpty()) {
+            fadNr = fade.getLast().getFadNr() + 1;
+        }
+
+
         Fad fad = new Fad(fadNr, fadtype, kapacitetL, oprindelse);
+
         storage.addToFadList(fad);
         return fad;
     }
@@ -52,20 +63,20 @@ public class Controller {
         double alkoholVolumen = 0;
         double samletVolumen = 0;
 
-        for(Fad fad : fade.keySet()) {
+        for (Fad fad : fade.keySet()) {
             double mængde = fade.get(fad);
 
-            if(mængde > fad.getMængdeL()) {
+            if (mængde > fad.getMængdeL()) {
                 throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end" +
                         "indholdet");
             }
 
-            if(dato.isBefore(fad.getIndhold().getFærdigDato())) {
+            if (dato.isBefore(fad.getIndhold().getFærdigDato())) {
                 throw new IllegalArgumentException("Dato for påfyldning af fad " + fad.getFadNr() + " er efter " +
                         "oprettelsesdatoen for færdigproduktet");
             }
 
-            if(fad.getIndhold().getFærdigDato().until(dato).getYears() < 3) {
+            if (fad.getIndhold().getFærdigDato().until(dato).getYears() < 3) {
                 throw new IllegalArgumentException("Fad " + fad.getFadNr() + " har ikke været lagret i 3 år endnu");
             }
 
@@ -80,7 +91,7 @@ public class Controller {
         samletVolumen += tilsatVandL;
         double alkoholprocentEfter = alkoholVolumen / samletVolumen * 100;
 
-        if(alkoholprocentEfter < 40) {
+        if (alkoholprocentEfter < 40) {
             throw new IllegalArgumentException("Endelig alkoholprocent er under 40%");
         }
 
@@ -90,12 +101,12 @@ public class Controller {
         return færdigprodukt;
     }
 
-    public void hældPåFlasker(Færdigprodukt færdigprodukt, int antal) {
-        færdigprodukt.hældPåFlasker(antal);
+    public void hældPåFlasker(Færdigprodukt færdigprodukt, int antal, double flaskeKapacitetL) {
+        færdigprodukt.hældPåFlasker(antal, flaskeKapacitetL);
     }
 
-    public void hældPåFlaskerMax(Færdigprodukt færdigprodukt) {
-        færdigprodukt.hældPåFlaskerMax();
+    public void hældPåFlaskerMax(Færdigprodukt færdigprodukt, double flaskeKapacitetL) {
+        færdigprodukt.hældPåFlaskerMax(flaskeKapacitetL);
     }
 
     public Lager createLager(String navn) {

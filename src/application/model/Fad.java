@@ -54,6 +54,13 @@ public class Fad implements Storable {
     private Map<LocalDate, ArrayList<Drinkable>> indholdshistorik;
     private Destillat indhold;
 
+    /**
+     *
+     * @param fadNr
+     * @param fadtype
+     * @param kapacitetL
+     * @param oprindelse
+     */
     public Fad(int fadNr, String fadtype, double kapacitetL, String oprindelse) {
         this.fadNr = fadNr;
         this.fadtype = fadtype;
@@ -185,10 +192,6 @@ public class Fad implements Storable {
 
     public int getFadNr() {
         return fadNr;
-    }
-
-    public void setFadNr(int fadNr) {
-        this.fadNr = fadNr;
     }
 
     public String getFadtype() {

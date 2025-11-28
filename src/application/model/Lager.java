@@ -110,7 +110,7 @@ public class Lager {
      * @return void
      */
     public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
-        // Call the storage method in Reol-instace -> Handles Errors.
+        // Call the storage method in Reol-instance -> Handles Errors.
         try {
             reol.gemPåPlads(pladsNr, produkt);
         } catch (Exception e) {
