@@ -3,24 +3,32 @@ package application.model;
 public class Flaske implements Storable {
     private String navn;
     private String flaskeID;
-    private double kapacitetL = 0.7;
+    private double flaskeKapacitetL;
     private String beskrivelse;
 
     //Linkattributter
     Færdigprodukt færdigprodukt;
 
-    Flaske(Færdigprodukt færdigprodukt, int flaskeNr) {
+    /**
+     * Contructor for et Flaske-objekt.
+     * @implements Storable
+     * @param færdigprodukt
+     * @param flaskeKapacitetL
+     * @param flaskeNr
+     */
+    Flaske(Færdigprodukt færdigprodukt, double flaskeKapacitetL, int flaskeNr) {
         this.navn = færdigprodukt.getNavn();
         this.flaskeID = færdigprodukt.getProduktNr() + "-" + flaskeNr;
         this.beskrivelse = færdigprodukt.getBeskrivelse();
+        this.flaskeKapacitetL = flaskeKapacitetL;
     }
 
     public String getFlaskeID() {
         return flaskeID;
     }
 
-    public double getKapacitetL() {
-        return kapacitetL;
+    public double getFlaskeKapacitetL() {
+        return flaskeKapacitetL;
     }
 
     public String getNavn() {
@@ -41,10 +49,6 @@ public class Flaske implements Storable {
 
     public void setFlaskeID(String flaskeID) {
         this.flaskeID = flaskeID;
-    }
-
-    public void setKapacitetL(double kapacitetL) {
-        this.kapacitetL = kapacitetL;
     }
 
     public void setBeskrivelse(String beskrivelse) {
