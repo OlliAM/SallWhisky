@@ -74,8 +74,14 @@ public class Fad implements Storable {
         }
         else {
             destillat = new KombiDestillat(dato, init);
-            if(andetIndhold.getMaltbatch() == Maltbatch.SINGLE_MALT || andetIndhold.getMaltbatch() == Maltbatch.SINGLE_CASK) {
+            Maltbatch indholdMalt = indhold.getMaltbatch();
+            Maltbatch andetMalt = andetIndhold.getMaltbatch();
+
+            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
                 destillat.setMaltbatch(Maltbatch.BLENDED);
+            }
+            else {
+                destillat.setMaltbatch(Maltbatch.SINGLE_MALT);
             }
             ((KombiDestillat) destillat).add(andetFad.getIndhold());
             ((KombiDestillat) destillat).add(indhold);
@@ -105,11 +111,13 @@ public class Fad implements Storable {
         }
         else {
             destillat = new KombiDestillat(dato, init);
+            Maltbatch indholdMalt = indhold.getMaltbatch();
 
-            if(bundDestillat.getMaltbatch() == Maltbatch.SINGLE_MALT) {
-                destillat.setMaltbatch(Maltbatch.SINGLE_CASK);
-            } else {
+            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
                 destillat.setMaltbatch(Maltbatch.BLENDED);
+            }
+            else {
+                destillat.setMaltbatch(Maltbatch.SINGLE_MALT);
             }
 
             ((KombiDestillat) destillat).add(bundDestillat);

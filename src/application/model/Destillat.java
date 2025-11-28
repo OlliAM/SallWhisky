@@ -56,4 +56,6 @@ public abstract class Destillat implements Drinkable {
     public void setMaltbatch(Maltbatch maltbatch) {
         this.maltbatch = maltbatch;
     }
+
+
 }

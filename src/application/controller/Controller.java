@@ -17,9 +17,9 @@ public class Controller {
         this.storage = Storage.getInstance();
     }
 
-    public BundDestillat createBundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort,
+    public BundDestillat createBundDestillat(LocalDate startDato, LocalDate slutDato, String kornsort,
                                              String rygemateriale, String init) {
-        if (slutDato.isBefore(startDato)) {
+        if (slutDato != null && slutDato.isBefore(startDato)) {
             throw new IllegalArgumentException("Slutdato er før startdato");
         }
         BundDestillat bundDestillat = new BundDestillat(startDato, slutDato, kornsort, rygemateriale, init);

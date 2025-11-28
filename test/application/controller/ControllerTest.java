@@ -17,6 +17,11 @@ class ControllerTest {
     }
 
     @Test
+    void createBundDistellat() {
+
+    }
+
+    @Test
     void createFad_OpretterFadIStorage() {
         //Act && assert
         assertTrue(storage.getFadList().isEmpty());

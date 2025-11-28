@@ -37,6 +37,13 @@ public class BundDestillat extends Destillat{
         this.mængdeL = mængdeL;
     }
 
+    @Override
+    public void setFærdigDato(LocalDate færdigDato) {
+        if(færdigDato.isBefore(startDato)) {
+            throw new IllegalArgumentException("færdig dato er før startdato");
+        }
+    }
+
     public LocalDate getStartDato() {
         return startDato;
     }
