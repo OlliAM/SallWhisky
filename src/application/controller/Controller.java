@@ -16,6 +16,18 @@ public class Controller {
         this.storage = Storage.getInstance();
     }
 
+    /**
+     * <p1><b><i>**Controller**</i></b></p1><br>
+     * <p1>Metode til at oprette individuelt {@code BundDestillat} objekt og tilføje den i {@code Storage} lager</p1>
+     * @param startDato Den endelige start dato for destillatet
+     * @param slutDato Den endelige slut dato for destillatet
+     * @param kornsort Den valgte kornsort brugt til at skabe {@code BundDestillat}
+     * @param maltBatchKg Mængden af malte anvent i oprettelsen, repræsenteret i KG
+     * @param rygemateriale Det rygemateriale brugt til at lave {@code BundDestillat}
+     * @param init Underskriften af den medarbejder der skabte {@code BundDestillat}
+     * @throws IllegalArgumentException Hvis slut datoen befinder sig før start datoen
+     * @return {@code BundDestillat}
+     */
     public BundDestillat createBundDestillat(@NotNull LocalDate startDato, LocalDate slutDato, String kornsort,
                                              double maltBatchKg, String rygemateriale, String init) {
         if (slutDato.isBefore(startDato)) {
@@ -26,19 +38,48 @@ public class Controller {
         return bundDestillat;
     }
 
+    /**
+     * <p1><b><i>**Controller**</i></b></p1><br>
+     * <p1><b><i>**Overloaded**</i></b></p1><br>
+     * <p1>Metode til at påfylde {@code Destillat} objekt til et udvalgt {@code Fad} objekt </p1>
+     * @param fad Det {@code Fad} objekt som det endelige destillat ønkes lagret i
+     * @param bundDestillat Det underordnede instans af {@code BundDestillat} klassen
+     * @param mængde Mængden af væskes der skal påfyldes.
+     * @param dato Oprettelsesdato for det individuelle {@code Destillat} objekt
+     * @param init Underskriften af den medarbejder der skabte {@code Destillat}
+     * @return {@code Destillat}
+     */
     public Destillat fyldPåFad(Fad fad, BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
         Destillat destillat = fad.fyldPå(bundDestillat, mængde, dato, init);
         storage.addToDestillatList(destillat);
         return destillat;
     }
 
+    /**
+     * <p1><b><i>**Controller**</i></b></p1><br>
+     * <p1><b><i>**Overloaded**</i></b></p1><br>
+     * <p1>Metode til at påfylde {@code Fad} objekt til et udvalgt {@code Fad} objekt </p1>
+     * @param fadTilFyldning Den generelle {@code Fad} hvis indhold skal påfyldes
+     * @param andetFad Den andet {@code Fad} hvis indhold påhældes det nye fad
+     * @param mængde Mængde af væske som skal påfyldes det endelige {@code Fad} objekt
+     * @param dato Datoen for påfyldning af fad
+     * @param init Underskriften fra medarbejderne som undertog påfyldningen.
+     * @return {@code Destillat}
+     */
     public Destillat fyldPåFad(Fad fadTilFyldning, Fad andetFad, int mængde, LocalDate dato, String init) {
         Destillat destillat = fadTilFyldning.fyldPå(andetFad, mængde, dato, init);
         storage.addToDestillatList(destillat);
         return destillat;
     }
 
-
+    /**
+     * <p1><b><i>**Controller**</i></b></p1><br>
+     * <p1><b><i>**Overloaded**</i></b></p1><br>
+     * @param fadtype Fadets overordnede type
+     * @param kapacitetL Væskemængden af tilfængelige kapacitet repræsenteret i KG
+     * @param oprindelse Tekst repræsentation af hvor {@code Fad} objektet stammer fra
+     * @return {@code Fad}
+     */
     public Fad createFad(String fadtype, double kapacitetL, String oprindelse) {
         // Automatisering af fadNr:
         int fadNr = 1;
