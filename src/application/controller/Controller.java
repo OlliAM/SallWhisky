@@ -49,7 +49,6 @@ public class Controller {
             fadNr = fade.getLast().getFadNr() + 1;
         }
 
-
         Fad fad = new Fad(fadNr, fadtype, kapacitetL, oprindelse);
 
         storage.addToFadList(fad);

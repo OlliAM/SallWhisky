@@ -1,0 +1,90 @@
+package application.model;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class FærdigproduktTest {
+    private Færdigprodukt færdigprodukt;
+    private BundDestillat bundDestillat;
+    private Fad fad;
+    private Map<Destillat, Fad> anvendteDestillater;
+
+    void setUp() {
+        fad = new Fad(1, "Egetræ", 30, "Spanien");
+        bundDestillat = new BundDestillat(LocalDate.of(2025, 1, 1),
+                LocalDate.of(2025, 1, 2), "Byg", "Tørv", "EH");
+
+
+        færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 10, 60,
+                55, 2, "Lækkert regnvand", 20,
+                "Salls Whisky", null);
+    }
+
+    @Test
+    void antalMuligeFlasker_MængdeLMindreEndKap() {
+        // Arrange
+        færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 0.9, 60,
+                55, 2, "Lækkert regnvand", 20,
+                "Salls Whisky", null);
+
+        // Act
+        int expected = 0;
+        int actual = færdigprodukt.antalMuligeFlasker(1.0);
+
+        // Assert
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    void antalMuligeFlasker_MængdeLLigMedKap() {
+        // Arrange
+        færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 1, 60,
+                55, 2, "Lækkert regnvand", 20,
+                "Salls Whisky", null);
+
+        // Act
+        int expected = 1;
+        int actual = færdigprodukt.antalMuligeFlasker(1.0);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void antalMuligeFlasker_MængdeLStørreEndKap_LigeUnder2() {
+        // Arrange
+        færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 1.9, 60,
+                55, 2, "Lækkert regnvand", 20,
+                "Salls Whisky", null);
+
+        // Act
+        int expected = 1;
+        int actual = færdigprodukt.antalMuligeFlasker(1.0);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void antalMuligeFlasker_MængdeLStørreEndKap_LigMed2() {
+        // Arrange
+        færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 2, 60,
+                55, 2, "Lækkert regnvand", 20,
+                "Salls Whisky", null);
+
+        // Act
+        int expected = 2;
+        int actual = færdigprodukt.antalMuligeFlasker(1.0);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+
+}

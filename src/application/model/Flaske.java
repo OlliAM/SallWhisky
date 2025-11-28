@@ -31,7 +31,6 @@ public class Flaske implements Storable {
         return færdigprodukt;
     }
 
-
     public void setFlaskeID(String flaskeID) {
         this.flaskeID = flaskeID;
     }
