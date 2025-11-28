@@ -1,18 +1,25 @@
 package application.model;
 
+/**
+ * <h2> ----- Attributer ----- </h2>
+ * <br>
+ * <p1><b>flaskeID (String):</b><br>
+ * Tekst identifikation af det relaterede {@code Flaske} objekt.</p1><br>
+ * <br>
+ * <p1><b>kakacitetL (double):</b><br>
+ * Den totale væskemængde i Liter som dette {@code Flaske} objekt kan indeholde.</p1><br>
+ * <br>
+ * <h3>-------------------------------------</h3>
+ */
 public class Flaske implements Storable {
-    private String navn;
     private String flaskeID;
     private double kapacitetL = 0.7;
-    private String beskrivelse;
 
     //Linkattributter
     Færdigprodukt færdigprodukt;
 
     Flaske(Færdigprodukt færdigprodukt, int flaskeNr) {
-        this.navn = færdigprodukt.getNavn();
         this.flaskeID = færdigprodukt.getProduktNr() + "-" + flaskeNr;
-        this.beskrivelse = færdigprodukt.getBeskrivelse();
     }
 
     public String getFlaskeID() {
@@ -23,20 +30,8 @@ public class Flaske implements Storable {
         return kapacitetL;
     }
 
-    public String getNavn() {
-        return navn;
-    }
-
-    public String getBeskrivelse() {
-        return beskrivelse;
-    }
-
     public Færdigprodukt getFærdigprodukt() {
         return færdigprodukt;
-    }
-
-    public void setNavn(String navn) {
-        this.navn = navn;
     }
 
     public void setFlaskeID(String flaskeID) {
@@ -45,10 +40,6 @@ public class Flaske implements Storable {
 
     public void setKapacitetL(double kapacitetL) {
         this.kapacitetL = kapacitetL;
-    }
-
-    public void setBeskrivelse(String beskrivelse) {
-        this.beskrivelse = beskrivelse;
     }
 
     public void setFærdigprodukt(Færdigprodukt færdigprodukt) {
