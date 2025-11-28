@@ -6,6 +6,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <h2> ----- Attributer ----- </h2>
+ * <br>
+ * <p1><b>navn (String):</b><br>
+ * Endelige navn på det færdige produkt.</p1><br>
+ * <br>
+ * <p1><b>produktNr (int):</b><br>
+ * Identifikations nummeret tilhørende dette {@code Færdigprodukt} objekt.</p1><br>
+ * <br>
+ * <p1><b>mængdeL (double):</b><br>
+ * Den nuværende væskemængde af det færdige produkt repræsenteret i Liter.</p1><br>
+ * <br>
+ * <p1><b>procentFørFortynding (double):</b><br>
+ * Procentdelen af det endelige produkt som er alkohol før fortyndningsprocessen.</p1><br>
+ * <br>
+ * <p1><b>procentEfterFortynding (double):</b><br>
+ * Procentdelen af det endelige produkt som er alkohol efter fortyndningsprocessen.</p1><br>
+ * <br>
+ * <p1><b>tilsatVandL (double):</b><br>
+ * Mængden af vand der er blevet tilføjet det endelige produkt repræsenteret i liter.</p1><br>
+ * <br>
+ * <p1><b>vandOprindelse (String):</b><br>
+ * Tekst repræsentation af hvorfra det vand anvendt i fortyndningsprocessen stammer fra.</p1><br>
+ * <br>
+ * <p1><b>beskrivelse (String):</b><br>
+ * En kort beskrivelse af det endelige produkt og dets indholdshistorik.</p1><br>
+ * <br>
+ * <p1><b>dato (LocalDate):</b><br>
+ * Datoen for hvornår det endelige produkt blev færdig lavet.</p1><br>
+ * <br>
+ * <h2> ----- Metoder ----- </h2>
+ * <br>
+ * <p1><b>hældPåFlasker (int antal)</b><br>
+ * Metode for at påfylde det relaterede {@code Færdigprodukt} til et antal flasker</p1><br>
+ * <br>
+ * <p1><b>hældPåFlaskerMax ()</b><br>
+ * Metode til at lave så mange {@code Flaske} objekter som mængden af det endelige produkt tillader</p1><br>
+ * <br>
+ * <h3>---------------------------------------------------------</h3>
+ */
 public class Færdigprodukt {
     private String navn;
     private int produktNr;
@@ -125,9 +165,10 @@ public class Færdigprodukt {
     }
 
     /**
-     * Der skal være minimum 0.7L færdigprodukt
-     * @param antal (not null)
-     * @return List</Flaske> af opfyldte flasker
+     * <p1>Metode for at påfylde det relaterede {@code Færdigprodukt} til et antal flasker</p1>
+     * @param antal Antallet af {@code Flaske} objekter der ønskes (not null)
+     * @throws IllegalArgumentException Hvis det ønskede antal overstiger hvor mange {@code Flaske} objekter kan laves
+     * @return {@code List<Flaske>}
      */
     public List<Flaske> hældPåFlasker(int antal) {
         int muligtAntal = antalMuligeFlasker();
@@ -144,8 +185,9 @@ public class Færdigprodukt {
     }
 
     /**
-     * Der skal være minimum 0.7L færdigprodukt
-     * @return List</Flaske> af opfyldte flasker
+     * <p1>Metode til at lave så mange {@code Flaske} objekter som mængden af det endelige produkt tillader</p1>
+     * @throws IllegalArgumentException Hvis kun 0 {@code Flaske} objekter kan laves
+     * @return {@code List<Flaske>}
      */
     public List<Flaske> hældPåFlaskerMax() {
         int muligtAntal = antalMuligeFlasker();
