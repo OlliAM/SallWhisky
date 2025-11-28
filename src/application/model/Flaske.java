@@ -13,13 +13,14 @@ package application.model;
  */
 public class Flaske implements Storable {
     private String flaskeID;
-    private double kapacitetL = 0.7;
+    private double flaskeKapacitetL = 0.7;
 
     //Linkattributter
     Færdigprodukt færdigprodukt;
 
-    Flaske(Færdigprodukt færdigprodukt, int flaskeNr) {
+    Flaske(Færdigprodukt færdigprodukt, double flaskeKapacitetL, int flaskeNr) {
         this.flaskeID = færdigprodukt.getProduktNr() + "-" + flaskeNr;
+        this.flaskeKapacitetL = flaskeKapacitetL;
     }
 
     public String getFlaskeID() {
@@ -27,7 +28,7 @@ public class Flaske implements Storable {
     }
 
     public double getKapacitetL() {
-        return kapacitetL;
+        return flaskeKapacitetL;
     }
 
     public Færdigprodukt getFærdigprodukt() {
@@ -38,8 +39,8 @@ public class Flaske implements Storable {
         this.flaskeID = flaskeID;
     }
 
-    public void setKapacitetL(double kapacitetL) {
-        this.kapacitetL = kapacitetL;
+    public void setKapacitetL(double flaskeKapacitetL) {
+        this.flaskeKapacitetL = flaskeKapacitetL;
     }
 
     public void setFærdigprodukt(Færdigprodukt færdigprodukt) {

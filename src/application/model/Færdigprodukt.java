@@ -38,10 +38,10 @@ import java.util.Map;
  * <br>
  * <h2> ----- Metoder ----- </h2>
  * <br>
- * <p1><b>hældPåFlasker (int antal)</b><br>
+ * <p1><b>hældPåFlasker (int antal, double flaskeKapacitetL)</b><br>
  * Metode for at påfylde det relaterede {@code Færdigprodukt} til et antal flasker</p1><br>
  * <br>
- * <p1><b>hældPåFlaskerMax ()</b><br>
+ * <p1><b>hældPåFlaskerMax (double flaskeKapacitetL)</b><br>
  * Metode til at lave så mange {@code Flaske} objekter som mængden af det endelige produkt tillader</p1><br>
  * <br>
  * <h3>---------------------------------------------------------</h3>
@@ -167,17 +167,18 @@ public class Færdigprodukt {
     /**
      * <p1>Metode for at påfylde det relaterede {@code Færdigprodukt} til et antal flasker</p1>
      * @param antal Antallet af {@code Flaske} objekter der ønskes (not null)
+     * @param flaskeKapacitetL Den endelige kapacitet tilgængelige i hvert {@code Flaske} objekt
      * @throws IllegalArgumentException Hvis det ønskede antal overstiger hvor mange {@code Flaske} objekter kan laves
      * @return {@code List<Flaske>}
      */
-    public List<Flaske> hældPåFlasker(int antal) {
-        int muligtAntal = antalMuligeFlasker();
+    public List<Flaske> hældPåFlasker(int antal, double flaskeKapacitetL) {
+        int muligtAntal = antalMuligeFlasker(flaskeKapacitetL);
 
         if (muligtAntal < antal) {
             throw new IllegalArgumentException("Du kan max lave " + muligtAntal + "flasker");
         } else {
             for (int i = 1; i <= antal; i++) {
-                Flaske flaske = new Flaske(this, i);
+                Flaske flaske = new Flaske(this, flaskeKapacitetL, i);
                 flasker.add(flaske);
             }
         }
@@ -186,24 +187,25 @@ public class Færdigprodukt {
 
     /**
      * <p1>Metode til at lave så mange {@code Flaske} objekter som mængden af det endelige produkt tillader</p1>
+     * @param flaskeKapacitetL Den endelige kapacitet tilgængelige i hvert {@code Flaske} objekt
      * @throws IllegalArgumentException Hvis kun 0 {@code Flaske} objekter kan laves
      * @return {@code List<Flaske>}
      */
-    public List<Flaske> hældPåFlaskerMax() {
-        int muligtAntal = antalMuligeFlasker();
+    public List<Flaske> hældPåFlaskerMax(double flaskeKapacitetL) {
+        int muligtAntal = antalMuligeFlasker(flaskeKapacitetL);
 
         if (muligtAntal < 1) {
             throw new IllegalArgumentException("Du kan max lave " + muligtAntal + "flasker");
         }
             for (int i = 1; i <= muligtAntal; i++) {
-                Flaske flaske = new Flaske(this, i);
+                Flaske flaske = new Flaske(this, flaskeKapacitetL, i);
                 flasker.add(flaske);
             }
         return new ArrayList<>(flasker);
     }
 
     // Hjælpemetode
-    public int antalMuligeFlasker() {
-        return (int) (mængdeL / 0.7);
+    public int antalMuligeFlasker(double flaskeKapacitetL) {
+        return (int) (mængdeL / flaskeKapacitetL);
     }
 }
