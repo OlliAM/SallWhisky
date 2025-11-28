@@ -102,12 +102,12 @@ public class Controller {
         return færdigprodukt;
     }
 
-    public void hældPåFlasker(Færdigprodukt færdigprodukt, int antal) {
-        færdigprodukt.hældPåFlasker(antal);
+    public void hældPåFlasker(Færdigprodukt færdigprodukt, int antal, double flaskeKapacitetL) {
+        færdigprodukt.hældPåFlasker(antal, flaskeKapacitetL);
     }
 
-    public void hældPåFlaskerMax(Færdigprodukt færdigprodukt) {
-        færdigprodukt.hældPåFlaskerMax();
+    public void hældPåFlaskerMax(Færdigprodukt færdigprodukt, double flaskeKapacitetL) {
+        færdigprodukt.hældPåFlaskerMax(flaskeKapacitetL);
     }
 
     public Lager createLager(String navn) {
