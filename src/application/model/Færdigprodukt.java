@@ -65,6 +65,10 @@ public class Færdigprodukt {
         this.mængdeL = mængdeL;
     }
 
+    public double getMængdeL() {
+        return mængdeL;
+    }
+
     public void setProcentFørFortynding(double procentFørFortynding) {
         this.procentFørFortynding = procentFørFortynding;
     }
@@ -103,10 +107,6 @@ public class Færdigprodukt {
 
     public Map<Destillat, Fad> getAnvendteDestillater() {
         return new HashMap<>(anvendteDestillater);
-    }
-
-    public double getMængdeL() {
-        return mængdeL;
     }
 
     public double getProcentFørFortynding() {
