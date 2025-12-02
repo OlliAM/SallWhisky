@@ -17,7 +17,7 @@ class ControllerTest {
     }
 
     @Test
-    void createBundDistellat() {
+    void createBundDestillat() {
 
     }
 
