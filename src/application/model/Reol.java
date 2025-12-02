@@ -57,6 +57,10 @@ public class Reol {
         this.optagedePladser = optagedePladser;
     }
 
+    public Storable[] getPladser() {
+        return pladser.clone();
+    }
+
     // Return the internal ID String of the Reol-instance.
     public String getID() {
         return this.ID;

@@ -258,4 +258,8 @@ public class Lager {
             return list;
         }
     }
+
+    public ArrayList<Reol> getReoler() {
+        return new ArrayList<>(reoler);
+    }
 }
