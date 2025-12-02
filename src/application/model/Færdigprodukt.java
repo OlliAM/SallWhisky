@@ -180,7 +180,7 @@ public class Færdigprodukt {
 
     /**
      * <p1>Metode for at påfylde det relaterede {@code Færdigprodukt} til et antal flasker</p1>
-     * @param antal Antallet af {@code Flaske} objekter der ønskes (not null)
+     * @param antal Antallet af {@code Flaske} objekter der ønskes (not null & antal > 0)
      * @param flaskeKapacitetL Den endelige kapacitet tilgængelige i hvert {@code Flaske} objekt
      * @throws IllegalArgumentException Hvis det ønskede antal overstiger hvor mange {@code Flaske} objekter kan laves
      * @return {@code List<Flaske>}
@@ -202,7 +202,7 @@ public class Færdigprodukt {
 
     /**
      * <p1>Metode til at lave så mange {@code Flaske} objekter som mængden af det endelige produkt tillader</p1>
-     * @param flaskeKapacitetL Den endelige kapacitet tilgængelige i hvert {@code Flaske} objekt
+     * @param flaskeKapacitetL Den endelige kapacitet tilgængelig i hvert {@code Flaske} objekt. Skal være > 0
      * @throws IllegalArgumentException Hvis kun 0 {@code Flaske} objekter kan laves
      * @return {@code List<Flaske>}
      */

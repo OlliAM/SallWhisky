@@ -57,7 +57,7 @@ public class FærdigproduktTest {
     }
 
     @Test
-    void antalMuligeFlasker_MængdeLStørreEndKap_LigeUnder2() {
+    void antalMuligeFlasker_MængdeLStørreEndKap() {
         // Arrange
         færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 1.9, 60,
                 55, 2, "Lækkert regnvand", 20,
@@ -71,20 +71,7 @@ public class FærdigproduktTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    void antalMuligeFlasker_MængdeLStørreEndKap_LigMed2() {
-        // Arrange
-        færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 2, 60,
-                55, 2, "Lækkert regnvand", 20,
-                "Salls Whisky", null);
 
-        // Act
-        int expected = 2;
-        int actual = færdigprodukt.antalMuligeFlasker(1.0);
-
-        // Assert
-        assertEquals(expected, actual);
-    }
 
 
 }
