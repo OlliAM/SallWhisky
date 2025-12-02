@@ -5,6 +5,40 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * <h2> ----- Attributer ----- </h2>
+ * <br>
+ * <p1><b>fadNr (int):</b><br>
+ * Identifikations nummer for {@code Fad} objektet.</p1><br>
+ * <br>
+ * <p1><b>fadType (String):</b><br>
+ * Typen af {@code Fad} objektet.</p1><br>
+ * <br>
+ * <p1><b>kapacitetL (double):</b><br>
+ * Den totale væskemængde i Liter som {@code Fad} objektet kan indeholde.</p1><br>
+ * <br>
+ * <p1><b>oprindelse (String):</b><br>
+ * Stedet hvorfra dette {@code Fad} objekt stammer fra.</p1><br>
+ * <br>
+ * <p1><b>nængdeL (double):</b><br>
+ * Den nuværende væskemængde i Liter som er lagret i {@code Fad} objektet.</p1><br>
+ * <br>
+ * <h2> ----- Metoder ----- </h2>
+ * <br>
+ * <p1><b>addToHistorik (Drinkable drinkable, LocalDate dato):</b><br>
+ * Tilføj {@code Drinkable} objekt og tilhørende dato til interne {@code Indholdshistorik}</p1><br>
+ * <br>
+ * <p1><b>removefromHistorik (Drinkable drinkable, LocalDate dato):</b><br>
+ * Henter alle {@code Drinkable} objekter som blev tilføjet på den specifikke dato,
+ * og fjerner det specificerede objeckt.</p1><br>
+ * <br>
+ * <p1><b>fyldPå (...):</b><br>
+ * Påfylder indholder fra et andet {@code Fad} eller {@code BundDestillat} objekt til dette objekt
+ * og opdatere interne variabler.<br>
+ * Metoden er Overloadet - Yderligere information på metodens JavaDoc.</p1><br>
+ * <br>
+ * <h3>-----------------------------------------------------------</h3>
+ */
 public class Fad implements Storable {
     //Fadene kan typisk bruges mange gange.
     //Størrelserne på fadene kan variere og Sall ser på anvendelse af mindre fade på 30 og 50 liter, men også på
@@ -35,6 +69,12 @@ public class Fad implements Storable {
         indholdshistorik = new TreeMap<>();
     }
 
+    /**
+     * <p1>Tilføj {@code Drinkable} objekt og tilhørende dato til interne {@code Indholdshistorik}</p1>
+     * @param drinkable Objekt af {@code Drinkable} til at tilføje til {@code Indholdshistorik}
+     * @param dato Datoen som skal tilføjes til {@code Indholdshistorik}. Sat til dagsdato hvis {@code null}
+     * @return {@code void}
+     */
     public void addToHistorik(Drinkable drinkable, LocalDate dato) {
         if (dato == null) {
             dato = LocalDate.now();
@@ -50,6 +90,13 @@ public class Fad implements Storable {
         }
     }
 
+    /**
+     * <p1>Henter alle {@code Drinkable} objekter som blev tilføjet på den specifikke dato,
+     * og fjerner det specificerede objeckt</p1>
+     * @param drinkable Objekt til at fjernes fra {@code Indholdshistorik}
+     * @param dato Datoen som anvendes til at hente {@code Drinkable} objekter fra interne liste
+     * @return {@code void}
+     */
     public void removeFromHistorik(Drinkable drinkable, LocalDate dato) {
         ArrayList<Drinkable> indhold = indholdshistorik.get(dato);
         if (indhold != null) {
@@ -57,6 +104,15 @@ public class Fad implements Storable {
         }
     }
 
+    /**
+     * <p1>Påfylder indholder fra et andet {@code Fad} objekt til dette objekt og opdatere interne variabler</p1>
+     * @param andetFad Andet {@code Fad} objekt som påfyldes det relaterede Fad.
+     * @param mængde Mængden i Liter, som bliver påfyldet dette {@code Fad} objekt.
+     * @param dato Datoen registreret for påfyldning. Sat til dagsdato hvis {@code null}
+     * @param init Navnet på det nyligt etablerede {@code Destillat} klasse
+     * @throws IllegalArgumentException Hvis den givne mængde overskrider {@code Fad} objektets kapacitet
+     * @return {@code Destillat}
+     */
     public Destillat fyldPåFraFad(Fad andetFad, int mængde, LocalDate dato, String init) {
         if(mængde > andetFad.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
             throw new IllegalArgumentException("Den givne mængde er ikke indefor fadenes parametre");
@@ -74,8 +130,13 @@ public class Fad implements Storable {
         }
         else {
             destillat = new KombiDestillat(dato, init);
-            if(andetIndhold.getMaltbatch() == Maltbatch.SINGLE_MALT || andetIndhold.getMaltbatch() == Maltbatch.SINGLE_CASK) {
+            Maltbatch indholdMalt = indhold.getMaltbatch();
+
+            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
                 destillat.setMaltbatch(Maltbatch.BLENDED);
+            }
+            else {
+                destillat.setMaltbatch(Maltbatch.SINGLE_MALT);
             }
             ((KombiDestillat) destillat).add(andetFad.getIndhold());
             ((KombiDestillat) destillat).add(indhold);
@@ -89,6 +150,15 @@ public class Fad implements Storable {
         return destillat;
     }
 
+    /**
+     * <p1>Påfylder indholder af {@code BundDestillat} objekt til dette objekt og opdatere interne variabler</p1>
+     * @param bundDestillat Det {@code BundDestillat} objket som påfyldes dette Fad.
+     * @param mængde Mængden i Liter, som bliver påfyldet dette {@code BundDestillat} objekt.
+     * @param dato Datoen registreret for påfyldning. Sat til dagsdato hvis {@code null}
+     * @param init Navnet på det nyligt etablerede {@code Destillat} klasse
+     * @throws IllegalArgumentException Hvis den givne mængde overskrider {@code Fad} objektets kapacitet
+     * @return {@code Destillat}
+     */
     public Destillat fyldPåFraDestillat(BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
         if(mængde > bundDestillat.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
             throw new IllegalArgumentException("Den givne mængde er ikke indefor fadet og destillatets parametre");
@@ -105,11 +175,13 @@ public class Fad implements Storable {
         }
         else {
             destillat = new KombiDestillat(dato, init);
+            Maltbatch indholdMalt = indhold.getMaltbatch();
 
-            if(bundDestillat.getMaltbatch() == Maltbatch.SINGLE_MALT) {
-                destillat.setMaltbatch(Maltbatch.SINGLE_CASK);
-            } else {
+            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
                 destillat.setMaltbatch(Maltbatch.BLENDED);
+            }
+            else {
+                destillat.setMaltbatch(Maltbatch.SINGLE_MALT);
             }
 
             ((KombiDestillat) destillat).add(bundDestillat);
