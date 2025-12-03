@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <h2> ----- Attributer ----- </h2>
+ * <h2> ----- Attributter ----- </h2>
  * <br>
  * <p1><b>navn (String):</b><br>
  * Endelige navn på det færdige produkt.</p1><br>
@@ -19,16 +19,16 @@ import java.util.Map;
  * Den nuværende væskemængde af det færdige produkt repræsenteret i Liter.</p1><br>
  * <br>
  * <p1><b>procentFørFortynding (double):</b><br>
- * Procentdelen af det endelige produkt som er alkohol før fortyndningsprocessen.</p1><br>
+ * Procentdelen af det endelige produkt som er alkohol før fortyndingsprocessen.</p1><br>
  * <br>
  * <p1><b>procentEfterFortynding (double):</b><br>
- * Procentdelen af det endelige produkt som er alkohol efter fortyndningsprocessen.</p1><br>
+ * Procentdelen af det endelige produkt som er alkohol efter fortyndingsprocessen.</p1><br>
  * <br>
  * <p1><b>tilsatVandL (double):</b><br>
  * Mængden af vand der er blevet tilføjet det endelige produkt repræsenteret i liter.</p1><br>
  * <br>
  * <p1><b>vandOprindelse (String):</b><br>
- * Tekst repræsentation af hvorfra det vand anvendt i fortyndningsprocessen stammer fra.</p1><br>
+ * Tekst repræsentation af hvorfra det vand anvendt i fortyndingsprocessen stammer fra.</p1><br>
  * <br>
  * <p1><b>beskrivelse (String):</b><br>
  * En kort beskrivelse af det endelige produkt og dets indholdshistorik.</p1><br>
@@ -61,6 +61,18 @@ public class Færdigprodukt {
     private List<Flaske> flasker;
     private Map<Destillat, Fad> anvendteDestillater;
 
+    /**
+     * @param navn
+     * @param anvendteDestillater
+     * @param mængdeL
+     * @param procentFørFortynding
+     * @param procentEfterFortynding
+     * @param tilsatVandL
+     * @param vandOprindelse
+     * @param produktNr
+     * @param beskrivelse
+     * @param dato if null dato = localDate.now()
+     */
     public Færdigprodukt(String navn, Map<Destillat, Fad> anvendteDestillater, double mængdeL, double procentFørFortynding,
                          double procentEfterFortynding, double tilsatVandL, String vandOprindelse, int produktNr,
                          String beskrivelse, LocalDate dato) {
@@ -73,7 +85,12 @@ public class Færdigprodukt {
         this.vandOprindelse = vandOprindelse;
         this.produktNr = produktNr;
         this.beskrivelse = beskrivelse;
-        this.dato = dato;
+        if (dato == null) {
+            dato = LocalDate.now();
+        } else {
+            this.dato = dato;
+        }
+        flasker = new ArrayList<>(); // ??
     }
 
     public String getNavn() {
@@ -112,13 +129,13 @@ public class Færdigprodukt {
         this.vandOprindelse = vandOprindelse;
     }
 
-    public void setProduktNr(int produktNr) {
-        this.produktNr = produktNr;
-    }
+//    public void setProduktNr(int produktNr) {
+//        this.produktNr = produktNr;
+//    }
 
-    public void setBeskrivelse(String beskrivelse) {
-        this.beskrivelse = beskrivelse;
-    }
+//    public void setBeskrivelse(String beskrivelse){
+//        this.beskrivelse = beskrivelse;
+//    }
 
     public LocalDate getDato() {
         return dato;
@@ -128,9 +145,6 @@ public class Færdigprodukt {
         this.dato = dato;
     }
 
-    public void setFlasker(List<Flaske> flasker) {
-        this.flasker = flasker;
-    }
 
     public Map<Destillat, Fad> getAnvendteDestillater() {
         return new HashMap<>(anvendteDestillater);
@@ -166,7 +180,7 @@ public class Færdigprodukt {
 
     /**
      * <p1>Metode for at påfylde det relaterede {@code Færdigprodukt} til et antal flasker</p1>
-     * @param antal Antallet af {@code Flaske} objekter der ønskes (not null)
+     * @param antal Antallet af {@code Flaske} objekter der ønskes (not null & antal > 0)
      * @param flaskeKapacitetL Den endelige kapacitet tilgængelige i hvert {@code Flaske} objekt
      * @throws IllegalArgumentException Hvis det ønskede antal overstiger hvor mange {@code Flaske} objekter kan laves
      * @return {@code List<Flaske>}
@@ -175,10 +189,11 @@ public class Færdigprodukt {
         int muligtAntal = antalMuligeFlasker(flaskeKapacitetL);
 
         if (muligtAntal < antal) {
-            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + "flasker");
+            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + " flasker.");
         } else {
             for (int i = 1; i <= antal; i++) {
                 Flaske flaske = new Flaske(this, flaskeKapacitetL, i);
+                mængdeL -= flaskeKapacitetL;
                 flasker.add(flaske);
             }
         }
@@ -187,7 +202,7 @@ public class Færdigprodukt {
 
     /**
      * <p1>Metode til at lave så mange {@code Flaske} objekter som mængden af det endelige produkt tillader</p1>
-     * @param flaskeKapacitetL Den endelige kapacitet tilgængelige i hvert {@code Flaske} objekt
+     * @param flaskeKapacitetL Den endelige kapacitet tilgængelig i hvert {@code Flaske} objekt. Skal være > 0
      * @throws IllegalArgumentException Hvis kun 0 {@code Flaske} objekter kan laves
      * @return {@code List<Flaske>}
      */
@@ -195,17 +210,28 @@ public class Færdigprodukt {
         int muligtAntal = antalMuligeFlasker(flaskeKapacitetL);
 
         if (muligtAntal < 1) {
-            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + "flasker");
+            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + " flasker.");
         }
-            for (int i = 1; i <= muligtAntal; i++) {
-                Flaske flaske = new Flaske(this, flaskeKapacitetL, i);
-                flasker.add(flaske);
-            }
+        for (int i = 1; i <= muligtAntal; i++) {
+            Flaske flaske = new Flaske(this, flaskeKapacitetL, i);
+            mængdeL -= flaskeKapacitetL;
+            flasker.add(flaske);
+        }
         return new ArrayList<>(flasker);
     }
 
-    // Hjælpemetode
+    /**
+     * Metode, der returnerer antallet af, hvor mange flasker en vis mængde
+     * færdigprodukt potentielt kan lave.
+     * @param flaskeKapacitetL > 0
+     * @return int antal potentielle flasker
+     * @throws IllegalArgumentException hvis (@flaskekapacitet) <= 0
+     */
     public int antalMuligeFlasker(double flaskeKapacitetL) {
+        if (flaskeKapacitetL <= 0) {
+            throw new IllegalArgumentException("Kapacitet skal være større end 0.");
+        }
+
         return (int) (mængdeL / flaskeKapacitetL);
     }
 }
