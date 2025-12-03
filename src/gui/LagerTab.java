@@ -3,6 +3,8 @@ package gui;
 import application.controller.Controller;
 import application.model.Lager;
 import application.model.Reol;
+import application.model.Storable;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -17,7 +19,7 @@ public class LagerTab extends Tab {
     private Lager lager;
     private Controller controller = new Controller();
     private ListView<Reol> lvwReoler;
-    private ListView<String> lvwPladser;
+    private ListView<Storable> lvwPladser;
     private Button btnOpretLager, btnVælgLager, btnOpretReol, btnTømPlads, btnTilføjTilLager;
 
     public LagerTab() {
@@ -85,8 +87,17 @@ public class LagerTab extends Tab {
         Label lblPladser = new Label("Pladser");
         lblPladser.setStyle("-fx-font-size: 14px; -fx-font-weight: 300;");
         lvwPladser = new ListView<>();
+        ChangeListener<Reol> reolListener = (ov, oldReol,
+                                             newReol) -> this.reolChanged();
 
         pladserVBox.getChildren().addAll(lblPladser, lvwPladser);
+    }
+
+    private void reolChanged() {
+        Reol selectedReol = lvwReoler.getSelectionModel().getSelectedItem();
+        if(selectedReol != null) {
+            lvwPladser.getItems().setAll(selectedReol.getPladser());
+        }
     }
 
     private void openLagerSelectionWindow() {

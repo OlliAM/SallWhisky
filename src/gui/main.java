@@ -35,16 +35,20 @@ public class main {
                 LocalDate.of(2020, 7, 25),
                 "Byg", "Tørv", "MK"
         );
+        bundDestillat1.setMængdeL(200);
+        bundDestillat1.setAlkoholprocent(50);
 
         BundDestillat bundDestillat2 = controller.createBundDestillat(
                 LocalDate.of(2017, 1, 5),
-                LocalDate.of(2019, 4, 1),
+                LocalDate.of(2017, 1, 7),
                 "Hvede", "Eg", "MK"
         );
+        bundDestillat2.setMængdeL(300);
+        bundDestillat2.setAlkoholprocent(60);
 
         BundDestillat bundDestillat3IkkeFærdig = controller.createBundDestillat(
-                LocalDate.of(2024, 1, 5),
-                LocalDate.of(2023, 4, 1),
+                LocalDate.of(2023, 1, 5),
+                null,
                 "Hvede", "Eg", "MK"
         );
 
