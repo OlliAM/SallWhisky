@@ -26,7 +26,7 @@ public class FærdigproduktTest {
     }
 
     @Test
-    void antalMuligeFlasker_MængdeLMindreEndKap() {
+    void antalMuligeFlasker_MængdeL_0_9_MindreEndKap() {
         // Arrange
         færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 0.9, 60,
                 55, 2, "Lækkert regnvand", 20,
@@ -42,7 +42,7 @@ public class FærdigproduktTest {
     }
 
     @Test
-    void antalMuligeFlasker_MængdeLLigMedKap() {
+    void antalMuligeFlasker_MængdeL_1_LigMedKap() {
         // Arrange
         færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 1, 60,
                 55, 2, "Lækkert regnvand", 20,
@@ -57,7 +57,7 @@ public class FærdigproduktTest {
     }
 
     @Test
-    void antalMuligeFlasker_MængdeLStørreEndKap() {
+    void antalMuligeFlasker_MængdeL_1_9_StørreEndKap() {
         // Arrange
         færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 1.9, 60,
                 55, 2, "Lækkert regnvand", 20,

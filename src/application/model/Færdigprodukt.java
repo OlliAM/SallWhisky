@@ -225,8 +225,13 @@ public class Færdigprodukt {
      * færdigprodukt potentielt kan lave.
      * @param flaskeKapacitetL > 0
      * @return int antal potentielle flasker
+     * @throws IllegalArgumentException hvis (@flaskekapacitet) <= 0
      */
     public int antalMuligeFlasker(double flaskeKapacitetL) {
+        if (flaskeKapacitetL <= 0) {
+            throw new IllegalArgumentException("Kapacitet skal være større end 0.");
+        }
+
         return (int) (mængdeL / flaskeKapacitetL);
     }
 }
