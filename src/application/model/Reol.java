@@ -226,7 +226,7 @@ public class Reol {
         // 'iterate over all spaces.
         for (int i = 0; i < pladser.length; i++) {
             Storable plads = pladser[i];
-            // check if the Storable value is off type: 'Destillat'.
+            // check if the Storable value is of type: 'Destillat'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
                 if (fad.getIndhold() == destillat) {

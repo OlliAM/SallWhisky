@@ -71,7 +71,7 @@ public class main {
                 "MK"
         );
 
-//        Destillat d3 = controller.fyldPåFad(fad3, bundDestillat3IkkeFærdig, 250, )
+        Destillat d3 = controller.fyldPåFad(fad3, bundDestillat3IkkeFærdig, 80, LocalDate.of() )
 
         // --- 6. Læg fade på lager ---
         controller.gemPåReol(lager1, reol1, 1, fad1);
