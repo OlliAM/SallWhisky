@@ -20,7 +20,6 @@ public class MainWindow extends Application {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         // Create Tabs
-
         LagerTab lagerTab = new LagerTab();
         Tab destillaterTab = new Tab("Destillater");
         Tab fadeTab = new FadeTab();

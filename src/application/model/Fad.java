@@ -129,7 +129,8 @@ public class Fad implements Storable {
             destillat = andetIndhold;
         }
         else {
-            destillat = new KombiDestillat(dato, init);
+            String nytNavn = indhold.getNavn() + "-" + andetIndhold.getNavn();
+            destillat = new KombiDestillat(nytNavn, dato, init);
             Maltbatch indholdMalt = indhold.getMaltbatch();
 
             if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
@@ -174,7 +175,8 @@ public class Fad implements Storable {
             destillat = bundDestillat;
         }
         else {
-            destillat = new KombiDestillat(dato, init);
+            String nytNavn = indhold.getNavn() + "-" + bundDestillat.getNavn();
+            destillat = new KombiDestillat(nytNavn, dato, init);
             Maltbatch indholdMalt = indhold.getMaltbatch();
 
             if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {

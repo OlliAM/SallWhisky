@@ -84,4 +84,7 @@ public class BundDestillat extends Destillat{
     public String getRygemateriale() {
         return rygemateriale;
     }
+
+
+
 }

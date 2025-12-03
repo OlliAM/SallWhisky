@@ -86,7 +86,7 @@ public class LagerTab extends Tab {
         VBox reolerVBox = new VBox();
         reolerVBox.setAlignment(Pos.CENTER);
         reolerVBox.setSpacing(10);
-        pane.add(reolerVBox, 1,1);
+        pane.add(reolerVBox, 1, 1);
 
         Label lblReoler = new Label("Reoler");
         lblReoler.setStyle("-fx-font-size: 14px; -fx-font-weight: 300;");
@@ -100,7 +100,7 @@ public class LagerTab extends Tab {
         VBox pladserVBox = new VBox();
         pladserVBox.setAlignment(Pos.CENTER);
         pladserVBox.setSpacing(10);
-        pane.add(pladserVBox,2,1);
+        pane.add(pladserVBox, 2, 1);
 
         Label lblPladser = new Label("Pladser");
         lblPladser.setStyle("-fx-font-size: 14px; -fx-font-weight: 300;");
@@ -232,7 +232,7 @@ public class LagerTab extends Tab {
 
     private void reolChanged() {
         Reol selectedReol = lvwReoler.getSelectionModel().getSelectedItem();
-        if(selectedReol != null) {
+        if (selectedReol != null) {
             lvwPladser.getItems().setAll(selectedReol.getPladser());
             System.out.println(selectedReol.getPladser());
         }
