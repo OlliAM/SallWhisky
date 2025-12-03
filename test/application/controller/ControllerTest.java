@@ -19,13 +19,13 @@ class ControllerTest {
     }
 
     @Test
-    void createBundDestillat_createterBunddestillatIStorage() {
+    void createBundDestillat_createBunddestillatIStorage() {
         //Act && Assert
 
         assertTrue(storage.getDestillatList().isEmpty());
 
-        BundDestillat expectedBunddestillat = controller.createBundDestillat(LocalDate.of(2025,1,1),
-                LocalDate.of(2025,1,2), "Byg", "Tørv", "EH");
+        BundDestillat expectedBunddestillat = controller.createBundDestillat("Bunddestillat1",
+                LocalDate.of(2025,1,1), "Byg", "Tørv", "EH");
         assertEquals(1, storage.getDestillatList().size());
 
         Destillat actualBunddestillat = storage.getDestillatList().getLast();
@@ -47,7 +47,7 @@ class ControllerTest {
     void createBunddestillat_SlutdatoFørStartdato() {
         //Act
         Exception exception = assertThrows(RuntimeException.class, () -> controller.createBundDestillat(
-                LocalDate.of(2025,1,2), LocalDate.of(2025,1,1),
+                "Bunddestillat 1", LocalDate.of(2025,1,2),
                 "Byg", "Tørv", "EH"
         ));
 
