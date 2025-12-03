@@ -84,9 +84,10 @@ public class Lager {
      * @param pladser nummer af tilgængelige lagerpladser
      * @return Reol
      */
-    public Reol opretReol(String ID, int pladser) {
+    public Reol createReol(String ID, int pladser) {
         // Instantiate the new Reol-class to store.
         Storable[] nyePladser = new Storable[pladser];
+        ID = navn + "-" + ID;
         Reol newReol = new Reol(ID, nyePladser, 0);
 
         // Check if the Reol-class already exists.
@@ -261,5 +262,10 @@ public class Lager {
 
     public ArrayList<Reol> getReoler() {
         return new ArrayList<>(reoler);
+    }
+
+    @Override
+    public String toString() {
+        return navn;
     }
 }

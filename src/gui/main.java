@@ -33,24 +33,21 @@ public class main {
         BundDestillat bundDestillat1 = controller.createBundDestillat(
                 LocalDate.of(2018, 3, 12),
                 LocalDate.of(2020, 7, 25),
-                "Byg", "Tørv", "MK"
+                "Byg", "Tørv", "MK", 200, 50
         );
         bundDestillat1.setMængdeL(200);
         bundDestillat1.setAlkoholprocent(50);
 
         BundDestillat bundDestillat2 = controller.createBundDestillat(
+                "Bunddestillat2",
                 LocalDate.of(2017, 1, 5),
                 LocalDate.of(2017, 1, 7),
-                "Hvede", "Eg", "MK"
+                "Hvede", "Eg", "MK", 300, 60
         );
-        bundDestillat2.setMængdeL(300);
-        bundDestillat2.setAlkoholprocent(60);
 
         BundDestillat bundDestillat3IkkeFærdig = controller.createBundDestillat(
                 LocalDate.of(2023, 1, 5),
-                null,
-                "Hvede", "Eg", "MK"
-        );
+                "Hvede", "Eg", "MK");
 
         // --- 4. Opret Fad ---
         Fad fad1 = controller.createFad("Bourbon Barrel", 200, "Kentucky");
@@ -71,7 +68,6 @@ public class main {
                 "MK"
         );
 
-//        Destillat d3 = controller.fyldPåFad(fad3, bundDestillat3IkkeFærdig, 250, )
 
         // --- 6. Læg fade på lager ---
         controller.gemPåReol(lager1, reol1, 1, fad1);
@@ -82,7 +78,7 @@ public class main {
         fadeTilProdukt.put(fad1, 50.0);  // Træk 50L fra fad 1
         fadeTilProdukt.put(fad2, 60.0);  // Træk 60L fra fad 2
 
-        Færdigprodukt fp1 = controller.opretFærdigProdukt(
+        Færdigprodukt fp1 = controller.createFærdigProdukt(
                 "Classic Blend 2024",
                 fadeTilProdukt,
                 10.0,                       // tilsat vand

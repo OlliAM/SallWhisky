@@ -241,4 +241,10 @@ public class Fad implements Storable {
     public void setMængdeL(double mængdeL) {
         this.mængdeL = mængdeL;
     }
+
+    @Override
+    public String toString() {
+        return "Fad " + fadNr + " - " + mængdeL + "L / " + kapacitetL + "L";
+    }
+
 }

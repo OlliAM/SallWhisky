@@ -3,6 +3,7 @@ package storage;
 import application.model.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Storage {
     private static Storage storage;
@@ -16,6 +17,7 @@ public class Storage {
     private ArrayList<String> rygematerialeList;
     private ArrayList<String> kornsortList;
     private ArrayList<String> fadtypeList;
+    private ArrayList<Double> fadKapacitetList;
 
     private Storage() {
         destillatList = new ArrayList<>();
@@ -26,6 +28,7 @@ public class Storage {
         rygematerialeList = new ArrayList<>();
         kornsortList = new ArrayList<>();
         fadtypeList = new ArrayList<>();
+        fadKapacitetList = new ArrayList<>();
     }
 
     public static Storage getInstance() {
@@ -141,5 +144,20 @@ public class Storage {
 
     public ArrayList<String> getFadtypeList() {
         return fadtypeList;
+    }
+
+    public void addToFadKapacitetList(double kapacitet) {
+        if(!fadKapacitetList.contains(kapacitet)) {
+            fadKapacitetList.add(kapacitet);
+            Collections.sort(fadKapacitetList);
+        }
+    }
+
+    public void removeFromFadKapacitetList(double kapacitet) {
+        fadKapacitetList.remove(kapacitet);
+    }
+
+    public ArrayList<Double> getFadKapacitetList() {
+        return fadKapacitetList;
     }
 }

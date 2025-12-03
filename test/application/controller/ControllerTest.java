@@ -19,7 +19,7 @@ class ControllerTest {
     }
 
     @Test
-    void createBundDestillat_OpretterBunddestillatIStorage() {
+    void createBundDestillat_createterBunddestillatIStorage() {
         //Act && Assert
 
         assertTrue(storage.getDestillatList().isEmpty());
@@ -56,7 +56,7 @@ class ControllerTest {
     }
 
     @Test
-    void createFad_OpretterFadIStorage() {
+    void createFad_createterFadIStorage() {
         //Act & assert
         assertTrue(storage.getFadList().isEmpty());
 
@@ -109,7 +109,7 @@ class ControllerTest {
     }
 
     @Test
-    void createLager_OpretterLagerIStorage() {
+    void createLager_createterLagerIStorage() {
         //Act & assert
         assertTrue(storage.getLagerList().isEmpty());
 
@@ -126,12 +126,12 @@ class ControllerTest {
     }
 
     @Test
-    void createReol_OpretterReolPåLager() {
+    void createReol_createterReolPåLager() {
         //Arrange
         Lager lager = controller.createLager("Lager1");
 
         //Act
-        Reol reol = lager.opretReol("A", 5);
+        Reol reol = lager.createReol("A", 5);
 
         //Assert
         assertTrue(lager.getReoler().contains(reol));

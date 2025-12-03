@@ -20,21 +20,40 @@ public class Controller {
      * <p1><b><i>**Controller**</i></b></p1><br>
      * <p1>Metode til at oprette individuelt {@code BundDestillat} objekt og tilføje den i {@code Storage} lager</p1>
      * @param startDato Den endelige start dato for destillatet
-     * @param slutDato Den endelige slut dato for destillatet
      * @param kornsort Den valgte kornsort brugt til at skabe {@code BundDestillat}
      * @param rygemateriale Det rygemateriale brugt til at lave {@code BundDestillat}
      * @param init Underskriften af den medarbejder der skabte {@code BundDestillat}
      * @throws IllegalArgumentException Hvis slut datoen befinder sig før start datoen
      * @return {@code BundDestillat}
      */
-    public BundDestillat createBundDestillat(LocalDate startDato, LocalDate slutDato, String kornsort,
+    public BundDestillat createBundDestillat(String navn, LocalDate startDato, String kornsort,
                                              String rygemateriale, String init) {
+        BundDestillat bundDestillat = new BundDestillat(navn, startDato, kornsort, rygemateriale, init);
+        storage.addToDestillatList(bundDestillat);
+        return bundDestillat;
+    }
+
+    public BundDestillat createBundDestillat(String navn, LocalDate startDato, LocalDate slutDato, String kornsort, String rygemateriale, String init,
+                                      double mængdeL, double alkoholProcent) {
         if (slutDato != null && slutDato.isBefore(startDato)) {
             throw new IllegalArgumentException("Slutdato er før startdato");
         }
-        BundDestillat bundDestillat = new BundDestillat(startDato, slutDato, kornsort, rygemateriale, init);
+        BundDestillat bundDestillat = new BundDestillat(navn, startDato, slutDato, kornsort, rygemateriale, init, mængdeL, alkoholProcent);
         storage.addToDestillatList(bundDestillat);
         return bundDestillat;
+    }
+
+    public void færdiggørBundDestillat(BundDestillat bundDestillat, LocalDate slutDato, double mængdeL, double alkoholProcent) {
+        if (slutDato != null && slutDato.isBefore(bundDestillat.getStartDato())) {
+            throw new IllegalArgumentException("Slutdato er før startdato");
+        }
+        bundDestillat.setFærdigDato(slutDato);
+        bundDestillat.setMængdeL(mængdeL);
+        bundDestillat.setAlkoholprocent(alkoholProcent);
+    }
+
+    public void givKommentarTilDestillat(Destillat destillat, String kommentar) {
+        destillat.setKommentar(kommentar);
     }
 
     /**
@@ -110,7 +129,7 @@ public class Controller {
      * @param dato Den endelige dato for oprettelse af {@code Færdigprodukt}
      * @return {@code Færdigprodukt}
      */
-    public Færdigprodukt opretFærdigProdukt(String navn, Map<Fad, Double> fade,
+    public Færdigprodukt createFærdigProdukt(String navn, Map<Fad, Double> fade,
                                             double tilsatVandL, String vandOprindelse, int produktNr, String beskrivelse,
                                             LocalDate dato) {
 
@@ -200,7 +219,7 @@ public class Controller {
      * @return {@code Reol}
      */
     public Reol createReol(Lager lager, String id, int antalPladser) {
-        return lager.opretReol(id, antalPladser);
+        return lager.createReol(id, antalPladser);
     }
 
     /**
@@ -243,6 +262,10 @@ public class Controller {
      */
     public void createFadtype(String fadtype) {
         storage.addToFadtypeList(fadtype);
+    }
+
+    public void createFadKapacitet(double kapacitet) {
+        storage.addToFadKapacitetList(kapacitet);
     }
 
     /**

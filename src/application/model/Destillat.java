@@ -21,6 +21,7 @@ import java.util.*;
  * <h3>-------------------------------------------</h3>
  */
 public abstract class Destillat implements Drinkable {
+    private String navn;
     private String kommentar;
     private double alkoholprocent;
     private Maltbatch maltbatch;
@@ -29,7 +30,8 @@ public abstract class Destillat implements Drinkable {
 
     //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
     //    Før det er færdigt
-    public Destillat(LocalDate færdigDato, String init) {
+    public Destillat(String navn, LocalDate færdigDato, String init) {
+        this.navn = navn;
         this.færdigDato = færdigDato;
         this.init = init;
     }
@@ -74,5 +76,12 @@ public abstract class Destillat implements Drinkable {
         this.maltbatch = maltbatch;
     }
 
+    public String getNavn() {
+        return navn;
+    }
 
+    @Override
+    public String toString() {
+        return navn + ": " + alkoholprocent + "%";
+    }
 }

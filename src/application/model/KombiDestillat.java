@@ -29,8 +29,8 @@ public class KombiDestillat extends Destillat{
     //Linkattributter
     private ArrayList<Destillat> destillater;
 
-    public KombiDestillat(LocalDate færdigDato, String init) {
-        super(færdigDato, init);
+    public KombiDestillat(String navn, LocalDate færdigDato, String init) {
+        super(navn,færdigDato, init);
         this.destillater = new ArrayList<>();
     }
 
