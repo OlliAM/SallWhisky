@@ -47,4 +47,8 @@ public class Flaske implements Storable {
         this.færdigprodukt = færdigprodukt;
     }
 
+    @Override
+    public String toString() {
+        return flaskeID;
+    }
 }

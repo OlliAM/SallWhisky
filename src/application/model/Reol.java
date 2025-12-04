@@ -118,7 +118,7 @@ public class Reol {
 
         // Check if the space at pladsNr-index is currently occupied.
         if (pladser[pladsNr] == null) {
-            throw new RuntimeException("Space: " + pladsNr + ", is currently empty!");
+            throw new RuntimeException("Space: " + pladsNr + " is currently empty!");
         }
 
         // Remove the Storable-value from specified index & decrement counter.
@@ -244,5 +244,10 @@ public class Reol {
         } else {
             return list;
         }
+    }
+
+    @Override
+    public String toString(){
+        return ID;
     }
 }

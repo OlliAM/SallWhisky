@@ -19,13 +19,13 @@ class ControllerTest {
     }
 
     @Test
-    void createBundDestillat_OpretterBunddestillatIStorage() {
+    void createBundDestillat_createBunddestillatIStorage() {
         //Act && Assert
 
         assertTrue(storage.getDestillatList().isEmpty());
 
-        BundDestillat expectedBunddestillat = controller.createBundDestillat(LocalDate.of(2025,1,1),
-                LocalDate.of(2025,1,2), "Byg", "Tørv", "EH");
+        BundDestillat expectedBunddestillat = controller.createBundDestillat("Bunddestillat1",
+                LocalDate.of(2025,1,1), "Byg", "Tørv", "EH");
         assertEquals(1, storage.getDestillatList().size());
 
         Destillat actualBunddestillat = storage.getDestillatList().getLast();
@@ -47,7 +47,7 @@ class ControllerTest {
     void createBunddestillat_SlutdatoFørStartdato() {
         //Act
         Exception exception = assertThrows(RuntimeException.class, () -> controller.createBundDestillat(
-                LocalDate.of(2025,1,2), LocalDate.of(2025,1,1),
+                "Bunddestillat 1", LocalDate.of(2025,1,2),
                 "Byg", "Tørv", "EH"
         ));
 
@@ -56,7 +56,7 @@ class ControllerTest {
     }
 
     @Test
-    void createFad_OpretterFadIStorage() {
+    void createFad_createterFadIStorage() {
         //Act & assert
         assertTrue(storage.getFadList().isEmpty());
 
@@ -109,7 +109,7 @@ class ControllerTest {
     }
 
     @Test
-    void createLager_OpretterLagerIStorage() {
+    void createLager_createterLagerIStorage() {
         //Act & assert
         assertTrue(storage.getLagerList().isEmpty());
 
@@ -126,12 +126,12 @@ class ControllerTest {
     }
 
     @Test
-    void createReol_OpretterReolPåLager() {
+    void createReol_createterReolPåLager() {
         //Arrange
         Lager lager = controller.createLager("Lager1");
 
         //Act
-        Reol reol = lager.opretReol("A", 5);
+        Reol reol = lager.createReol("A", 5);
 
         //Assert
         assertTrue(lager.getReoler().contains(reol));

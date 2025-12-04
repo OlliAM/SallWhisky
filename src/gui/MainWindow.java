@@ -17,12 +17,12 @@ public class MainWindow extends Application {
 
     public void start(Stage stage) {
         TabPane tabPane = new TabPane();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         // Create Tabs
-
         LagerTab lagerTab = new LagerTab();
         Tab destillaterTab = new Tab("Destillater");
-        Tab fadeTab = new Tab("Fade");
+        Tab fadeTab = new FadeTab();
         Tab produkterTab = new Tab("Produkter");
         tabPane.getTabs().addAll(lagerTab, destillaterTab, fadeTab, produkterTab);
 

@@ -234,4 +234,9 @@ public class Færdigprodukt {
 
         return (int) (mængdeL / flaskeKapacitetL);
     }
+
+    @Override
+    public String toString() {
+        return navn;
+    }
 }
