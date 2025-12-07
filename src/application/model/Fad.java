@@ -141,10 +141,8 @@ public class Fad implements Storable {
             ((KombiDestillat) indholdEfterPåfyldning).add(destillat);
             ((KombiDestillat) indholdEfterPåfyldning).add(fadIndhold);
 
-            double alkoholV = 0;
-            alkoholV = originalMængde / 100 * fadIndhold.getAlkoholprocent();
+            double alkoholV = originalMængde / 100 * fadIndhold.getAlkoholprocent();
             alkoholV += påhældningsMængde / 100 * destillat.getAlkoholprocent();
-            System.out.println(alkoholV);
             indholdEfterPåfyldning.setAlkoholprocent(alkoholV / mængdeL * 100);
         }
 

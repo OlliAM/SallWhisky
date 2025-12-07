@@ -57,7 +57,6 @@ public class BundDestillat extends Destillat{
         }
         else {
             super.setMaltbatch(Maltbatch.GRAIN);
-            System.out.println(navn + "er grain");
         }
     }
 
