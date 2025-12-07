@@ -119,6 +119,8 @@ public class Fad implements Storable {
         }
 
         Destillat indholdEfterPåfyldning;
+        double originalMængde = mængdeL;
+        mængdeL += påhældningsMængde;
 
         if(fadIndhold == null) {
             indholdEfterPåfyldning = destillat;
@@ -127,22 +129,29 @@ public class Fad implements Storable {
             String nytNavn = fadIndhold.getNavn() + "-" + destillat.getNavn();
             indholdEfterPåfyldning = new KombiDestillat(nytNavn, dato, init);
             Maltbatch indholdMalt = fadIndhold.getMaltbatch();
+            Maltbatch andetMalt = destillat.getMaltbatch();
 
-            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
-                indholdEfterPåfyldning.setMaltbatch(Maltbatch.BLENDED);
-            }
-            else {
-                indholdEfterPåfyldning.setMaltbatch(Maltbatch.SINGLE_MALT);
-            }
+            boolean indholdSingle = indholdMalt == Maltbatch.SINGLE_MALT || indholdMalt == Maltbatch.SINGLE_CASK;
+            boolean andetSingle = andetMalt == Maltbatch.SINGLE_MALT || andetMalt == Maltbatch.SINGLE_CASK;
+
+            indholdEfterPåfyldning.setMaltbatch(
+                    (indholdSingle && andetSingle) ? Maltbatch.SINGLE_MALT : Maltbatch.BLENDED
+            );
+
             ((KombiDestillat) indholdEfterPåfyldning).add(destillat);
             ((KombiDestillat) indholdEfterPåfyldning).add(fadIndhold);
+
+            double alkoholV = 0;
+            alkoholV = originalMængde / 100 * fadIndhold.getAlkoholprocent();
+            alkoholV += påhældningsMængde / 100 * destillat.getAlkoholprocent();
+            System.out.println(alkoholV);
+            indholdEfterPåfyldning.setAlkoholprocent(alkoholV / mængdeL * 100);
         }
 
         fadIndhold = indholdEfterPåfyldning;
         addToHistorik(fadIndhold, dato);
-        mængdeL += påhældningsMængde;
 
-        return destillat;
+        return indholdEfterPåfyldning;
     }
 
     /**
