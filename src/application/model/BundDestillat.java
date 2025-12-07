@@ -48,6 +48,7 @@ public class BundDestillat extends Destillat{
         this.rygemateriale = rygemateriale;
         this.mængdeL = mængdeL;
         super.setAlkoholprocent(alkoholProcent);
+        vælgMaltBatch(navn, kornsort);
     }
 
     private void vælgMaltBatch(String navn, String kornsort) {

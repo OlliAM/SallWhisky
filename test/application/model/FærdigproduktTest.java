@@ -16,8 +16,8 @@ public class FærdigproduktTest {
 
     void setUp() {
         fad = new Fad(1, "Egetræ", 30, "Spanien");
-        bundDestillat = new BundDestillat(LocalDate.of(2025, 1, 1),
-                LocalDate.of(2025, 1, 2), "Byg", "Tørv", "EH");
+        bundDestillat = new BundDestillat("Navn", LocalDate.of(2025, 1, 1),
+                "Byg", "Tørv", "EH");
 
 
         færdigprodukt = new Færdigprodukt("Whisky", anvendteDestillater, 10, 60,
