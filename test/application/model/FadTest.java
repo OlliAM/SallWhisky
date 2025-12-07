@@ -14,8 +14,8 @@ class FadTest {
     @BeforeEach
     void setUp() {
         fad = new Fad(1, "Egetræ", 10, "Spanien");
-        bundDestillat = new BundDestillat(LocalDate.of(2025,1,1),
-                LocalDate.of(2025,1,2), "Byg", "Tørv", "EH");
+        bundDestillat = new BundDestillat("Navn", LocalDate.of(2025,1,1),
+                "Byg", "Tørv", "EH");
 
     }
 
@@ -36,8 +36,8 @@ class FadTest {
     void addToHistorik_EksisterendeDrinkablePåDato() {
         //Arrange
         LocalDate dato = LocalDate.now();
-        BundDestillat bundDestillat2 = new BundDestillat(LocalDate.of(2025,1,2),
-                LocalDate.of(2025,1,3), "Hvede", "Tørv", "EH");
+        BundDestillat bundDestillat2 = new BundDestillat("Navn2", LocalDate.of(2025,1,2),
+                "Hvede", "Tørv", "EH");
 
         //Act && assert
         fad.addToHistorik(bundDestillat, null);

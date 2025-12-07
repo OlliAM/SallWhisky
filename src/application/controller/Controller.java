@@ -29,7 +29,7 @@ public class Controller {
     public BundDestillat createBundDestillat(String navn, LocalDate startDato, String kornsort,
                                              String rygemateriale, String init) {
         BundDestillat bundDestillat = new BundDestillat(navn, startDato, kornsort, rygemateriale, init);
-        storage.addToDestillatList(bundDestillat);
+        storage.addToDestilleringList(bundDestillat);
         return bundDestillat;
     }
 

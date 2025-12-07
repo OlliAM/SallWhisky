@@ -36,7 +36,6 @@ class ControllerTest {
         assertEquals("Tørv", expectedBunddestillat.getRygemateriale());
         assertEquals("EH", expectedBunddestillat.getInit());
         assertEquals(LocalDate.of(2025,1,1), expectedBunddestillat.getStartDato());
-        assertEquals(LocalDate.of(2025,1,2), expectedBunddestillat.getFærdigDato());
         assertNull(expectedBunddestillat.getKommentar());
         assertEquals(0, expectedBunddestillat.getAlkoholprocent());
         assertEquals(0, expectedBunddestillat.getMængdeL());

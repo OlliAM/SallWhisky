@@ -92,6 +92,20 @@ public class main {
 
         // --- Hæld på flasker ---
         controller.hældPåFlasker(fp1, 50, 1.0);   // 50 flasker à 1 liter
+
+        //Opret kapaciteter
+        controller.createFadKapacitet(30);
+        controller.createFadKapacitet(50);
+        controller.createFadKapacitet(100);
+        controller.createFadKapacitet(190);
+        controller.createFadKapacitet(250);
+
+        //Opret fadtyper
+        controller.createFadtype("Egetræ");
+
+        //Set kommentar
+        bundDestillat1.setKommentar("Din mor er en luder og jones er gay.");
+        bundDestillat2.setKommentar("Ole ");
     }
 }
 
