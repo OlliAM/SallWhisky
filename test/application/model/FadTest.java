@@ -52,20 +52,25 @@ class FadTest {
 
     }
 
-    @Test
-    void addToHistorik_MINDato() {
-        //Arrange
-
-        //Act && assert
-
-    }
 
     @Test
     void removeFromHistorik() {
+        //Arrange
+        LocalDate dato = LocalDate.now();
+        fad.addToHistorik(bundDestillat, dato);
+
+        //Act && assert
+        fad.removeFromHistorik(bundDestillat, dato);
+        assertTrue(fad.getIndholdshistorik().get(dato).isEmpty());
+
+        fad.removeFromHistorik(bundDestillat, dato);
+        assertTrue(fad.getIndholdshistorik().get(dato).isEmpty());
+
     }
 
     @Test
-    void fyldPåFraFad() {
+    void fyldPåFraFad_() {
+
     }
 
     @Test

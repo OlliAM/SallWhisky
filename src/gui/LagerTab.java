@@ -186,6 +186,7 @@ public class LagerTab extends Tab {
         stage.setScene(scene);
         stage.initOwner(this.getTabPane().getScene().getWindow()); // make it modal relative to main window
         stage.show();
+        txfReolNavn.getParent().requestFocus();
     }
 
     private void createLagerAction() {
@@ -236,7 +237,6 @@ public class LagerTab extends Tab {
         Reol selectedReol = lvwReoler.getSelectionModel().getSelectedItem();
         if (selectedReol != null) {
             lvwPladser.getItems().setAll(selectedReol.getPladser());
-            System.out.println(selectedReol.getPladser());
         }
     }
 

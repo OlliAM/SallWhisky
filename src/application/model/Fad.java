@@ -52,7 +52,7 @@ public class Fad implements Storable {
 
     //Linkattributter
     private Map<LocalDate, ArrayList<Drinkable>> indholdshistorik;
-    private Destillat indhold;
+    private Destillat fadIndhold;
 
     /**
      *
@@ -75,6 +75,7 @@ public class Fad implements Storable {
      * @param dato Datoen som skal tilføjes til {@code Indholdshistorik}. Sat til dagsdato hvis {@code null}
      * @return {@code void}
      */
+
     public void addToHistorik(Drinkable drinkable, LocalDate dato) {
         if (dato == null) {
             dato = LocalDate.now();
@@ -104,6 +105,46 @@ public class Fad implements Storable {
         }
     }
 
+    private Destillat fyldPå(Destillat destillat, double påhældningsMængde, double kildeMængde, LocalDate dato, String init) {
+        if(påhældningsMængde > kildeMængde) {
+            throw new IllegalArgumentException("Destillat/Fad har mindre indhold end den ønskede mængde");
+        }
+
+        if(påhældningsMængde > kapacitetL - mængdeL) {
+            throw new IllegalArgumentException("Fadet har ikke plads til den ønskede mængde");
+        }
+
+        if(dato == null) {
+            dato = LocalDate.now();
+        }
+
+        Destillat indholdEfterPåfyldning;
+
+        if(fadIndhold == null) {
+            indholdEfterPåfyldning = destillat;
+        }
+        else {
+            String nytNavn = fadIndhold.getNavn() + "-" + destillat.getNavn();
+            indholdEfterPåfyldning = new KombiDestillat(nytNavn, dato, init);
+            Maltbatch indholdMalt = fadIndhold.getMaltbatch();
+
+            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
+                indholdEfterPåfyldning.setMaltbatch(Maltbatch.BLENDED);
+            }
+            else {
+                indholdEfterPåfyldning.setMaltbatch(Maltbatch.SINGLE_MALT);
+            }
+            ((KombiDestillat) indholdEfterPåfyldning).add(destillat);
+            ((KombiDestillat) indholdEfterPåfyldning).add(fadIndhold);
+        }
+
+        fadIndhold = indholdEfterPåfyldning;
+        addToHistorik(fadIndhold, dato);
+        mængdeL += påhældningsMængde;
+
+        return destillat;
+    }
+
     /**
      * <p1>Påfylder indholder fra et andet {@code Fad} objekt til dette objekt og opdatere interne variabler</p1>
      * @param andetFad Andet {@code Fad} objekt som påfyldes det relaterede Fad.
@@ -114,40 +155,8 @@ public class Fad implements Storable {
      * @return {@code Destillat}
      */
     public Destillat fyldPåFraFad(Fad andetFad, int mængde, LocalDate dato, String init) {
-        if(mængde > andetFad.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
-            throw new IllegalArgumentException("Den givne mængde er ikke indefor fadenes parametre");
-        }
-
-        if(dato == null) {
-            dato = LocalDate.now();
-        }
-
-        Destillat destillat;
-        Destillat andetIndhold = andetFad.getIndhold();
-
-        if(indhold == null) {
-            destillat = andetIndhold;
-        }
-        else {
-            String nytNavn = indhold.getNavn() + "-" + andetIndhold.getNavn();
-            destillat = new KombiDestillat(nytNavn, dato, init);
-            Maltbatch indholdMalt = indhold.getMaltbatch();
-
-            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
-                destillat.setMaltbatch(Maltbatch.BLENDED);
-            }
-            else {
-                destillat.setMaltbatch(Maltbatch.SINGLE_MALT);
-            }
-            ((KombiDestillat) destillat).add(andetFad.getIndhold());
-            ((KombiDestillat) destillat).add(indhold);
-        }
-
-        indhold = destillat;
-        addToHistorik(indhold, dato);
-        mængdeL += mængde;
+        Destillat destillat = fyldPå(andetFad.getFadIndhold(), mængde, andetFad.getMængdeL(), dato, init);
         andetFad.setMængdeL(andetFad.getMængdeL() - mængde);
-
         return destillat;
     }
 
@@ -161,51 +170,19 @@ public class Fad implements Storable {
      * @return {@code Destillat}
      */
     public Destillat fyldPåFraDestillat(BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
-        if(mængde > bundDestillat.getMængdeL() || mængde > (kapacitetL - mængdeL)) {
-            throw new IllegalArgumentException("Den givne mængde er ikke indefor fadet og destillatets parametre");
-        }
-
-        if(dato == null) {
-            dato = LocalDate.now();
-        }
-
-        Destillat destillat;
-
-        if(indhold == null) {
-            destillat = bundDestillat;
-        }
-        else {
-            String nytNavn = indhold.getNavn() + "-" + bundDestillat.getNavn();
-            destillat = new KombiDestillat(nytNavn, dato, init);
-            Maltbatch indholdMalt = indhold.getMaltbatch();
-
-            if(indholdMalt == Maltbatch.GRAIN || indholdMalt == Maltbatch.BLENDED) {
-                destillat.setMaltbatch(Maltbatch.BLENDED);
-            }
-            else {
-                destillat.setMaltbatch(Maltbatch.SINGLE_MALT);
-            }
-
-            ((KombiDestillat) destillat).add(bundDestillat);
-            ((KombiDestillat) destillat).add(indhold);
-        }
-
-        indhold = destillat;
-        addToHistorik(indhold, dato);
-        mængdeL += mængde;
+        Destillat destillat = fyldPå(bundDestillat, mængde, bundDestillat.getMængdeL(), dato, init);
         bundDestillat.setMængdeL(bundDestillat.getMængdeL() - mængde);
 
         return destillat;
     }
 
 
-
     public Map<LocalDate, ArrayList<Drinkable>> getIndholdshistorik() {
         return new TreeMap<>(indholdshistorik);
     }
 
-    public Destillat getIndhold() {
-        return indhold;
+    public Destillat getFadIndhold() {
+        return fadIndhold;
     }
 
     public int getFadNr() {

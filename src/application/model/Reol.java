@@ -1,7 +1,6 @@
 package application.model;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * <h2>----- Attributer -----</h2>
@@ -229,7 +228,7 @@ public class Reol {
             // check if the Storable value is off type: 'Destillat'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
-                if (fad.getIndhold() == destillat) {
+                if (fad.getFadIndhold() == destillat) {
                     String værdi = ID + ": " + i;
                     list.add(værdi);
                 }

@@ -152,7 +152,7 @@ public class FadeTab extends Tab {
         lvwFadeIndhold.getItems().clear();
 
         for (Fad fad : controller.getStorage().getFadList()) {
-            if (fad.getIndhold() == null) {
+            if (fad.getFadIndhold() == null) {
                 lvwFadeTomme.getItems().add(fad);
             } else {
                 lvwFadeIndhold.getItems().add(fad);
