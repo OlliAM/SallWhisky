@@ -189,7 +189,7 @@ public class Færdigprodukt {
         int muligtAntal = antalMuligeFlasker(flaskeKapacitetL);
 
         if (muligtAntal < antal) {
-            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + " flasker.");
+            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + " flasker af " + this);
         } else {
             for (int i = 1; i <= antal; i++) {
                 Flaske flaske = new Flaske(this, flaskeKapacitetL, i);
