@@ -69,4 +69,9 @@ public class KombiDestillat extends Destillat{
             throw new ArrayIndexOutOfBoundsException("Destillatet består kun af 2");
         }
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " - Kombidestillat";
+    }
 }

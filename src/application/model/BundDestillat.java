@@ -37,12 +37,7 @@ public class BundDestillat extends Destillat{
         this.kornsort = kornsort;
         this.rygemateriale = rygemateriale;
 
-        if(kornsort.equals("Byg")) {
-            super.setMaltbatch(Maltbatch.SINGLE_CASK);
-        }
-        else {
-            super.setMaltbatch(Maltbatch.GRAIN);
-        }
+        vælgMaltBatch(navn, kornsort);
     }
 
     public BundDestillat(String navn, LocalDate startDato, LocalDate slutDato, String kornsort, String rygemateriale, String init,
@@ -53,6 +48,16 @@ public class BundDestillat extends Destillat{
         this.rygemateriale = rygemateriale;
         this.mængdeL = mængdeL;
         super.setAlkoholprocent(alkoholProcent);
+        vælgMaltBatch(navn, kornsort);
+    }
+
+    private void vælgMaltBatch(String navn, String kornsort) {
+        if(kornsort.equals("Byg")) {
+            super.setMaltbatch(Maltbatch.SINGLE_CASK);
+        }
+        else {
+            super.setMaltbatch(Maltbatch.GRAIN);
+        }
     }
 
     //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
@@ -87,4 +92,8 @@ public class BundDestillat extends Destillat{
 
 
 
+    @Override
+    public String toString() {
+        return super.toString() + " - Bunddestillat";
+    }
 }

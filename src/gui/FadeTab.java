@@ -1,13 +1,12 @@
 package gui;
 
 import application.model.Fad;
-import application.model.Reol;
-import application.model.Storable;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 import application.controller.Controller;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
@@ -21,6 +20,7 @@ public class FadeTab extends Tab {
 
     public FadeTab() {
         super("Fade");
+
         GridPane gridPane = new GridPane();
         this.setContent(gridPane);
         initContent(gridPane);
@@ -117,6 +117,7 @@ public class FadeTab extends Tab {
     private void fadeTomChanged(Fad selectedFad) {
         if (selectedFad != null) {
             lvwFadeIndhold.getSelectionModel().clearSelection();
+            fad = selectedFad;
             btnSletFad.setDisable(false);
             btnHistorik.setDisable(false);
             btnPåfyldFad.setDisable(false);
@@ -132,6 +133,7 @@ public class FadeTab extends Tab {
     private void fadeIndholdChanged(Fad selectedFad) {
         if (selectedFad != null) {
             lvwFadeTomme.getSelectionModel().clearSelection();
+            fad = selectedFad;
             btnSletFad.setDisable(false);
             btnHistorik.setDisable(false);
             btnPåfyldFad.setDisable(false);
@@ -150,7 +152,7 @@ public class FadeTab extends Tab {
         lvwFadeIndhold.getItems().clear();
 
         for (Fad fad : controller.getStorage().getFadList()) {
-            if (fad.getIndhold() == null) {
+            if (fad.getFadIndhold() == null) {
                 lvwFadeTomme.getItems().add(fad);
             } else {
                 lvwFadeIndhold.getItems().add(fad);
@@ -159,18 +161,21 @@ public class FadeTab extends Tab {
     }
 
     private void createFadAction() {
-
+        Stage owner = (Stage) this.getTabPane().getScene().getWindow();
+        CreateFadWindow opretFad = new CreateFadWindow(owner);
+        opretFad.showAndWait();
+        updateListViews();
     }
 
     private void sletFadAction() {
-        // Confirmation dialog
+        Fad selectedFad = fad;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Bekræft sletning");
         alert.setHeaderText("Er du sikker på, at du vil slette dette fad?");
         alert.setContentText(
-                "Fadnummer: " + fad.getFadNr() + "\n" +
-                        "Fadtype: " + fad.getFadtype() + "\n" +
-                        "Oprindelse: " + fad.getOprindelse() + "\n\n" +
+                "Fadnummer: " + selectedFad.getFadNr() + "\n" +
+                        "Fadtype: " + selectedFad.getFadtype() + "\n" +
+                        "Oprindelse: " + selectedFad.getOprindelse() + "\n\n" +
                         "Denne handling kan ikke fortrydes."
         );
 
@@ -187,7 +192,7 @@ public class FadeTab extends Tab {
             Alert info = new Alert(Alert.AlertType.INFORMATION);
             info.setHeaderText(null);
             info.setTitle("Fad slettet");
-            info.setContentText("Fad nr. " + fad.getFadNr() + " blev slettet.");
+            info.setContentText("Fad " + selectedFad.getFadNr() + " blev slettet.");
             info.showAndWait();
         }
     }
@@ -196,6 +201,7 @@ public class FadeTab extends Tab {
     }
 
     private void tapFadAction() {
+
     }
 
     private void påfyldFadAction() {

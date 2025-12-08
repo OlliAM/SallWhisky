@@ -28,8 +28,8 @@ public abstract class Destillat implements Drinkable {
     private LocalDate færdigDato;
     private String init;
 
-    //    Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
-    //    Før det er færdigt
+    //Vi laver setter-metode for de variable, som kan tilføjes senere, således at et destillat kan oprettes i systemet
+    //Før det er færdigt
     public Destillat(String navn, LocalDate færdigDato, String init) {
         this.navn = navn;
         this.færdigDato = færdigDato;

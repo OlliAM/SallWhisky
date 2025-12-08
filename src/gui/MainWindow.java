@@ -8,6 +8,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 
 public class MainWindow extends Application {
@@ -18,10 +19,12 @@ public class MainWindow extends Application {
     public void start(Stage stage) {
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        tabPane.setPrefSize(800, 600);
+        tabPane.setMaxSize(800, 600);
 
         // Create Tabs
         LagerTab lagerTab = new LagerTab();
-        Tab destillaterTab = new Tab("Destillater");
+        Tab destillaterTab = new DestillaterTab();
         Tab fadeTab = new FadeTab();
         Tab produkterTab = new Tab("Produkter");
         tabPane.getTabs().addAll(lagerTab, destillaterTab, fadeTab, produkterTab);

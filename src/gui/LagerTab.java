@@ -27,9 +27,9 @@ public class LagerTab extends Tab {
 
     public LagerTab() {
         super("Lager");
-        GridPane gridPane = new GridPane();
-        this.setContent(gridPane);
-        initContent(gridPane);
+        GridPane pane = new GridPane();
+        this.setContent(pane);
+        initContent(pane);
     }
 
     public void initContent(GridPane pane) {
@@ -186,6 +186,7 @@ public class LagerTab extends Tab {
         stage.setScene(scene);
         stage.initOwner(this.getTabPane().getScene().getWindow()); // make it modal relative to main window
         stage.show();
+        txfReolNavn.getParent().requestFocus();
     }
 
     private void createLagerAction() {
@@ -198,6 +199,7 @@ public class LagerTab extends Tab {
 
         TextField txfLagerNavn = new TextField();
         txfLagerNavn.setPromptText("Indtast lagernavn");
+
 
         Button btnSelect = new Button("Vælg");
         btnSelect.setOnAction(event -> {
@@ -228,13 +230,13 @@ public class LagerTab extends Tab {
         stage.setScene(scene);
         stage.initOwner(this.getTabPane().getScene().getWindow()); // make it modal relative to main window
         stage.show();
+        txfLagerNavn.getParent().requestFocus();
     }
 
     private void reolChanged() {
         Reol selectedReol = lvwReoler.getSelectionModel().getSelectedItem();
         if (selectedReol != null) {
             lvwPladser.getItems().setAll(selectedReol.getPladser());
-            System.out.println(selectedReol.getPladser());
         }
     }
 

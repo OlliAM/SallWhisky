@@ -1,7 +1,6 @@
 package application.model;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * <h2>----- Attributer -----</h2>
@@ -76,7 +75,11 @@ public class Reol {
      * @return double
      */
     public double getProcentOptaget() {
-        return (pladser.length / optagedePladser);
+        double procentOptaget = 0;
+        if(optagedePladser > 0) {
+           procentOptaget = ((double) optagedePladser / pladser.length * 100);
+        }
+        return procentOptaget;
     }
 
     /**
@@ -123,6 +126,7 @@ public class Reol {
 
         // Remove the Storable-value from specified index & decrement counter.
         Storable værdi = pladser[pladsNr];
+        pladser[pladsNr] = null;
         optagedePladser -= 1;
         return værdi;
     }
@@ -132,7 +136,6 @@ public class Reol {
      * @return {@code Arraylist<String>}
      */
     public ArrayList<String> getTommePladser() {
-
         // Initiate the internal Arraylist.
         ArrayList<String> list = new ArrayList<>();
 
@@ -155,7 +158,6 @@ public class Reol {
      * @return {@code String} / {@code null}
      */
     public String søgPåReol(int fadNr) {
-
         // 'iterate over all spaces.
         for (int i = 0; i < pladser.length; i++) {
             Storable plads = pladser[i];
@@ -165,8 +167,6 @@ public class Reol {
                 if (fad.getFadNr() == fadNr) {
                     return ID + ": " + i;
                 }
-            } else {
-                continue;
             }
         }
 
@@ -229,7 +229,7 @@ public class Reol {
             // check if the Storable value is of type: 'Destillat'.
             if (plads instanceof Fad) {
                 Fad fad = (Fad) plads;
-                if (fad.getIndhold() == destillat) {
+                if (fad.getFadIndhold() == destillat) {
                     String værdi = ID + ": " + i;
                     list.add(værdi);
                 }

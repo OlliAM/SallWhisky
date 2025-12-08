@@ -19,27 +19,48 @@ class ControllerTest {
     }
 
     @Test
-    void createBundDestillat_createBunddestillatIStorage() {
+    void createBundDestillat_opretUfærdigtBunddestillatIStorage() {
+        //Act && Assert
+
+        assertTrue(storage.getDestilleringList().isEmpty());
+
+        BundDestillat expectedBunddestillat = controller.createBundDestillat("Bunddestillat1",
+                LocalDate.of(2025,1,1), "Byg", "Tørv", "EH");
+        assertEquals(1, storage.getDestilleringList().size());
+
+        Destillat actualBunddestillat = storage.getDestilleringList().getLast();
+        assertEquals(expectedBunddestillat, actualBunddestillat);
+
+        assertEquals("Byg", expectedBunddestillat.getKornsort());
+        assertEquals("Tørv", expectedBunddestillat.getRygemateriale());
+        assertEquals("EH", expectedBunddestillat.getInit());
+        assertEquals(LocalDate.of(2025,1,1), expectedBunddestillat.getStartDato());
+        assertNull(expectedBunddestillat.getKommentar());
+        assertEquals(0, expectedBunddestillat.getAlkoholprocent());
+        assertEquals(0, expectedBunddestillat.getMængdeL());
+        assertEquals(Maltbatch.SINGLE_CASK, expectedBunddestillat.getMaltbatch());
+    }
+
+    @Test
+    void createBundDestillat_opretFærdigtBunddestillatIStorage() {
         //Act && Assert
 
         assertTrue(storage.getDestillatList().isEmpty());
 
         BundDestillat expectedBunddestillat = controller.createBundDestillat("Bunddestillat1",
-                LocalDate.of(2025,1,1), "Byg", "Tørv", "EH");
+                LocalDate.of(2025,1,1), LocalDate.of(2025,1,2), "Byg",
+                "Tørv", "EH", 10, 50);
         assertEquals(1, storage.getDestillatList().size());
 
         Destillat actualBunddestillat = storage.getDestillatList().getLast();
         assertEquals(expectedBunddestillat, actualBunddestillat);
 
-        assertEquals(0, expectedBunddestillat.getMængdeL());
         assertEquals("Byg", expectedBunddestillat.getKornsort());
         assertEquals("Tørv", expectedBunddestillat.getRygemateriale());
         assertEquals("EH", expectedBunddestillat.getInit());
         assertEquals(LocalDate.of(2025,1,1), expectedBunddestillat.getStartDato());
-        assertEquals(LocalDate.of(2025,1,2), expectedBunddestillat.getFærdigDato());
         assertNull(expectedBunddestillat.getKommentar());
-        assertEquals(0, expectedBunddestillat.getAlkoholprocent());
-        assertEquals(0, expectedBunddestillat.getMængdeL());
+        assertEquals(50, expectedBunddestillat.getAlkoholprocent());
         assertEquals(Maltbatch.SINGLE_CASK, expectedBunddestillat.getMaltbatch());
     }
 
@@ -48,7 +69,8 @@ class ControllerTest {
         //Act
         Exception exception = assertThrows(RuntimeException.class, () -> controller.createBundDestillat(
                 "Bunddestillat 1", LocalDate.of(2025,1,2),
-                "Byg", "Tørv", "EH"
+                LocalDate.of(2025,1,1), "Byg", "Tørv", "EH",50,
+                50
         ));
 
         //Assert
@@ -68,7 +90,7 @@ class ControllerTest {
 
         assertEquals(1, actualFad.getFadNr());
         assertTrue(expectedFad.getIndholdshistorik().isEmpty());
-        assertNull(expectedFad.getIndhold());
+        assertNull(expectedFad.getFadIndhold());
         assertEquals(0, expectedFad.getMængdeL());
         assertEquals(50, expectedFad.getKapacitetL());
         assertEquals("Egetræ", expectedFad.getFadtype());

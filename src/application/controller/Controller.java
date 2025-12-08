@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.model.*;
-import org.jetbrains.annotations.NotNull;
 import storage.Storage;
 
 import java.time.LocalDate;
@@ -29,13 +28,13 @@ public class Controller {
     public BundDestillat createBundDestillat(String navn, LocalDate startDato, String kornsort,
                                              String rygemateriale, String init) {
         BundDestillat bundDestillat = new BundDestillat(navn, startDato, kornsort, rygemateriale, init);
-        storage.addToDestillatList(bundDestillat);
+        storage.addToDestilleringList(bundDestillat);
         return bundDestillat;
     }
 
     public BundDestillat createBundDestillat(String navn, LocalDate startDato, LocalDate slutDato, String kornsort, String rygemateriale, String init,
                                       double mængdeL, double alkoholProcent) {
-        if (slutDato != null && slutDato.isBefore(startDato)) {
+        if (slutDato.isBefore(startDato)) {
             throw new IllegalArgumentException("Slutdato er før startdato");
         }
         BundDestillat bundDestillat = new BundDestillat(navn, startDato, slutDato, kornsort, rygemateriale, init, mængdeL, alkoholProcent);
@@ -145,16 +144,16 @@ public class Controller {
                         "indholdet");
             }
 
-            if (dato.isBefore(fad.getIndhold().getFærdigDato())) {
+            if (dato.isBefore(fad.getFadIndhold().getFærdigDato())) {
                 throw new IllegalArgumentException("Dato for påfyldning af fad " + fad.getFadNr() + " er efter " +
                         "oprettelsesdatoen for færdigproduktet");
             }
 
-            if (fad.getIndhold().getFærdigDato().until(dato).getYears() < 3) {
+            if (fad.getFadIndhold().getFærdigDato().until(dato).getYears() < 3) {
                 throw new IllegalArgumentException("Fad " + fad.getFadNr() + " har ikke været lagret i 3 år endnu");
             }
 
-            Destillat destillat = fad.getIndhold();
+            Destillat destillat = fad.getFadIndhold();
             anvendteDestillater.put(destillat, fad);
 
             alkoholVolumen += mængde / 100 * destillat.getAlkoholprocent();

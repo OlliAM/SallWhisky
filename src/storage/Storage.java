@@ -8,6 +8,7 @@ import java.util.Collections;
 public class Storage {
     private static Storage storage;
     private ArrayList<Destillat> destillatList;
+    private ArrayList<BundDestillat> destilleringList;
     private ArrayList<Fad> fadList;
     private ArrayList<Færdigprodukt> færdigproduktList;
     private ArrayList<Lager> lagerList;
@@ -21,6 +22,7 @@ public class Storage {
 
     private Storage() {
         destillatList = new ArrayList<>();
+        destilleringList = new ArrayList<>();
         fadList = new ArrayList<>();
         færdigproduktList = new ArrayList<>();
         lagerList = new ArrayList<>();
@@ -51,6 +53,20 @@ public class Storage {
 
     public ArrayList<Destillat> getDestillatList() {
         return destillatList;
+    }
+
+    // ---- Destilleringer ------
+
+    public void addToDestilleringList(BundDestillat bundDestillat) {
+        destilleringList.add(bundDestillat);
+    }
+
+    public void removeFromDestilleringList(BundDestillat bundDestillat) {
+        destilleringList.remove(bundDestillat);
+    }
+
+    public ArrayList<BundDestillat> getDestilleringList() {
+        return destilleringList;
     }
 
     // ---------- Fad ----------
