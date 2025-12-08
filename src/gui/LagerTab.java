@@ -2,6 +2,7 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Lager;
+import application.model.Plads;
 import application.model.Reol;
 import application.model.Storable;
 import javafx.beans.value.ChangeListener;
@@ -21,7 +22,7 @@ public class LagerTab extends Tab {
     private Lager lager;
     private Controller controller = new Controller();
     private ListView<Reol> lvwReoler;
-    private ListView<Storable> lvwPladser;
+    private ListView<Plads> lvwPladser;
     private Button btncreateLager, btnVælgLager, btncreateReol, btnTømPlads, btnTilføjTilLager;
     private Label lblLagerNavn;
 
@@ -105,15 +106,19 @@ public class LagerTab extends Tab {
         Label lblPladser = new Label("Pladser");
         lblPladser.setStyle("-fx-font-size: 14px; -fx-font-weight: 300;");
         lvwPladser = new ListView<>();
-        lvwPladser.setCellFactory(lvwPladser -> new ListCell<>() {
+        lvwPladser.setCellFactory(list -> new ListCell<>() {
             @Override
-            protected void updateItem(Storable item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setText("Tom plads");
+            protected void updateItem(Plads plads, boolean empty) {
+                super.updateItem(plads, empty);
+                if (empty || plads == null) {
+                    setText(null);
                 } else {
-                    setText(item.toString());
+                    String str = plads.getPladsNr() + " - ";
+                    if (plads.getVare() == null) {
+                        setText(str + "Tom plads");
+                    } else {
+                        setText(str + plads.getVare().toString());
+                    }
                 }
             }
         });

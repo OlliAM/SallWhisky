@@ -46,17 +46,24 @@ public class Reol {
 
     // Class variables.
     private String ID;
-    private Storable[] pladser;
     private int optagedePladser;
 
-    // Constructor (private).
-    Reol(String ID, Storable[] pladser, int optagedePladser) {
+    //Linkattributes
+    private Plads[] pladser;
+    private Lager lager;
+
+    // Constructor (protected).
+    Reol(Lager lager, String ID, int antalPladser) {
+        this.lager = lager;
         this.ID = ID;
-        this.pladser = pladser;
-        this.optagedePladser = optagedePladser;
+        pladser = new Plads[antalPladser];
+        for (int i = 0; i < antalPladser; i++) {
+            pladser[i] = new Plads(this, i + 1);
+        }
+        optagedePladser = 0;
     }
 
-    public Storable[] getPladser() {
+    public Plads[] getPladser() {
         return pladser.clone();
     }
 
@@ -96,13 +103,8 @@ public class Reol {
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
 
-        // Check if the space at pladsNr-index is currently occupied.
-        if (pladser[pladsNr] != null) {
-            throw new RuntimeException("Space: " + pladsNr + ", is already in use!");
-        }
-
         // Add the produkt-instance to specified index & increment by 1.
-        pladser[pladsNr] = produkt;
+        produkt.gemPåPlads(pladser[pladsNr]);
         optagedePladser += 1;
     }
 
@@ -125,8 +127,8 @@ public class Reol {
         }
 
         // Remove the Storable-value from specified index & decrement counter.
-        Storable værdi = pladser[pladsNr];
-        pladser[pladsNr] = null;
+        Storable værdi = pladser[pladsNr].getVare();
+        pladser[pladsNr].setVare(null);
         optagedePladser -= 1;
         return værdi;
     }
@@ -140,9 +142,9 @@ public class Reol {
         ArrayList<String> list = new ArrayList<>();
 
         // For loop to iterate over all spaces & add if necessary.
-        for (int i = 0; i < pladser.length; i++) {
-            if (pladser[i] != null) {
-                list.add(ID + ": " + i);
+        for (Plads plads : pladser) {
+            if (plads.getVare() != null) {
+                tommePladser.add(plads);
             }
         }
 
@@ -154,24 +156,24 @@ public class Reol {
      * <p1><b><i>**Overloaded**</i></b></p1><br>
      * <p1>Metode til at søge efter et individuelt {@code Fad} objekt på det tilhørende reol
      * ud fra objektets ID nummer. Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
+     *
      * @param fadNr ID nummer for fadet som søges
-     * @return {@code String} / {@code null}
+     * @return {@code Plads} / {@code null}
      */
-    public String søgPåReol(int fadNr) {
+    public Plads søgPåReol(int fadNr) {
+        boolean found = false;
+        Plads result = null;
+
         // 'iterate over all spaces.
-        for (int i = 0; i < pladser.length; i++) {
-            Storable plads = pladser[i];
-            // check if the Storable value is off type: 'Fad'.
-            if (plads instanceof Fad) {
-                Fad fad = (Fad) plads;
-                if (fad.getFadNr() == fadNr) {
-                    return ID + ": " + i;
+        for (Plads plads : pladser) {
+            Storable vare = plads.getVare();
+            if (vare instanceof Fad) {
+                if (((Fad) vare).getFadNr() == fadNr) {
+                    result = vare.getPlads();
                 }
             }
         }
-
-        // Default -> No match found!
-        return null;
+        return result;
     }
 
     /**
@@ -182,32 +184,20 @@ public class Reol {
      * @param fadtype Typen af {@code Fad} der søges
      * @return {@code Arraylist<String>} / {@code null}
      */
-    public ArrayList<String> søgPåReol(String fadtype) {
+    public ArrayList<Plads> søgPåReol(String fadtype) {
 
         // Instantiate new arraylist.
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Plads> list = new ArrayList<>();
 
         // 'iterate over all spaces.
-        for (int i = 0; i < pladser.length; i++) {
-            Storable plads = pladser[i];
-            // check if the Storable value is off type: 'Fadtype'.
-            if (plads instanceof Fad) {
-                Fad fad = (Fad) plads;
+        for (Plads plads : pladser) {
+            if (plads.getVare() instanceof Fad fad) {
                 if (fad.getFadtype().equals(fadtype)) {
-                    String værdi = ID + ": " + i;
-                    list.add(værdi);
+                    list.add(plads);
                 }
-            } else {
-                continue;
             }
         }
-
-        // Default -> No match found!
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list;
-        }
+        return list;
     }
 
     /**
@@ -215,7 +205,8 @@ public class Reol {
      * <p1>Metode til at søge efter alle {@code Fad} objekter på reolen
      * som indeholder det specifikke {@code destillat}.
      * Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
-     * @param destillat Typen af {@code destillat} som søges
+     *
+     * @param destillat Typen af {@code Destillat} som søges
      * @return {@code Arraylist<String>} / {@code null}
      */
     public ArrayList<String> søgPåReol(Destillat destillat) {

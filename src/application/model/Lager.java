@@ -86,9 +86,8 @@ public class Lager {
      */
     public Reol createReol(String ID, int pladser) {
         // Instantiate the new Reol-class to store.
-        Storable[] nyePladser = new Storable[pladser];
         ID = navn + "-" + ID;
-        Reol newReol = new Reol(ID, nyePladser, 0);
+        Reol newReol = new Reol(this, ID, pladser);
 
         // Check if the Reol-class already exists.
         if (!reoler.contains(newReol)) {
@@ -163,19 +162,19 @@ public class Lager {
      * ikke indeholder et {@code Storable} objekt</p1>
      * @return {@code Arraylist<String>}
      */
-    public ArrayList<String> getTommePladser() {
+    public ArrayList<Plads> getTommePladser() {
 
         // Instantialize new Arraylist.
         ArrayList<String> list = new ArrayList<>();
 
         // Iterate through all currently stored Reol-instances.
         for (Reol reol : reoler) {
-            ArrayList<String> reolList = reol.getTommePladser();
+            ArrayList<Plads> reolList = reol.getTommePladser();
             list.addAll(reolList);
         }
 
         // Return the finalized list.
-        return  list;
+        return list;
     }
 
     /**
@@ -185,19 +184,13 @@ public class Lager {
      * @param fadNr ID nummer for fadet som søges
      * @return String
      */
-    public String søgPåLager(int fadNr) {
-
-        // Iterate over entire list of Reol-instances.
-        for (Reol reol : reoler) {
-            String værdi = reol.søgPåReol(fadNr);
-            // If null is returned the value was not found!
-            // If a String-type was returned the value was found!
-            if (værdi != null) {
-                return værdi;
-            }
+    public Plads søgPåLager(int fadNr) {
+        Plads plads = null;
+        int i = 0;
+        while (plads == null && i < reoler.size()) {
+            plads = reoler.get(i).søgPåReol(fadNr);
         }
-        // Default = Unsuccessfull search.
-        return "Cask with ID: " + fadNr + ", not found!";
+        return plads;
     }
 
     /**
@@ -208,26 +201,16 @@ public class Lager {
      * @param fadtype Typen af {@code Fad} der søges
      * @return {@code Arraylist<String>} / {@code null}
      */
-    public ArrayList<String> søgPåLager(String fadtype) {
-
+    public ArrayList<Plads> søgPåLager(String fadtype) {
         // Initiate new arraylist instance.
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Plads> list = new ArrayList<>();
 
         // Iterate over entire list of Reol-instances.
         for (Reol reol : reoler) {
-            ArrayList<String> værdier = reol.søgPåReol(fadtype);
-            // If null is returned the value was not found!
-            // If an Arraylist-type was returned the value was found!
-            if (værdier != null) {
-                list.addAll(værdier);
-            }
+            ArrayList<Plads> pladser = reol.søgPåReol(fadtype);
+            list.addAll(pladser);
         }
-        // Default = Unsuccessfull search.
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list;
-        }
+        return list;
     }
 
     /**
@@ -238,26 +221,19 @@ public class Lager {
      * @param destillat Typen af {@code destillat} som søges
      * @return {@code Arraylist<String>} / {@code null}
      */
-    public ArrayList<String> søgPåLager(Destillat destillat) {
+    public ArrayList<Plads> søgPåLager(Destillat destillat) {
 
         // Initiate new arraylist instance.
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Plads> list = new ArrayList<>();
 
         // Iterate over entire list of Reol-instances.
         for (Reol reol : reoler) {
-            ArrayList<String> værdier = reol.søgPåReol(destillat);
+            ArrayList<Plads> pladser = reol.søgPåReol(destillat);
             // If null is returned the value was not found!
             // If an Arraylist-type was returned the value was found!
-            if (værdier != null) {
-                list.addAll(værdier);
-            }
+            list.addAll(pladser);
         }
-        // Default = Unsuccessfull search.
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list;
-        }
+        return list;
     }
 
     public ArrayList<Reol> getReoler() {

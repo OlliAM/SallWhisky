@@ -298,7 +298,7 @@ public class Controller {
      * @param lager Det specifikke {@code Lager} objekt som ønskes søgt i
      * @return {@code Arraylist<String>}
      */
-    public ArrayList<String> getTommePladser(Lager lager) {
+    public ArrayList<Plads> getTommePladser(Lager lager) {
         return lager.getTommePladser();
     }
 
@@ -310,7 +310,7 @@ public class Controller {
      * @param fadNr Identificerende nummer for det ønskede {@code Fad} objekt
      * @return {@code String}
      */
-    public String søgPåLager(Lager lager, int fadNr) {
+    public Plads søgPåLager(Lager lager, int fadNr) {
         return lager.søgPåLager(fadNr);
     }
 
@@ -322,7 +322,7 @@ public class Controller {
      * @param fadtype Den type af {@code Fad} som ønskes at finde
      * @return {@code Arraylist<String>}
      */
-    public ArrayList<String> søgPåLager(Lager lager, String fadtype) {
+    public ArrayList<Plads> søgPåLager(Lager lager, String fadtype) {
         return lager.søgPåLager(fadtype);
     }
 
@@ -334,7 +334,7 @@ public class Controller {
      * @param destillat Det indhold som ønskes at finde
      * @return {@code Arraylist<String>}
      */
-    public ArrayList<String> søgPåLager(Lager lager, Destillat destillat) {
+    public ArrayList<Plads> søgPåLager(Lager lager, Destillat destillat) {
         return lager.søgPåLager(destillat);
     }
 

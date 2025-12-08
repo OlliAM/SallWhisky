@@ -34,6 +34,36 @@ public class KombiDestillat extends Destillat{
         this.destillater = new ArrayList<>();
     }
 
+
+    public boolean indeholderDestillat(Destillat destillat) {
+        boolean indeholderDestillat = false;
+        int i = 0;
+        //Gem kombidestillater i en liste der tjekkes til sidst, for at undgå en masse unødige rekursive kald
+        ArrayList<KombiDestillat> kombiDestillater = new ArrayList<>();
+        while(!indeholderDestillat && i < destillater.size()) {
+            Destillat d = destillater.get(i);
+            if (d instanceof KombiDestillat kd) {
+                kombiDestillater.add(kd);
+            } else {
+                if (d == destillat) {
+                    indeholderDestillat = true;
+                }
+            }
+            i++;
+        }
+
+        i = 0;
+        while(!indeholderDestillat && i < kombiDestillater.size()) {
+            KombiDestillat d = kombiDestillater.get(i);
+            indeholderDestillat = indeholderDestillat(d);
+            i++;
+        }
+
+        return indeholderDestillat;
+    }
+
+
+
     /**
      * <p1>Metode til at tilføje et {@code Destillat} til den tilhørende {@code KombiDestillat} klasse.
      * Tager højde for om det specificerede Destillat allerede eksisterer i den interne liste</p1>
@@ -69,6 +99,7 @@ public class KombiDestillat extends Destillat{
             throw new ArrayIndexOutOfBoundsException("Destillatet består kun af 2");
         }
     }
+
 
     @Override
     public String toString() {

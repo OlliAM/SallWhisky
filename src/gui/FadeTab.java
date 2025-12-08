@@ -111,8 +111,32 @@ public class FadeTab extends Tab {
 
         tommeFadeVBox.getChildren().addAll(lblTommeFade, lvwFadeTomme);
 
+        lvwFadeIndhold.setCellFactory(list -> createFadCell());
+        lvwFadeTomme.setCellFactory(list -> createFadCell());
+
         updateListViews();
     }
+
+    private ListCell<Fad> createFadCell() {
+        return new ListCell<>() {
+            @Override
+            protected void updateItem(Fad fad, boolean empty) {
+                super.updateItem(fad, empty);
+
+                if (empty || fad == null) {
+                    setText(null);
+                    return;
+                }
+
+                String pladsText = (fad.getPlads() != null)
+                        ? fad.getPlads().toString()
+                        : "Ingen plads";
+
+                setText(fad.toString() + "\n" + pladsText);
+            }
+        };
+    }
+
 
     private void fadeTomChanged(Fad selectedFad) {
         if (selectedFad != null) {
