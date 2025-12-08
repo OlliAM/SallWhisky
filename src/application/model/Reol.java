@@ -43,12 +43,10 @@ import java.util.ArrayList;
  * <h3>-----------------------------------------------------------</h3>
  */
 public class Reol {
-
-    // Class variables.
     private String ID;
     private int optagedePladser;
 
-    //Linkattributes
+    //Linkattributter
     private Plads[] pladser;
     private Lager lager;
 
@@ -127,8 +125,8 @@ public class Reol {
         }
 
         // Check if the space at pladsNr-index is currently occupied.
-        if (pladser[pladsNr] == null) {
-            throw new RuntimeException("Space: " + pladsNr + " is currently empty!");
+        if (pladser[pladsNr].getVare() != null) {
+            throw new RuntimeException(pladsNr + "  ");
         }
 
         // Remove the Storable-value from specified index & decrement counter.
