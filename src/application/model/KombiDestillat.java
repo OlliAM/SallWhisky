@@ -31,6 +31,7 @@ public class KombiDestillat extends Destillat{
 
     public KombiDestillat(String navn, LocalDate færdigDato, String init) {
         super(navn,færdigDato, init);
+
         this.destillater = new ArrayList<>();
     }
 

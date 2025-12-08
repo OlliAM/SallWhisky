@@ -74,28 +74,30 @@ public class Reol {
 
     // Return the total num of occupied spaces in the Reol-instance.
     public int getOptagedePladser() {
-        return this.optagedePladser;
+        return optagedePladser;
     }
 
     /**
      * <p1>Metode til at udregne procentdelen af lagerpladser der på nuværende tidspunkt er optaget</p1>
+     *
      * @return double
      */
     public double getProcentOptaget() {
         double procentOptaget = 0;
-        if(optagedePladser > 0) {
-           procentOptaget = ((double) optagedePladser / pladser.length * 100);
+        if (optagedePladser > 0) {
+            procentOptaget = ((double) optagedePladser / pladser.length * 100);
         }
         return procentOptaget;
     }
 
     /**
      * <p1>Metode til at lagre et {@code Storable} objekt på det specificerede lagerplads nummer</p1>
+     *
      * @param pladsNr Identificerende nummer for lagerplads
      * @param produkt {@code Storable} objekt til at lagre
-     * @throws IndexOutOfBoundsException Hvis plads nummeret er uden for Reolens kapacitet
-     * @throws RuntimeException Hvis den nuværende lagerplads er optaget
      * @return void
+     * @throws IndexOutOfBoundsException Hvis plads nummeret er uden for Reolens kapacitet
+     * @throws RuntimeException          Hvis den nuværende lagerplads er optaget
      */
     public void gemPåPlads(int pladsNr, Storable produkt) {
         // Check if the pladsNr is out of bounds.
@@ -110,10 +112,11 @@ public class Reol {
 
     /**
      * <p1>Utager et {@code Storable} objekt fra den specificerede lagerplads</p1>
+     *
      * @param pladsNr Identificerende nummer for lagerplads
-     * @throws IndexOutOfBoundsException Hvis plads nummeret er uden for Reolens kapacitet
-     * @throws RuntimeException Hvis den nuværende lagerplads er {@code null}
      * @return {@code Storable}
+     * @throws IndexOutOfBoundsException Hvis plads nummeret er uden for Reolens kapacitet
+     * @throws RuntimeException          Hvis den nuværende lagerplads er {@code null}
      */
     public Storable tagFraPlads(int pladsNr) {
         // Check if the pladsNr is out of bounds.
@@ -135,11 +138,12 @@ public class Reol {
 
     /**
      * <p1>Metode til at producere en liste af alle individuelle lagerpladser som er ledige</p1>
+     *
      * @return {@code Arraylist<String>}
      */
-    public ArrayList<String> getTommePladser() {
+    public ArrayList<Plads> getTommePladser() {
         // Initiate the internal Arraylist.
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Plads> tommePladser = new ArrayList<>();
 
         // For loop to iterate over all spaces & add if necessary.
         for (Plads plads : pladser) {
@@ -147,9 +151,8 @@ public class Reol {
                 tommePladser.add(plads);
             }
         }
-
         // Return final list.
-        return list;
+        return tommePladser;
     }
 
     /**
@@ -181,6 +184,7 @@ public class Reol {
      * <p1>Metode til at søge efter alle {@code Fad} objekter på reolen
      * som besidder den specifikke {@code fadType} variabel.
      * Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
+     *
      * @param fadtype Typen af {@code Fad} der søges
      * @return {@code Arraylist<String>} / {@code null}
      */
@@ -209,36 +213,25 @@ public class Reol {
      * @param destillat Typen af {@code Destillat} som søges
      * @return {@code Arraylist<String>} / {@code null}
      */
-    public ArrayList<String> søgPåReol(Destillat destillat) {
+    public ArrayList<Plads> søgPåReol(Destillat destillat) {
 
         // Instantiate new arraylist.
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Plads> list = new ArrayList<>();
 
-        // 'iterate over all spaces.
-        for (int i = 0; i < pladser.length; i++) {
-            Storable plads = pladser[i];
-            // check if the Storable value is off type: 'Destillat'.
-            if (plads instanceof Fad) {
-                Fad fad = (Fad) plads;
-                if (fad.getFadIndhold() == destillat) {
-                    String værdi = ID + ": " + i;
-                    list.add(værdi);
+        for (Plads plads : pladser) {
+            if (plads.getVare() instanceof Fad fad) {
+                if (fad.getFadIndhold() instanceof KombiDestillat kd) {
+                    if(kd.indeholderDestillat(destillat)) {
+                        list.add(fad.getPlads());
+                    }
                 }
-            } else {
-                continue;
             }
         }
-
-        // Default -> No match found!
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list;
-        }
+        return list;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return ID;
     }
 }

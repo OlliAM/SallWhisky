@@ -49,6 +49,6 @@ public class Flaske extends Storable {
 
     @Override
     public String toString() {
-        return flaskeID;
+        return "FlaskeID: " + flaskeID + ": " + flaskeKapacitetL + "L";
     }
 }

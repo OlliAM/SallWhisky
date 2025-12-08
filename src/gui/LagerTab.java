@@ -153,7 +153,7 @@ public class LagerTab extends Tab {
         vbox.setAlignment(Pos.CENTER);
 
         TextField txfReolNavn = new TextField();
-        txfReolNavn.setPromptText("Indtast reolnavn her");
+        txfReolNavn.setPromptText("Indtast navn på reol her");
 
         TextField txfAntal = new TextField();
         txfAntal.setPromptText("Indtast antal pladser");

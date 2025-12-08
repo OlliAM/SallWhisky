@@ -80,7 +80,8 @@ public class Lager {
     /**
      * <p1> Opretter et instanse af {@code Reol-klassen} med prekonfigureret lagerplads
      * og lagrer den i tilhørende {@code Lager-klasse}.</p1><br>
-     * @param ID String id
+     *
+     * @param ID      String id
      * @param pladser nummer af tilgængelige lagerpladser
      * @return Reol
      */
@@ -102,12 +103,13 @@ public class Lager {
      * <p1>Metode til at lagre valgte instans af {@code Storable} i specificerede {@code Reol}.
      * Metoden opfanger hvilken subklasse objektet tilhører og optæller herefter
      * interne {@code antalFade} eller {@code antalFlasker} variabler.</p1>
-     * @param reol reol til at gemme produktet i
+     *
+     * @param reol    reol til at gemme produktet i
      * @param pladsNr tilhørende nummer af lagerplads
      * @param produkt valgte produkt til at lagre
-     * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
-     * @throws RuntimeException Hvis den valgte lagerplads allerede anvendes.
      * @return void
+     * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
+     * @throws RuntimeException          Hvis den valgte lagerplads allerede anvendes.
      */
     public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
         // Call the storage method in Reol-instance -> Handles Errors.
@@ -129,11 +131,12 @@ public class Lager {
      * <p1>Metode til at udtage et {@code Storable} objekt fra den specificerede lagerplads.
      * Metoden opfanger hvilken subklasse objektet tilhører og nedsætter herefter
      * interne {@code antalFade} eller {@code antalFlasker} variabler. </p1>
-     * @param reol reol til at tage produktet fra
+     *
+     * @param reol    reol til at tage produktet fra
      * @param pladsNr tilhørende nummer af lagerplads
-     * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
-     * @throws RuntimeException Hvis den valgte lagerplads er uden {@code Storable} objekt.
      * @return Storable
+     * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
+     * @throws RuntimeException          Hvis den valgte lagerplads er uden {@code Storable} objekt.
      */
     public Storable tagFraReol(Reol reol, int pladsNr) {
         // Initiate new Storable variable.
@@ -160,12 +163,13 @@ public class Lager {
     /**
      * <p1>Metode til at udarbejde en liste af individuelle lagerpladser der på nuværende tidspunkt
      * ikke indeholder et {@code Storable} objekt</p1>
-     * @return {@code Arraylist<String>}
+     *
+     * @return {@code Arraylist<Plads>}
      */
     public ArrayList<Plads> getTommePladser() {
 
         // Instantialize new Arraylist.
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Plads> list = new ArrayList<>();
 
         // Iterate through all currently stored Reol-instances.
         for (Reol reol : reoler) {
@@ -181,8 +185,9 @@ public class Lager {
      * <p1><b><i>**Overloaded**</i></b></p1><br>
      * <p1>Metode til at søge efter et individuelt {@code Fad} objekt på det tilhørende lager
      * ud fra objektets ID nummer. Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
+     *
      * @param fadNr ID nummer for fadet som søges
-     * @return String
+     * @return Plads
      */
     public Plads søgPåLager(int fadNr) {
         Plads plads = null;
@@ -198,8 +203,9 @@ public class Lager {
      * <p1>Metode til at søge efter alle {@code Fad} objekter på det tilhørende lager
      * som besidder den specifikke {@code fadType} variabel.
      * Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
+     *
      * @param fadtype Typen af {@code Fad} der søges
-     * @return {@code Arraylist<String>} / {@code null}
+     * @return {@code Arraylist<Plads>} / {@code null}
      */
     public ArrayList<Plads> søgPåLager(String fadtype) {
         // Initiate new arraylist instance.
@@ -218,6 +224,7 @@ public class Lager {
      * <p1>Metode til at søge efter alle {@code Fad} objekter på det tilhørende lager
      * som indeholder det specifikke {@code destillat}.
      * Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
+     *
      * @param destillat Typen af {@code destillat} som søges
      * @return {@code Arraylist<String>} / {@code null}
      */
