@@ -21,38 +21,11 @@ class ReolTest {
     }
 
     @Test
-    void gemPåPlads_pladsOutOfBounds() {
-        //Act && assert
-        Exception exception = assertThrows(RuntimeException.class, () -> reol.gemPåPlads(11, fad));
-
-        assertEquals("Index out of bounds!", exception.getMessage());
-    }
-
-    @Test
-    void gemPåPlads_pladsOptaget() {
-        //Arrange
-        Fad fad2 = new Fad(2, "Egetræ", 10, "Italien");
-        reol.gemPåPlads(1, fad);
-
-        //Act & assert
-        Exception exception = assertThrows(RuntimeException.class, () -> reol.gemPåPlads(1, fad2));
-
-        assertEquals("Space: 1, is already in use!", exception.getMessage());
-    }
-
-    @Test
-    void gemPåPlads_friPlads() {
-        //Act & assert
-        reol.gemPåPlads(1, fad);
-        assertEquals(fad, reol.getPladser()[1]);
-    }
-
-    @Test
     void tagFraPlads_pladsOutOfBounds() {
         //Act && assert
-        Exception exception = assertThrows(RuntimeException.class, () -> reol.tagFraPlads(11));
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> reol.tagFraPlads(11));
 
-        assertEquals("Index out of bounds!", exception.getMessage());
+        assertEquals("Pladsen er udenfor reolens kapacitet.", exception.getMessage());
     }
 
     @Test
@@ -66,7 +39,7 @@ class ReolTest {
     @Test
     void tagFraPlads_pladsOccupied() {
         //Arrange
-        reol.gemPåPlads(1, fad);
+
 
         //Act
         Storable actual = reol.tagFraPlads(1);
@@ -88,9 +61,9 @@ class ReolTest {
 
         //Act & assert
         assertEquals(0, reol.getProcentOptaget());
-        reol.gemPåPlads(1, fad);
+        //reol.gemPåPlads(1, fad);
         assertEquals(10, reol.getProcentOptaget());
-        reol.gemPåPlads(2, fad2);
+        //reol.gemPåPlads(2, fad2);
         assertEquals(20, reol.getProcentOptaget());
     }
 

@@ -91,23 +91,25 @@ public class Reol {
     }
 
     /**
-     * <p1>Metode til at lagre et {@code Storable} objekt på det specificerede lagerplads nummer</p1>
+     * <p1>Metode til at lagre valgte instans af {@code Storable} i specificerede {@code Reol}.
+     * Metoden opfanger hvilken subklasse objektet tilhører og optæller herefter
+     * interne {@code antalFade} eller {@code antalFlasker} variabler.</p1>
      *
-     * @param pladsNr Identificerende nummer for lagerplads
-     * @param produkt {@code Storable} objekt til at lagre
+     * @param reol    reol til at gemme produktet i
+     * @param produkt valgte produkt til at lagre
      * @return void
-     * @throws IndexOutOfBoundsException Hvis plads nummeret er uden for Reolens kapacitet
-     * @throws RuntimeException          Hvis den nuværende lagerplads er optaget
+     * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
+     * @throws RuntimeException          Hvis den valgte lagerplads allerede anvendes.
      */
-    public void gemPåPlads(int pladsNr, Storable produkt) {
-        // Check if the pladsNr is out of bounds.
-        if (pladsNr > pladser.length) {
-            throw new IndexOutOfBoundsException("Index out of bounds!");
+    public void gemPåReol(Reol reol, Storable produkt) {
+        ArrayList<Plads> tommePladser = reol.getTommePladser();
+
+        if(tommePladser.isEmpty()) {
+            throw new IllegalArgumentException("Reol " + ID + " har ingen tomme pladser");
         }
 
-        // Add the produkt-instance to specified index & increment by 1.
-        produkt.gemPåPlads(pladser[pladsNr]);
-        optagedePladser += 1;
+        produkt.gemPåPlads(tommePladser.getFirst());
+        optagedePladser++;
     }
 
     /**
@@ -121,7 +123,7 @@ public class Reol {
     public Storable tagFraPlads(int pladsNr) {
         // Check if the pladsNr is out of bounds.
         if (pladsNr > pladser.length) {
-            throw new IndexOutOfBoundsException("Index out of bounds!");
+            throw new IndexOutOfBoundsException("Pladsen er udenfor reolens kapacitet.");
         }
 
         // Check if the space at pladsNr-index is currently occupied.
@@ -132,7 +134,7 @@ public class Reol {
         // Remove the Storable-value from specified index & decrement counter.
         Storable værdi = pladser[pladsNr].getVare();
         pladser[pladsNr].setVare(null);
-        optagedePladser -= 1;
+        optagedePladser--;
         return værdi;
     }
 
@@ -228,6 +230,10 @@ public class Reol {
             }
         }
         return list;
+    }
+
+    public Lager getLager() {
+        return lager;
     }
 
     @Override

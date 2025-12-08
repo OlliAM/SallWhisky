@@ -277,7 +277,7 @@ public class Controller {
      * @return {@code void}
      */
     public void gemPåReol(Lager lager, Reol reol, int pladsNr, Storable produkt) {
-        lager.gemPåReol(reol, pladsNr, produkt);
+        //Todo
     }
 
     /**
