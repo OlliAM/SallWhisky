@@ -19,6 +19,13 @@ public abstract class Storable {
         plads.setVare(this);
     }
 
+    public void fjernFraPlads() {
+        if(plads != null) {
+            plads.setVare(null);
+        }
+        plads = null;
+    }
+
     public Plads getPlads() {
         return plads;
     }

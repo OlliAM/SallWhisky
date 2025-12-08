@@ -100,34 +100,6 @@ public class Lager {
     }
 
     /**
-     * <p1>Metode til at lagre valgte instans af {@code Storable} i specificerede {@code Reol}.
-     * Metoden opfanger hvilken subklasse objektet tilhører og optæller herefter
-     * interne {@code antalFade} eller {@code antalFlasker} variabler.</p1>
-     *
-     * @param reol    reol til at gemme produktet i
-     * @param pladsNr tilhørende nummer af lagerplads
-     * @param produkt valgte produkt til at lagre
-     * @return void
-     * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
-     * @throws RuntimeException          Hvis den valgte lagerplads allerede anvendes.
-     */
-    public void gemPåReol(Reol reol, int pladsNr, Storable produkt) {
-        // Call the storage method in Reol-instance -> Handles Errors.
-        try {
-            reol.gemPåPlads(pladsNr, produkt);
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        }
-
-        // Check which type of Storable was added & increment internal counter.
-        if (produkt instanceof Fad) {
-            antalFade += 1;
-        } else {
-            antalFlasker += 1;
-        }
-    }
-
-    /**
      * <p1>Metode til at udtage et {@code Storable} objekt fra den specificerede lagerplads.
      * Metoden opfanger hvilken subklasse objektet tilhører og nedsætter herefter
      * interne {@code antalFade} eller {@code antalFlasker} variabler. </p1>
