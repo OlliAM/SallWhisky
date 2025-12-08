@@ -9,13 +9,14 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReolTest {
-    Reol reol;
-    Fad fad;
+    private Reol reol;
+    private Fad fad;
+    private Lager lager;
 
     @BeforeEach
     void setup() {
-        Storable[] pladser = new Storable[10];
-        reol = new Reol("Reol1", pladser, 0);
+        lager = new Lager("Lager1");
+        reol = new Reol(lager,"A", 0);
         fad = new Fad(1, "Egetræ", 10, "Spanien");
     }
 

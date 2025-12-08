@@ -11,7 +11,7 @@ package application.model;
  * <br>
  * <h3>-------------------------------------</h3>
  */
-public class Flaske implements Storable {
+public class Flaske extends Storable {
     private String flaskeID;
     private double flaskeKapacitetL = 0.7;
 
@@ -49,6 +49,6 @@ public class Flaske implements Storable {
 
     @Override
     public String toString() {
-        return flaskeID;
+        return "FlaskeID: " + flaskeID + ": " + flaskeKapacitetL + "L";
     }
 }

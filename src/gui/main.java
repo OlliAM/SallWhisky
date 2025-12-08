@@ -104,7 +104,7 @@ public class main {
         controller.createFadtype("Egetræ");
 
         //Set kommentar
-        bundDestillat1.setKommentar("Din mor er en luder og jones er gay.");
+        bundDestillat1.setKommentar("Hvis Benn ser det her, skylder Clerk ham 50 kr :)");
         bundDestillat2.setKommentar("Ole ");
     }
 }
