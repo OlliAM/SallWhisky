@@ -96,7 +96,7 @@ public class Færdigprodukt {
                 throw new IllegalArgumentException("Fadet er tomt");
             }
             if (mængde > fad.getMængdeL()) {
-                throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end" +
+                throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end " +
                         "indholdet");
             }
 
