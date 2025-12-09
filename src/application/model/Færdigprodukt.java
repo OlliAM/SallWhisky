@@ -92,6 +92,9 @@ public class Færdigprodukt {
         for (Fad fad : fade.keySet()) {
             double mængde = fade.get(fad);
 
+            if(fad.getFadIndhold() == null) {
+                throw new IllegalArgumentException("Fadet er tomt");
+            }
             if (mængde > fad.getMængdeL()) {
                 throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end" +
                         "indholdet");
@@ -126,91 +129,6 @@ public class Færdigprodukt {
     public Færdigprodukt(String navn, Fad fad, double mængde, double tilsatVandL, String vandOprindelse, int produktNr,
                          String beskrivelse, LocalDate dato) {
         this(navn, Map.of(fad, mængde), tilsatVandL, vandOprindelse, produktNr, beskrivelse, dato);
-    }
-
-    public String getNavn() {
-        return navn;
-    }
-
-    public void setNavn(String navn) {
-        this.navn = navn;
-    }
-
-    public void setAnvendteDestillater(Map<Destillat, Fad> anvendteDestillater) {
-        this.anvendteDestillater = anvendteDestillater;
-    }
-
-    public void setMængdeL(double mængdeL) {
-        this.mængdeL = mængdeL;
-    }
-
-    public double getMængdeL() {
-        return mængdeL;
-    }
-
-    public void setProcentFørFortynding(double procentFørFortynding) {
-        this.procentFørFortynding = procentFørFortynding;
-    }
-
-    public void setProcentEfterFortynding(double procentEfterFortynding) {
-        this.procentEfterFortynding = procentEfterFortynding;
-    }
-
-    public void setTilsatVandL(double tilsatVandL) {
-        this.tilsatVandL = tilsatVandL;
-    }
-
-    public void setVandOprindelse(String vandOprindelse) {
-        this.vandOprindelse = vandOprindelse;
-    }
-
-//    public void setProduktNr(int produktNr) {
-//        this.produktNr = produktNr;
-//    }
-
-//    public void setBeskrivelse(String beskrivelse){
-//        this.beskrivelse = beskrivelse;
-//    }
-
-    public LocalDate getDato() {
-        return dato;
-    }
-
-    public void setDato(LocalDate dato) {
-        this.dato = dato;
-    }
-
-
-    public Map<Destillat, Fad> getAnvendteDestillater() {
-        return new HashMap<>(anvendteDestillater);
-    }
-
-    public double getProcentFørFortynding() {
-        return procentFørFortynding;
-    }
-
-    public double getProcentEfterFortynding() {
-        return procentEfterFortynding;
-    }
-
-    public double getTilsatVandL() {
-        return tilsatVandL;
-    }
-
-    public String getVandOprindelse() {
-        return vandOprindelse;
-    }
-
-    public int getProduktNr() {
-        return produktNr;
-    }
-
-    public String getBeskrivelse() {
-        return beskrivelse;
-    }
-
-    public List<Flaske> getFlasker() {
-        return new ArrayList<>(flasker);
     }
 
     /**
@@ -268,6 +186,83 @@ public class Færdigprodukt {
         }
 
         return (int) (mængdeL / flaskeKapacitetL);
+    }
+
+    public String getNavn() {
+        return navn;
+    }
+
+    public void setNavn(String navn) {
+        this.navn = navn;
+    }
+
+    public void setAnvendteDestillater(Map<Destillat, Fad> anvendteDestillater) {
+        this.anvendteDestillater = anvendteDestillater;
+    }
+
+    public void setMængdeL(double mængdeL) {
+        this.mængdeL = mængdeL;
+    }
+
+    public double getMængdeL() {
+        return mængdeL;
+    }
+
+    public void setProcentFørFortynding(double procentFørFortynding) {
+        this.procentFørFortynding = procentFørFortynding;
+    }
+
+    public void setProcentEfterFortynding(double procentEfterFortynding) {
+        this.procentEfterFortynding = procentEfterFortynding;
+    }
+
+    public void setTilsatVandL(double tilsatVandL) {
+        this.tilsatVandL = tilsatVandL;
+    }
+
+    public void setVandOprindelse(String vandOprindelse) {
+        this.vandOprindelse = vandOprindelse;
+    }
+
+    public LocalDate getDato() {
+        return dato;
+    }
+
+    public void setDato(LocalDate dato) {
+        this.dato = dato;
+    }
+
+
+    public Map<Destillat, Fad> getAnvendteDestillater() {
+        return new HashMap<>(anvendteDestillater);
+    }
+
+    public double getProcentFørFortynding() {
+        return procentFørFortynding;
+    }
+
+    public double getProcentEfterFortynding() {
+        return procentEfterFortynding;
+    }
+
+    public double getTilsatVandL() {
+        return tilsatVandL;
+    }
+
+    public String getVandOprindelse() {
+        return vandOprindelse;
+    }
+
+    public int getProduktNr() {
+        return produktNr;
+    }
+
+    public String getBeskrivelse() {
+        return beskrivelse;
+    }
+
+    public List<Flaske> getFlasker() {
+        return new ArrayList<>(flasker);
     }
 
     @Override

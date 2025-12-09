@@ -13,7 +13,7 @@ package application.model;
  */
 public class Flaske extends Storable {
     private String flaskeID;
-    private double flaskeKapacitetL = 0.7;
+    private double flaskeKapacitetL;
 
     //Linkattributter
     Færdigprodukt færdigprodukt;
@@ -21,6 +21,7 @@ public class Flaske extends Storable {
     Flaske(Færdigprodukt færdigprodukt, double flaskeKapacitetL, int flaskeNr) {
         this.flaskeID = færdigprodukt.getProduktNr() + "-" + flaskeNr;
         this.flaskeKapacitetL = flaskeKapacitetL;
+        this.færdigprodukt = færdigprodukt;
     }
 
     public String getFlaskeID() {

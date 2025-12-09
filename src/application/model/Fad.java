@@ -118,6 +118,10 @@ public class Fad extends Storable {
             dato = LocalDate.now();
         }
 
+        if(dato.isBefore(destillat.getFærdigDato())) {
+            throw new IllegalArgumentException("Påfyldningsdato er før destillatets færdigdato");
+        }
+
         Destillat indholdEfterPåfyldning;
         double originalMængde = mængdeL;
         mængdeL += påhældningsMængde;

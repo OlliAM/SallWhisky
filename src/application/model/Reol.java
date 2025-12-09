@@ -119,7 +119,7 @@ public class Reol {
 
         // Remove the Storable-value from specified index & decrement counter.
         Storable værdi = pladser[actualPlads].getVare();
-        pladser[actualPlads].setVare(null);
+        værdi.fjernFraPlads();
         return værdi;
     }
 
