@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReolTest {
     private Reol reol;
-    private Fad fad;
+    private Fad fad, fad2;
     private Lager lager;
 
     @BeforeEach
@@ -21,6 +21,7 @@ class ReolTest {
         lager = new Lager("Lager1");
         reol = new Reol(lager,"A", 10);
         fad = new Fad(1, "Egetræ", 10, "Spanien");
+        fad2 = new Fad(2, "Egetræ", 10, "Italien");
     }
 
     @Test
@@ -67,7 +68,9 @@ class ReolTest {
         //Act && assert
         Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> reol.tagFraPlads(11));
 
-        assertEquals("Pladsen er udenfor reolens kapacitet.", exception.getMessage());
+        assertEquals("Reol " + reol.getID() + " har kun " + reol.getPladser().length + " pladser.",
+                exception.getMessage());
+
     }
 
     @Test
@@ -75,25 +78,23 @@ class ReolTest {
         //Act & assert
         Exception exception = assertThrows(RuntimeException.class, () -> reol.tagFraPlads(1));
 
-        assertEquals("Space: 1 is currently empty!", exception.getMessage());
+        assertEquals("Plads " + reol.getPladser()[0].getPladsNr() + " på " + reol + " er tom.",
+                exception.getMessage());
     }
 
-    @Test
-    void tagFraPlads_pladsOccupied() {
-        //Arrange
 
+    @Test
+    void tagFraPlads_pladsOptaget() {
+        //Arrange
+        fad.gemPåPlads(reol.getPladser()[0]);
 
         //Act
+        Storable expected = fad;
         Storable actual = reol.tagFraPlads(1);
 
         //Assert
-        assertNull(reol.getPladser()[1]);
-        assertEquals(fad, actual);
-    }
-
-    @Test
-    void getTommePladser() {
-        //TODO venter indtil vi har besluttet os for hvordan vi håndterer pladser
+        assertNull(reol.getPladser()[0].getVare());
+        assertEquals(expected, actual);
     }
 
     @Test
