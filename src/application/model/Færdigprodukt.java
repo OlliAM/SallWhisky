@@ -93,7 +93,7 @@ public class Færdigprodukt {
             double mængde = fade.get(fad);
 
             if (mængde > fad.getMængdeL()) {
-                throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end" +
+                throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end " +
                         "indholdet");
             }
 
