@@ -78,7 +78,7 @@ class ControllerTest {
     }
 
     @Test
-    void createFad_createterFadIStorage() {
+    void createFad_createFadIStorage() {
         //Act & assert
         assertTrue(storage.getFadList().isEmpty());
 
@@ -131,7 +131,7 @@ class ControllerTest {
     }
 
     @Test
-    void createLager_createterLagerIStorage() {
+    void createLager_createLagerIStorage() {
         //Act & assert
         assertTrue(storage.getLagerList().isEmpty());
 
@@ -148,7 +148,7 @@ class ControllerTest {
     }
 
     @Test
-    void createReol_createterReolPåLager() {
+    void createReol_createReolPåLager() {
         //Arrange
         Lager lager = controller.createLager("Lager1");
 

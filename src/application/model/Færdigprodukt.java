@@ -63,34 +63,69 @@ public class Færdigprodukt {
 
     /**
      * @param navn
-     * @param anvendteDestillater
-     * @param mængdeL
-     * @param procentFørFortynding
-     * @param procentEfterFortynding
+     * @param fade
      * @param tilsatVandL
      * @param vandOprindelse
      * @param produktNr
      * @param beskrivelse
      * @param dato if null dato = localDate.now()
+     * @Pre: anvendteDestillater er ikke tom
      */
-    public Færdigprodukt(String navn, Map<Destillat, Fad> anvendteDestillater, double mængdeL, double procentFørFortynding,
-                         double procentEfterFortynding, double tilsatVandL, String vandOprindelse, int produktNr,
-                         String beskrivelse, LocalDate dato) {
+    public Færdigprodukt(String navn, Map<Fad, Double> fade, double tilsatVandL, String vandOprindelse,
+                         int produktNr, String beskrivelse, LocalDate dato) {
         this.navn = navn;
-        this.anvendteDestillater = anvendteDestillater;
-        this.mængdeL = mængdeL;
-        this.procentFørFortynding = procentFørFortynding;
-        this.procentEfterFortynding = procentEfterFortynding;
         this.tilsatVandL = tilsatVandL;
         this.vandOprindelse = vandOprindelse;
         this.produktNr = produktNr;
         this.beskrivelse = beskrivelse;
         if (dato == null) {
-            dato = LocalDate.now();
+            this.dato = LocalDate.now();
         } else {
             this.dato = dato;
         }
-        flasker = new ArrayList<>(); // ??
+        flasker = new ArrayList<>();
+        anvendteDestillater = new HashMap<>();
+
+        double alkoholVolumen = 0;
+        double samletVolumen = 0;
+
+        for (Fad fad : fade.keySet()) {
+            double mængde = fade.get(fad);
+
+            if (mængde > fad.getMængdeL()) {
+                throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end" +
+                        "indholdet");
+            }
+
+            if (dato.isBefore(fad.getFadIndhold().getFærdigDato())) {
+                throw new IllegalArgumentException("Dato for påfyldning af fad " + fad.getFadNr() + " er efter " +
+                        "oprettelsesdatoen for færdigproduktet");
+            }
+
+            if (fad.getFadIndhold().getFærdigDato().until(dato).getYears() < 3) {
+                throw new IllegalArgumentException("Fad " + fad.getFadNr() + " har ikke været lagret i 3 år endnu");
+            }
+
+            Destillat destillat = fad.getFadIndhold();
+            anvendteDestillater.put(destillat, fad);
+
+            alkoholVolumen += mængde / 100 * destillat.getAlkoholprocent();
+            samletVolumen += mængde;
+        }
+
+        procentFørFortynding = alkoholVolumen / samletVolumen * 100;
+        samletVolumen += tilsatVandL;
+        procentEfterFortynding = alkoholVolumen / samletVolumen * 100;
+        mængdeL = samletVolumen;
+
+        if (procentEfterFortynding < 40) {
+            throw new IllegalArgumentException("Endelig alkoholprocent er under 40%");
+        }
+    }
+
+    public Færdigprodukt(String navn, Fad fad, double mængde, double tilsatVandL, String vandOprindelse, int produktNr,
+                         String beskrivelse, LocalDate dato) {
+        this(navn, Map.of(fad, mængde), tilsatVandL, vandOprindelse, produktNr, beskrivelse, dato);
     }
 
     public String getNavn() {

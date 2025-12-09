@@ -13,17 +13,40 @@ public abstract class Storable {
         }
 
         if(plads != null) {
-            plads.setVare(null);
+            fjernFraPlads();
         }
+
         this.plads = valgtePlads;
+        Reol reol = plads.getReol();
+        Lager lager = reol.getLager();
+        reol.decrementFriePladser();
+
+        if(this instanceof Fad) {
+            lager.incrementFade();
+        }
+
+        else if(this instanceof Flaske) {
+            lager.incrementFlasker();
+        }
+
         plads.setVare(this);
     }
 
     public void fjernFraPlads() {
         if(plads != null) {
+            Reol reol = plads.getReol();
+            Lager lager = reol.getLager();
             plads.setVare(null);
+            reol.incrementFriePladser();
+
+            if(this instanceof Fad) {
+                lager.decrementFade();
+            }
+            else if(this instanceof Flaske) {
+                lager.decrementFlasker();
+            }
+            plads = null;
         }
-        plads = null;
     }
 
     public Plads getPlads() {

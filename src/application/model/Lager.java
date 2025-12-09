@@ -62,21 +62,6 @@ public class Lager {
         this.antalFlasker = 0;
     }
 
-    // Return the internal name String of the Lager-instance.
-    public String getLagerNavn() {
-        return this.navn;
-    }
-
-    // Return the total num of Cask-instances in storage..
-    public int getAntalFade() {
-        return this.antalFade;
-    }
-
-    // Return the total num of Bottle-instances in storage..
-    public int getAntalFlasker() {
-        return this.antalFlasker;
-    }
-
     /**
      * <p1> Opretter et instanse af {@code Reol-klassen} med prekonfigureret lagerplads
      * og lagrer den i tilhørende {@code Lager-klasse}.</p1><br>
@@ -89,47 +74,21 @@ public class Lager {
         // Instantiate the new Reol-class to store.
         ID = navn + "-" + ID;
         Reol newReol = new Reol(this, ID, pladser);
-
-        // Check if the Reol-class already exists.
-        if (!reoler.contains(newReol)) {
-            reoler.add(newReol);
-        }
-
+        reoler.add(newReol);
         // Return Reol-class -> Used for Controller.
         return newReol;
     }
 
-    /**
-     * <p1>Metode til at udtage et {@code Storable} objekt fra den specificerede lagerplads.
-     * Metoden opfanger hvilken subklasse objektet tilhører og nedsætter herefter
-     * interne {@code antalFade} eller {@code antalFlasker} variabler. </p1>
-     *
-     * @param reol    reol til at tage produktet fra
-     * @param pladsNr tilhørende nummer af lagerplads
-     * @return Storable
-     * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
-     * @throws RuntimeException          Hvis den valgte lagerplads er uden {@code Storable} objekt.
-     */
-    public Storable tagFraReol(Reol reol, int pladsNr) {
-        // Initiate new Storable variable.
-        Storable produkt = null;
+    public Plads gemPåLager(Storable produkt) {
+        ArrayList<Plads> tommePladser = getTommePladser();
 
-        // Call the removal method in Reol-instace -> Handles Errors
-        try {
-            produkt = reol.tagFraPlads(pladsNr);
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
+        if(tommePladser.isEmpty()) {
+            throw new IllegalArgumentException(navn + " har ingen tomme pladser");
         }
 
-        // Check which type of Storable was removed & decrement internal counter.
-        if (produkt instanceof Fad) {
-            antalFade -= 1;
-        } else {
-            antalFlasker -= 1;
-        }
-
-        // Return Storable object.
-        return produkt;
+        Plads plads = tommePladser.getFirst();
+        produkt.gemPåPlads(plads);
+        return plads;
     }
 
     /**
@@ -151,23 +110,6 @@ public class Lager {
 
         // Return the finalized list.
         return list;
-    }
-
-    /**
-     * <p1><b><i>**Overloaded**</i></b></p1><br>
-     * <p1>Metode til at søge efter et individuelt {@code Fad} objekt på det tilhørende lager
-     * ud fra objektets ID nummer. Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
-     *
-     * @param fadNr ID nummer for fadet som søges
-     * @return Plads
-     */
-    public Plads søgPåLager(int fadNr) {
-        Plads plads = null;
-        int i = 0;
-        while (plads == null && i < reoler.size()) {
-            plads = reoler.get(i).søgPåReol(fadNr);
-        }
-        return plads;
     }
 
     /**
@@ -217,6 +159,37 @@ public class Lager {
 
     public ArrayList<Reol> getReoler() {
         return new ArrayList<>(reoler);
+    }
+
+    // Return the internal name String of the Lager-instance.
+    public String getLagerNavn() {
+        return this.navn;
+    }
+
+    // Return the total num of Cask-instances in storage..
+    public int getAntalFade() {
+        return this.antalFade;
+    }
+
+    // Return the total num of Bottle-instances in storage..
+    public int getAntalFlasker() {
+        return this.antalFlasker;
+    }
+
+    public void incrementFade() {
+        antalFade++;
+    }
+
+    public void decrementFade() {
+        antalFade--;
+    }
+
+    public void incrementFlasker() {
+        antalFlasker++;
+    }
+
+    public void decrementFlasker() {
+        antalFlasker--;
     }
 
     @Override

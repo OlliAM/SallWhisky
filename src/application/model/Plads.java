@@ -21,6 +21,7 @@ public class Plads {
     }
 
     public void setVare(Storable vare) {
+
         this.vare = vare;
     }
 

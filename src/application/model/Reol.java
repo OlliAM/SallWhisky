@@ -44,7 +44,7 @@ import java.util.ArrayList;
  */
 public class Reol {
     private String ID;
-    private int optagedePladser;
+    private int friePladser;
 
     //Linkattributter
     private Plads[] pladser;
@@ -58,21 +58,7 @@ public class Reol {
         for (int i = 0; i < antalPladser; i++) {
             pladser[i] = new Plads(this, i + 1);
         }
-        optagedePladser = 0;
-    }
-
-    public Plads[] getPladser() {
-        return pladser.clone();
-    }
-
-    // Return the internal ID String of the Reol-instance.
-    public String getID() {
-        return this.ID;
-    }
-
-    // Return the total num of occupied spaces in the Reol-instance.
-    public int getOptagedePladser() {
-        return optagedePladser;
+        friePladser = antalPladser;
     }
 
     /**
@@ -81,6 +67,7 @@ public class Reol {
      * @return double
      */
     public double getProcentOptaget() {
+        int optagedePladser = pladser.length - friePladser;
         double procentOptaget = 0;
         if (optagedePladser > 0) {
             procentOptaget = ((double) optagedePladser / pladser.length * 100);
@@ -93,21 +80,21 @@ public class Reol {
      * Metoden opfanger hvilken subklasse objektet tilhører og optæller herefter
      * interne {@code antalFade} eller {@code antalFlasker} variabler.</p1>
      *
-     * @param reol    reol til at gemme produktet i
      * @param produkt valgte produkt til at lagre
      * @return void
      * @throws IndexOutOfBoundsException Hvis {@code pladsNr} param er uden for Reolens kapacitet
      * @throws RuntimeException          Hvis den valgte lagerplads allerede anvendes.
      */
-    public void gemPåReol(Reol reol, Storable produkt) {
-        ArrayList<Plads> tommePladser = reol.getTommePladser();
+    public Plads gemPåReol(Storable produkt) {
+        ArrayList<Plads> tommePladser = getTommePladser();
 
         if(tommePladser.isEmpty()) {
-            throw new IllegalArgumentException("Reol " + ID + " har ingen tomme pladser");
+            throw new IllegalArgumentException("Reol " + ID + " har ingen ledige pladser.");
         }
 
-        produkt.gemPåPlads(tommePladser.getFirst());
-        optagedePladser++;
+        Plads plads = tommePladser.getFirst();
+        produkt.gemPåPlads(plads);
+        return plads;
     }
 
     /**
@@ -120,19 +107,19 @@ public class Reol {
      */
     public Storable tagFraPlads(int pladsNr) {
         // Check if the pladsNr is out of bounds.
+        int actualPlads = pladsNr -1;
         if (pladsNr > pladser.length) {
-            throw new IndexOutOfBoundsException("Pladsen er udenfor reolens kapacitet.");
+            throw new IndexOutOfBoundsException("Reol " + ID + " har kun " + pladser.length + " pladser.");
         }
 
         // Check if the space at pladsNr-index is currently occupied.
-        if (pladser[pladsNr].getVare() != null) {
-            throw new RuntimeException(pladsNr + "  ");
+        if (pladser[actualPlads].getVare() == null) {
+            throw new IllegalArgumentException("Plads " + pladsNr + " på " + this + " er tom.");
         }
 
         // Remove the Storable-value from specified index & decrement counter.
-        Storable værdi = pladser[pladsNr].getVare();
-        pladser[pladsNr].setVare(null);
-        optagedePladser--;
+        Storable værdi = pladser[actualPlads].getVare();
+        pladser[actualPlads].setVare(null);
         return værdi;
     }
 
@@ -147,36 +134,12 @@ public class Reol {
 
         // For loop to iterate over all spaces & add if necessary.
         for (Plads plads : pladser) {
-            if (plads.getVare() != null) {
+            if (plads.getVare() == null) {
                 tommePladser.add(plads);
             }
         }
         // Return final list.
         return tommePladser;
-    }
-
-    /**
-     * <p1><b><i>**Overloaded**</i></b></p1><br>
-     * <p1>Metode til at søge efter et individuelt {@code Fad} objekt på det tilhørende reol
-     * ud fra objektets ID nummer. Udfører en Linear Søgning eftersom placeringen er sporadisk</p1>
-     *
-     * @param fadNr ID nummer for fadet som søges
-     * @return {@code Plads} / {@code null}
-     */
-    public Plads søgPåReol(int fadNr) {
-        boolean found = false;
-        Plads result = null;
-
-        // 'iterate over all spaces.
-        for (Plads plads : pladser) {
-            Storable vare = plads.getVare();
-            if (vare instanceof Fad) {
-                if (((Fad) vare).getFadNr() == fadNr) {
-                    result = vare.getPlads();
-                }
-            }
-        }
-        return result;
     }
 
     /**
@@ -225,13 +188,39 @@ public class Reol {
                         list.add(fad.getPlads());
                     }
                 }
+                else if(fad.getFadIndhold() instanceof BundDestillat bd) {
+                    if(bd == destillat) {
+                        list.add(fad.getPlads());
+                    }
+                }
             }
         }
         return list;
     }
 
+    public Plads[] getPladser() {
+        return pladser.clone();
+    }
+
+    // Return the internal ID String of the Reol-instance.
+    public String getID() {
+        return this.ID;
+    }
+
     public Lager getLager() {
         return lager;
+    }
+
+    public int getFriePladser() {
+        return friePladser;
+    }
+
+    public void incrementFriePladser() {
+        friePladser++;
+    }
+
+    public void decrementFriePladser() {
+        friePladser--;
     }
 
     @Override

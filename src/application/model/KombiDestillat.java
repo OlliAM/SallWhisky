@@ -38,28 +38,21 @@ public class KombiDestillat extends Destillat{
 
     public boolean indeholderDestillat(Destillat destillat) {
         boolean indeholderDestillat = false;
-        int i = 0;
-        //Gem kombidestillater i en liste der tjekkes til sidst, for at undgå en masse unødige rekursive kald
-        ArrayList<KombiDestillat> kombiDestillater = new ArrayList<>();
-        while(!indeholderDestillat && i < destillater.size()) {
-            Destillat d = destillater.get(i);
-            if (d instanceof KombiDestillat kd) {
-                kombiDestillater.add(kd);
-            } else {
-                if (d == destillat) {
-                    indeholderDestillat = true;
+
+        if(destillater.contains(destillat)) {
+            indeholderDestillat = true;
+        }
+
+        else {
+            int i = 0;
+            while(!indeholderDestillat && i < destillater.size()) {
+                Destillat d = destillater.get(i);
+                if(d instanceof KombiDestillat kd) {
+                    indeholderDestillat = kd.indeholderDestillat(destillat);
                 }
+                i++;
             }
-            i++;
         }
-
-        i = 0;
-        while(!indeholderDestillat && i < kombiDestillater.size()) {
-            KombiDestillat d = kombiDestillater.get(i);
-            indeholderDestillat = indeholderDestillat(d);
-            i++;
-        }
-
         return indeholderDestillat;
     }
 
