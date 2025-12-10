@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import storage.Storage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
@@ -79,16 +80,25 @@ class ControllerTest {
 
     @Test
     void createFad_createFadIStorage() {
-        //Act & assert
-        assertTrue(storage.getFadList().isEmpty());
+        //Arrange
+        ArrayList<Fad> initialFadList = storage.getFadList();
+        int fadListSize = initialFadList.size();
+        int fadNr = 0;
+        if(!initialFadList.isEmpty()) {
+            fadNr = initialFadList.getLast().getFadNr();
+        }
 
+        //Act & assert
         Fad expectedFad = controller.createFad("Egetræ", 50, "Spanien");
-        assertEquals(1, storage.getFadList().size());
+        fadListSize++;
+        fadNr++;
+
+        assertEquals(fadListSize, storage.getFadList().size());
 
         Fad actualFad = storage.getFadList().getLast();
         assertEquals(expectedFad, actualFad);
 
-        assertEquals(1, actualFad.getFadNr());
+        assertEquals(fadNr, actualFad.getFadNr());
         assertTrue(expectedFad.getIndholdshistorik().isEmpty());
         assertNull(expectedFad.getFadIndhold());
         assertEquals(0, expectedFad.getMængdeL());
@@ -151,13 +161,14 @@ class ControllerTest {
     void createReol_createReolPåLager() {
         //Arrange
         Lager lager = controller.createLager("Lager1");
+        String reolnavn = "A";
 
         //Act
-        Reol reol = lager.createReol("A", 5);
+        Reol reol = lager.createReol(reolnavn, 5);
 
         //Assert
         assertTrue(lager.getReoler().contains(reol));
         assertEquals(5, reol.getPladser().length);
-        assertEquals("A", reol.getID());
+        assertEquals(lager.getLagerNavn() + "-" + reolnavn, reol.getID());
     }
 }

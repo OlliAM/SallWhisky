@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FærdigproduktTest {
+    private Færdigprodukt færdigprodukt1;
     private BundDestillat bundDestillat1;
     private Fad fad1, fad2;
     private Map<Destillat, Fad> anvendteDestillater;
@@ -24,6 +25,9 @@ public class FærdigproduktTest {
         fad1 = new Fad(1, "Egetræ", 20, "Spain");
         fad2 = new Fad(2, "Egetræ", 20, "Italien");
         fad1.fyldPåFraDestillat(bundDestillat1, 5, LocalDate.of(2020,1,2), "EH");
+        færdigprodukt1 = new Færdigprodukt("Færdigprodukt",
+                fad1, 1, 0, "Spanien", 3, "",
+                LocalDate.of(2025,1,1));
     }
 
     @Test
@@ -116,7 +120,7 @@ public class FærdigproduktTest {
                 LocalDate.now()));
 
         //Assert
-        assertEquals("Mængde der skal hældes fra fad " + fad1.getFadNr() + " er større end" +
+        assertEquals("Mængde der skal hældes fra fad " + fad1.getFadNr() + " er større end " +
                 "indholdet", expected.getMessage());
     }
 
@@ -167,5 +171,33 @@ public class FærdigproduktTest {
         assertEquals(færdigprodukt, flaske.getFærdigprodukt());
         assertEquals(2, flaske.getKapacitetL());
         assertEquals(færdigprodukt.getProduktNr() + "-1", flaske.getFlaskeID());
+    }
+
+    @Test
+    void hældPåFlaske_mængdeMindreEndFlaskeKapacitet() {
+        //Arrange
+        double kapacitet = 2;
+
+        //Act
+        Exception expected =  assertThrows(IllegalArgumentException.class, () ->
+                færdigprodukt1.hældPåFlaskerMax(kapacitet));
+
+        //Assert
+        assertEquals("Der er ikke nok væske til at lave en flaske med kapacitet " +
+                kapacitet + "L", expected.getMessage());
+    }
+
+    @Test
+    void hældPåFlaske_antalFlaskerStørreEndMængde() {
+        //Arrange
+        double kapacitet = 1;
+
+        //Act
+        Exception expected =  assertThrows(IllegalArgumentException.class, () ->
+                færdigprodukt1.hældPåFlasker(2, kapacitet));
+
+        //Assert
+        assertEquals("Du kan max lave " + færdigprodukt1.antalMuligeFlasker(kapacitet) + " flasker af " +
+                færdigprodukt1 + ".", expected.getMessage());
     }
 }

@@ -122,8 +122,8 @@ public class LagerTab extends Tab {
                 }
             }
         });
-
         pladserVBox.getChildren().addAll(lblPladser, lvwPladser);
+
     }
 
     private void tilføjTilLagerAction() {
@@ -187,7 +187,7 @@ public class LagerTab extends Tab {
         vbox.getChildren().addAll(txfReolNavn, txfAntal, buttonHBox);
 
         // Show the window
-        Scene scene = new Scene(vbox, 300, 400);
+        Scene scene = new Scene(vbox,300,150);
         stage.setScene(scene);
         stage.initOwner(this.getTabPane().getScene().getWindow()); // make it modal relative to main window
         stage.show();
@@ -215,6 +215,7 @@ public class LagerTab extends Tab {
                 lvwReoler.getItems().setAll(lager.getReoler());
                 lvwReoler.getSelectionModel().clearSelection();
                 lvwPladser.getItems().clear();
+                btncreateReol.setDisable(false);
                 stage.close();
             }
         });
@@ -231,7 +232,7 @@ public class LagerTab extends Tab {
         vbox.getChildren().addAll(txfLagerNavn, buttonHBox);
 
         // Show the window
-        Scene scene = new Scene(vbox, 300, 400);
+        Scene scene = new Scene(vbox, 300, 100);
         stage.setScene(scene);
         stage.initOwner(this.getTabPane().getScene().getWindow()); // make it modal relative to main window
         stage.show();

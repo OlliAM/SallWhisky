@@ -141,6 +141,11 @@ public class Færdigprodukt {
     public List<Flaske> hældPåFlasker(int antal, double flaskeKapacitetL) {
         int muligtAntal = antalMuligeFlasker(flaskeKapacitetL);
 
+        if(muligtAntal == 0) {
+            throw new IllegalArgumentException("Der er ikke nok væske til at lave en flaske med kapacitet " +
+                    flaskeKapacitetL + "L");
+        }
+
         if (muligtAntal < antal) {
             throw new IllegalArgumentException("Du kan max lave " + muligtAntal + " flasker af " + this + ".");
         } else {
@@ -162,15 +167,7 @@ public class Færdigprodukt {
     public List<Flaske> hældPåFlaskerMax(double flaskeKapacitetL) {
         int muligtAntal = antalMuligeFlasker(flaskeKapacitetL);
 
-        if (muligtAntal < 1) {
-            throw new IllegalArgumentException("Du kan max lave " + muligtAntal + " flasker af " + this + ".");
-        }
-        for (int i = 1; i <= muligtAntal; i++) {
-            Flaske flaske = new Flaske(this, flaskeKapacitetL, i);
-            mængdeL -= flaskeKapacitetL;
-            flasker.add(flaske);
-        }
-        return new ArrayList<>(flasker);
+        return hældPåFlasker(muligtAntal, flaskeKapacitetL);
     }
 
     /**

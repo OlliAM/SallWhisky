@@ -142,51 +142,6 @@ public class Controller {
      * @param dato Den endelige dato for oprettelse af {@code Færdigprodukt}
      * @return {@code Færdigprodukt}
      */
-//    public Færdigprodukt createFærdigProdukt(String navn, Map<Fad, Double> fade,
-//                                            double tilsatVandL, String vandOprindelse, int produktNr, String beskrivelse,
-//                                            LocalDate dato) {
-//
-//        HashMap<Destillat, Fad> anvendteDestillater = new HashMap<>();
-//        double alkoholVolumen = 0;
-//        double samletVolumen = 0;
-//
-//        for (Fad fad : fade.keySet()) {
-//            double mængde = fade.get(fad);
-//
-//            if (mængde > fad.getMængdeL()) {
-//                throw new IllegalArgumentException("Mængde der skal hældes fra fad " + fad.getFadNr() + " er større end" +
-//                        "indholdet");
-//            }
-//
-//            if (dato.isBefore(fad.getFadIndhold().getFærdigDato())) {
-//                throw new IllegalArgumentException("Dato for påfyldning af fad " + fad.getFadNr() + " er efter " +
-//                        "oprettelsesdatoen for færdigproduktet");
-//            }
-//
-//            if (fad.getFadIndhold().getFærdigDato().until(dato).getYears() < 3) {
-//                throw new IllegalArgumentException("Fad " + fad.getFadNr() + " har ikke været lagret i 3 år endnu");
-//            }
-//
-//            Destillat destillat = fad.getFadIndhold();
-//            anvendteDestillater.put(destillat, fad);
-//
-//            alkoholVolumen += mængde / 100 * destillat.getAlkoholprocent();
-//            samletVolumen += mængde;
-//        }
-//
-//        double alkoholprocentFør = alkoholVolumen / samletVolumen * 100;
-//        samletVolumen += tilsatVandL;
-//        double alkoholprocentEfter = alkoholVolumen / samletVolumen * 100;
-//
-//        if (alkoholprocentEfter < 40) {
-//            throw new IllegalArgumentException("Endelig alkoholprocent er under 40%");
-//        }
-//
-//        Færdigprodukt færdigprodukt = new Færdigprodukt(navn, anvendteDestillater, samletVolumen, alkoholprocentFør,
-//                alkoholprocentEfter, tilsatVandL, vandOprindelse, produktNr, beskrivelse, dato);
-//        storage.addToFærdigproduktList(færdigprodukt);
-//        return færdigprodukt;
-//    }
 
     /**
      * <p1><b><i>**Controller**</i></b></p1><br>
