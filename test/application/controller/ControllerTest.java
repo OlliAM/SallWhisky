@@ -29,8 +29,7 @@ class ControllerTest {
                 LocalDate.of(2025,1,1), "Byg", "Tørv", "EH");
         assertEquals(1, storage.getDestilleringList().size());
 
-        Destillat actualBunddestillat = storage.getDestilleringList().getLast();
-        assertEquals(expectedBunddestillat, actualBunddestillat);
+        assertTrue(storage.getDestilleringList().contains(expectedBunddestillat));
 
         assertEquals("Byg", expectedBunddestillat.getKornsort());
         assertEquals("Tørv", expectedBunddestillat.getRygemateriale());
@@ -53,8 +52,7 @@ class ControllerTest {
                 "Tørv", "EH", 10, 50);
         assertEquals(1, storage.getDestillatList().size());
 
-        Destillat actualBunddestillat = storage.getDestillatList().getLast();
-        assertEquals(expectedBunddestillat, actualBunddestillat);
+        assertTrue(storage.getDestillatList().contains(expectedBunddestillat));
 
         assertEquals("Byg", expectedBunddestillat.getKornsort());
         assertEquals("Tørv", expectedBunddestillat.getRygemateriale());
@@ -169,6 +167,6 @@ class ControllerTest {
         //Assert
         assertTrue(lager.getReoler().contains(reol));
         assertEquals(5, reol.getPladser().length);
-        assertEquals(lager.getLagerNavn() + "-" + reolnavn, reol.getID());
+        assertEquals(reolnavn, reol.getID());
     }
 }

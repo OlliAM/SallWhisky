@@ -174,7 +174,7 @@ public class FærdigproduktTest {
     }
 
     @Test
-    void hældPåFlaske_mængdeMindreEndFlaskeKapacitet() {
+    void hældPåFlaskerMax_mængdeMindreEndFlaskeKapacitet() {
         //Arrange
         double kapacitet = 2;
 
