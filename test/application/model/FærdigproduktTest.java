@@ -15,7 +15,6 @@ public class FærdigproduktTest {
     private Færdigprodukt færdigprodukt1;
     private BundDestillat bundDestillat1;
     private Fad fad1, fad2;
-    private Map<Destillat, Fad> anvendteDestillater;
 
     @BeforeEach
     void setup() {
@@ -75,6 +74,7 @@ public class FærdigproduktTest {
         for(double mængde : fade.values()) {
             påfyldningsMængde += mængde;
         }
+
         double mængdeVand = 2;
         double totalMængde = påfyldningsMængde + mængdeVand;
         double alkoholVol = 0;

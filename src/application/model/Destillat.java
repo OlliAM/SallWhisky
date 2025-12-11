@@ -20,7 +20,7 @@ import java.util.*;
  * <br>
  * <h3>-------------------------------------------</h3>
  */
-public abstract class Destillat implements Drinkable {
+public abstract class Destillat implements Drinkable, Comparable<Destillat>{
     private String navn;
     private String kommentar;
     private double alkoholprocent;
@@ -76,12 +76,42 @@ public abstract class Destillat implements Drinkable {
         this.maltbatch = maltbatch;
     }
 
+    public void setNavn(String navn) {
+        this.navn = navn;
+    }
+
     public String getNavn() {
         return navn;
     }
 
     @Override
     public String toString() {
-        return navn + ": " + alkoholprocent + "%";
+        return navn + "\n" + alkoholprocent + "%";
+    }
+
+    @Override
+    public int compareTo(Destillat other) {
+        int result;
+        if(færdigDato != null) {
+            if(other.getFærdigDato() != null) {
+                result = other.getFærdigDato().compareTo(færdigDato);
+            }
+            else if(other instanceof BundDestillat bd) {
+                result = bd.getStartDato().compareTo(færdigDato);
+            }
+            else result = navn.compareTo(other.getNavn());
+        }
+        else if(this instanceof BundDestillat bd) {
+            if(other.getFærdigDato() != null) {
+                result = other.getFærdigDato().compareTo(bd.getStartDato());
+            }
+            else if(other instanceof BundDestillat bd2) {
+                result = bd2.getStartDato().compareTo(bd.getStartDato());
+            }
+            else result = navn.compareTo(other.getNavn());
+        }
+        else result = navn.compareTo(other.getNavn());
+
+        return result;
     }
 }

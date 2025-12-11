@@ -1,4 +1,4 @@
-package gui;
+package gui.tabs.FadeTabVinduer;
 
 import application.controller.Controller;
 import javafx.geometry.Insets;
@@ -13,13 +13,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class CreateFadWindow extends Stage {
+public class FadWindow extends Stage {
     private TextField txfFadStørrelse, txfFadtype, txfOprindelse;
     private String fadtype;
     private Button btnOpretFad, btnAnnuller;
     Controller controller;
 
-    public CreateFadWindow(Stage owner) {
+    public FadWindow(Stage owner) {
         this.initOwner(owner);
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);

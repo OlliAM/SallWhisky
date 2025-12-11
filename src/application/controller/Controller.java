@@ -68,7 +68,7 @@ public class Controller {
      * @param init          Underskriften af den medarbejder der skabte {@code Destillat}
      * @return {@code Destillat}
      */
-    public Destillat fyldPåFad(Fad fad, BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
+    public Destillat fyldPåFad(Fad fad, BundDestillat bundDestillat, double mængde, LocalDate dato, String init) {
         Destillat destillat = fad.fyldPåFraDestillat(bundDestillat, mængde, dato, init);
         storage.addToDestillatList(destillat);
         return destillat;
@@ -86,7 +86,7 @@ public class Controller {
      * @param init           Underskriften fra medarbejderne som undertog påfyldningen.
      * @return {@code Destillat}
      */
-    public Destillat fyldPåFad(Fad fadTilFyldning, Fad andetFad, int mængde, LocalDate dato, String init) {
+    public Destillat fyldPåFad(Fad fadTilFyldning, Fad andetFad, double mængde, LocalDate dato, String init) {
         Destillat destillat = fadTilFyldning.fyldPåFraFad(andetFad, mængde, dato, init);
         storage.addToDestillatList(destillat);
         return destillat;
@@ -194,6 +194,25 @@ public class Controller {
         return lager.createReol(id, antalPladser);
     }
 
+    public void removeLager(Lager selectedLager) {
+        for(Reol reol : selectedLager.getReoler()) {
+            selectedLager.removeReol(reol);
+        }
+        storage.removeFromLagerList(selectedLager);
+    }
+
+    public void removeReol(Reol reol) {
+        reol.getLager().removeReol(reol);
+    }
+
+    public Storable tømPlads(Plads plads) {
+        Storable vare = plads.getVare();
+        if(vare != null) {
+            vare.fjernFraPlads();
+        }
+        return vare;
+    }
+
     /**
      * <p1><b><i>**Controller**</i></b></p1><br>
      * <p1>Metode til at etablere et nyt {@code Indhold} objekt</p1>
@@ -244,18 +263,24 @@ public class Controller {
         storage.addToFadKapacitetList(kapacitet);
     }
 
+    public void gemPåPlads(Plads plads, Storable produkt) {
+        produkt.gemPåPlads(plads);
+    }
+
+    public void gemPåLager(Lager lager, Storable produkt) {
+        lager.gemPåLager(produkt);
+    }
+
     /**
      * <p1><b><i>**Controller**</i></b></p1><br>
      * <p1>Metode til at lagre {@code Storable} objekt på tilgængelig lagerplads</p1>
      *
-     * @param lager   Det specifikke {@code Lager} objekt som produktet skal lagres i
      * @param reol    Det specifikke {@code reol} objekt som produktet skal lagres i
-     * @param pladsNr Identificerende nummer for lagerplads
      * @param produkt {@code Storable} objekt som skal lagres
      * @return {@code void}
      */
-    public void gemPåReol(Lager lager, Reol reol, int pladsNr, Storable produkt) {
-        //Todo
+    public void gemPåReol(Reol reol, Storable produkt) {
+        reol.gemPåReol(produkt);
     }
 
     /**
@@ -294,6 +319,22 @@ public class Controller {
      */
     public ArrayList<Plads> søgPåLager(Lager lager, Destillat destillat) {
         return lager.søgPåLager(destillat);
+    }
+
+    public ArrayList<Plads> søgIStorage(String fadType){
+        ArrayList<Plads> pladser = new ArrayList<>();
+        for (Lager lager : storage.getLagerList()) {
+            pladser.addAll(lager.søgPåLager(fadType));
+        }
+        return pladser;
+    }
+
+    public ArrayList<Plads> søgIStorage(Destillat destillat){
+        ArrayList<Plads> pladser = new ArrayList<>();
+        for (Lager lager : storage.getLagerList()) {
+            pladser.addAll(lager.søgPåLager(destillat));
+        }
+        return pladser;
     }
 
     public Storage getStorage() {

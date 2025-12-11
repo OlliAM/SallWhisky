@@ -1,14 +1,13 @@
 package gui;
 
+import gui.tabs.DestillaterTab;
+import gui.tabs.FadeTab;
+import gui.tabs.LagerTab;
+import gui.tabs.ProdukterTab;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 
 public class MainWindow extends Application {
@@ -24,9 +23,33 @@ public class MainWindow extends Application {
 
         // Create Tabs
         LagerTab lagerTab = new LagerTab();
-        Tab destillaterTab = new DestillaterTab();
-        Tab fadeTab = new FadeTab();
-        Tab produkterTab = new Tab("Produkter");
+        lagerTab.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            if (isNowSelected) {
+                // Tab was switched to
+                lagerTab.updateTab();
+            }
+        });
+        DestillaterTab destillaterTab = new DestillaterTab();
+        destillaterTab.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            if (isNowSelected) {
+                // Tab was switched to
+                destillaterTab.updateTab();
+            }
+        });
+        FadeTab fadeTab = new FadeTab();
+        fadeTab.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            if (isNowSelected) {
+                // Tab was switched to
+                fadeTab.updateTab();
+            }
+        });
+        ProdukterTab produkterTab = new ProdukterTab();
+        produkterTab.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            if (isNowSelected) {
+                // Tab was switched to
+                produkterTab.onTabSelected();
+            }
+        });
         tabPane.getTabs().addAll(lagerTab, destillaterTab, fadeTab, produkterTab);
 
         this.stage = stage;
@@ -35,17 +58,6 @@ public class MainWindow extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-    }
-
-    private void initContent(GridPane pane) {
-        pane.setGridLinesVisible(false);
-        pane.setPadding(new Insets(20));
-        pane.setHgap(20);
-        pane.setVgap(20);
-
-        // Label for Konference
-        Label lblKonference = new Label("Konferencer");
-        pane.add(lblKonference, 0, 0);
     }
 
 }

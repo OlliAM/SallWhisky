@@ -88,7 +88,7 @@ public class Reol {
     public Plads gemPåReol(Storable produkt) {
         ArrayList<Plads> tommePladser = getTommePladser();
 
-        if(tommePladser.isEmpty()) {
+        if (tommePladser.isEmpty()) {
             throw new IllegalArgumentException("Reol " + ID + " har ingen ledige pladser.");
         }
 
@@ -107,7 +107,7 @@ public class Reol {
      */
     public Storable tagFraPlads(int pladsNr) {
         // Check if the pladsNr is out of bounds.
-        int actualPlads = pladsNr -1;
+        int actualPlads = pladsNr - 1;
         if (pladsNr > pladser.length) {
             throw new IndexOutOfBoundsException("Reol " + ID + " har kun " + pladser.length + " pladser.");
         }
@@ -183,13 +183,10 @@ public class Reol {
 
         for (Plads plads : pladser) {
             if (plads.getVare() instanceof Fad fad) {
-                if (fad.getFadIndhold() instanceof KombiDestillat kd) {
-                    if(kd.indeholderDestillat(destillat)) {
-                        list.add(fad.getPlads());
-                    }
-                }
-                else if(fad.getFadIndhold() instanceof BundDestillat bd) {
-                    if(bd == destillat) {
+                if (fad.getFadIndhold() == destillat) {
+                    list.add(plads);
+                } else if (fad.getFadIndhold() instanceof KombiDestillat kd) {
+                    if (kd.indeholderDestillat(destillat)) {
                         list.add(fad.getPlads());
                     }
                 }
@@ -223,8 +220,32 @@ public class Reol {
         friePladser--;
     }
 
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public void changeSize(int size) {
+        ArrayList<Integer> anvendtePladser = new ArrayList<>();
+        for (int i = size; i < pladser.length; i++) {
+            if (pladser[i].getVare() != null) {
+                anvendtePladser.add(pladser[i].getPladsNr());
+            }
+        }
+
+        if (!anvendtePladser.isEmpty()) {
+            throw new IllegalArgumentException("Følgende pladser over den nye størrelse på reolen er optaget: "
+                    + anvendtePladser);
+        } else {
+            Plads[] nyePladser = new Plads[size];
+            for (int i = 0; i < size; i++) {
+                nyePladser[i] = pladser[i];
+            }
+            pladser = nyePladser;
+        }
+    }
+
     @Override
     public String toString() {
-        return ID;
+        return lager.getLagerNavn() + " - " + ID;
     }
 }

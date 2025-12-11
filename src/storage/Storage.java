@@ -2,13 +2,12 @@ package storage;
 
 import application.model.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class Storage {
     private static Storage storage;
-    private ArrayList<Destillat> destillatList;
-    private ArrayList<BundDestillat> destilleringList;
+    private TreeSet<Destillat> destillatList;
+    private TreeSet<BundDestillat> destilleringList;
     private ArrayList<Fad> fadList;
     private ArrayList<Færdigprodukt> færdigproduktList;
     private ArrayList<Lager> lagerList;
@@ -21,8 +20,8 @@ public class Storage {
     private ArrayList<Double> fadKapacitetList;
 
     private Storage() {
-        destillatList = new ArrayList<>();
-        destilleringList = new ArrayList<>();
+        destillatList = new TreeSet<>();
+        destilleringList = new TreeSet<>();
         fadList = new ArrayList<>();
         færdigproduktList = new ArrayList<>();
         lagerList = new ArrayList<>();
@@ -51,7 +50,7 @@ public class Storage {
         destillatList.remove(d);
     }
 
-    public ArrayList<Destillat> getDestillatList() {
+    public Set<Destillat> getDestillatList() {
         return destillatList;
     }
 
@@ -65,7 +64,7 @@ public class Storage {
         destilleringList.remove(bundDestillat);
     }
 
-    public ArrayList<BundDestillat> getDestilleringList() {
+    public Set<BundDestillat> getDestilleringList() {
         return destilleringList;
     }
 
@@ -96,6 +95,7 @@ public class Storage {
     public ArrayList<Færdigprodukt> getFærdigproduktList() {
         return færdigproduktList;
     }
+
 
     // ---------- Lager ----------
     public void addToLagerList(Lager l) {
@@ -175,5 +175,13 @@ public class Storage {
 
     public ArrayList<Double> getFadKapacitetList() {
         return fadKapacitetList;
+    }
+
+    public ArrayList<Flaske> getFlaskeList() {
+        ArrayList<Flaske> flasker = new ArrayList<>();
+        for(Færdigprodukt færdigprodukt : færdigproduktList) {
+            flasker.addAll(færdigprodukt.getFlasker());
+        }
+        return flasker;
     }
 }

@@ -126,7 +126,7 @@ public class Fad extends Storable {
         double originalMængde = mængdeL;
         mængdeL += påhældningsMængde;
 
-        if(fadIndhold == null) {
+        if(fadIndhold == null || fadIndhold == destillat) {
             indholdEfterPåfyldning = destillat;
         }
         else {
@@ -165,7 +165,7 @@ public class Fad extends Storable {
      * @throws IllegalArgumentException Hvis den givne mængde overskrider {@code Fad} objektets kapacitet
      * @return {@code Destillat}
      */
-    public Destillat fyldPåFraFad(Fad andetFad, int mængde, LocalDate dato, String init) {
+    public Destillat fyldPåFraFad(Fad andetFad, double mængde, LocalDate dato, String init) {
         Destillat destillat = fyldPå(andetFad.getFadIndhold(), mængde, andetFad.getMængdeL(), dato, init);
         andetFad.setMængdeL(andetFad.getMængdeL() - mængde);
         return destillat;
@@ -180,7 +180,7 @@ public class Fad extends Storable {
      * @throws IllegalArgumentException Hvis den givne mængde overskrider {@code Fad} objektets kapacitet
      * @return {@code Destillat}
      */
-    public Destillat fyldPåFraDestillat(BundDestillat bundDestillat, int mængde, LocalDate dato, String init) {
+    public Destillat fyldPåFraDestillat(BundDestillat bundDestillat, double mængde, LocalDate dato, String init) {
         Destillat destillat = fyldPå(bundDestillat, mængde, bundDestillat.getMængdeL(), dato, init);
         bundDestillat.setMængdeL(bundDestillat.getMængdeL() - mængde);
 
@@ -234,7 +234,12 @@ public class Fad extends Storable {
 
     @Override
     public String toString() {
-        return "Fad " + fadNr + " - " + mængdeL + "L / " + kapacitetL + "L";
+        String destillatString = "Tom";
+        if(fadIndhold != null) {
+            destillatString = fadIndhold.getNavn();
+        }
+        return "Fad " + fadNr + " - " + destillatString + "\n" + mængdeL + "L / " + kapacitetL + "L\n" +
+                fadtype + " - " + oprindelse;
     }
 
 }

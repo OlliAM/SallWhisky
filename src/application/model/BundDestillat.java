@@ -90,10 +90,20 @@ public class BundDestillat extends Destillat{
         return rygemateriale;
     }
 
+    public void setStartDato(LocalDate startDato) {
+        this.startDato = startDato;
+    }
 
+    public void setKornsort(String kornsort) {
+        this.kornsort = kornsort;
+    }
+
+    public void setRygemateriale(String rygemateriale) {
+        this.rygemateriale = rygemateriale;
+    }
 
     @Override
     public String toString() {
-        return super.toString() + " - Bunddestillat";
+        return super.toString() + "\nBunddestillat";
     }
 }

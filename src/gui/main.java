@@ -68,13 +68,14 @@ public class main {
 
 
         // --- Læg fade på lager ---
-        controller.gemPåReol(lager1, reol1, 0, fad1);
-        controller.gemPåReol(lager1, reol1, 1, fad2);
-        controller.gemPåReol(lager1, reol1, 2, fad3);
-        controller.gemPåReol(lager1, reol1, 3, fad3);
-        controller.gemPåReol(lager1, reol2, 3, fad1);
-        controller.gemPåReol(lager1, reol2, 4, fad2);
+        controller.gemPåReol(reol1, fad1);
+        controller.gemPåReol(reol1, fad2);
+        controller.gemPåReol(reol1, fad3);
+        controller.gemPåReol(reol1, fad3);
+        controller.gemPåReol(reol2, fad1);
+        controller.gemPåReol(reol2, fad2);
 
+        System.out.println(fad1.getPlads());
         // --- Skab Færdigprodukt (efter min. 3 år lagring) ---
         Map<Fad, Double> fadeTilProdukt = new HashMap<>();
         fadeTilProdukt.put(fad1, 50.0);  // Træk 50L fra fad 1

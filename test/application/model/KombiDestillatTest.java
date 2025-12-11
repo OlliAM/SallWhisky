@@ -36,7 +36,7 @@ class KombiDestillatTest {
     }
 
     @Test
-    void indeholderDestillat_1Kombi1BundIndeholderIKombiDestillat() {
+    void indeholderDestillat_1Kombi1BundIndeholderKombiDestillat() {
         //Act & assert
         assertTrue(kombiDestillat1.indeholderDestillat(bundDestillat1));
     }

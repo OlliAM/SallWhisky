@@ -72,11 +72,22 @@ public class Lager {
      */
     public Reol createReol(String ID, int pladser) {
         // Instantiate the new Reol-class to store.
-        ID = navn + "-" + ID;
         Reol newReol = new Reol(this, ID, pladser);
         reoler.add(newReol);
         // Return Reol-class -> Used for Controller.
         return newReol;
+    }
+
+    public void removeReol(Reol reol) {
+        if(reoler.contains(reol)) {
+            for (Plads plads : reol.getPladser()) {
+                Storable vare = plads.getVare();
+                if(vare != null) {
+                    vare.fjernFraPlads();
+                }
+            }
+            reoler.remove(reol);
+        }
     }
 
     public Plads gemPåLager(Storable produkt) {
@@ -160,18 +171,18 @@ public class Lager {
     public ArrayList<Reol> getReoler() {
         return new ArrayList<>(reoler);
     }
-
     // Return the internal name String of the Lager-instance.
+
     public String getLagerNavn() {
         return this.navn;
     }
-
     // Return the total num of Cask-instances in storage..
+
     public int getAntalFade() {
         return this.antalFade;
     }
-
     // Return the total num of Bottle-instances in storage..
+
     public int getAntalFlasker() {
         return this.antalFlasker;
     }
@@ -190,6 +201,11 @@ public class Lager {
 
     public void decrementFlasker() {
         antalFlasker--;
+    }
+
+    public void setNavn(String navn) {
+        this.navn = navn;
+
     }
 
     @Override

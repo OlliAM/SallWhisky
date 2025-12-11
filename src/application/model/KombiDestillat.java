@@ -97,6 +97,6 @@ public class KombiDestillat extends Destillat{
 
     @Override
     public String toString() {
-        return super.toString() + " - Kombidestillat";
+        return super.toString() + "\nKombidestillat";
     }
 }
