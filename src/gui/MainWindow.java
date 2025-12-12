@@ -14,7 +14,6 @@ public class MainWindow extends Application {
     Stage stage;
 
 
-
     public void start(Stage stage) {
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
